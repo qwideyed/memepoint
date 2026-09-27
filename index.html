@@ -5,127 +5,228 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MemePoint</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            mpdark: {
-              bg: '#0f1117',
-              card: '#161922',
-              border: '#262b3a',
-              hover: '#1f2430'
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-bg-hover: rgba(255, 255, 255, 0.08);
+      --glass-card: rgba(25, 27, 36, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-border-top: rgba(255, 255, 255, 0.28);
+      --glass-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
+      --glass-pill-active: rgba(255, 255, 255, 0.18);
+    }
+
     * {
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
+
     body {
-      background-color: #0f1117;
-      color: #e2e8f0;
+      background-color: #050608;
+      color: #f5f5f7;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .ambient-sphere {
+      position: fixed;
+      border-radius: 9999px;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    .glass-nav {
+      background: rgba(18, 20, 29, 0.65);
+      backdrop-filter: blur(36px) saturate(190%);
+      -webkit-backdrop-filter: blur(36px) saturate(190%);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-panel {
+      background: var(--glass-card);
+      backdrop-filter: blur(30px) saturate(190%);
+      -webkit-backdrop-filter: blur(30px) saturate(190%);
+      border: 1px solid var(--glass-border);
+      border-top: 1px solid var(--glass-border-top);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), var(--glass-inner-glow);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0.5px rgba(255, 255, 255, 0.2);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .glass-pill-active {
+      background: rgba(255, 255, 255, 0.22) !important;
+      border: 1px solid rgba(255, 255, 255, 0.35) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 16px rgba(255, 255, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .glass-card {
+      background: rgba(22, 25, 36, 0.5);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-3px) scale(1.008);
+      border-color: rgba(255, 255, 255, 0.22);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .glass-search {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0.5px rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .glass-search:focus-within {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
-  <header class="w-full bg-[#161922] border-b border-[#262b3a] sticky top-0 z-30 px-4 py-3">
-    <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
-      <div class="flex items-center gap-4">
-        <a href="index.html" class="flex items-center gap-2 text-xl font-bold text-white tracking-tight">
-          <span class="w-8 h-8 rounded-lg bg-pink-600 flex items-center justify-center text-white text-sm font-black">MP</span>
-          <span>MemePoint</span>
+  <div class="ambient-sphere w-[550px] h-[550px] -top-32 -left-32 bg-violet-600/30"></div>
+  <div class="ambient-sphere w-[600px] h-[600px] top-1/4 -right-48 bg-blue-600/25"></div>
+  <div class="ambient-sphere w-[500px] h-[500px] bottom-10 left-1/3 bg-fuchsia-600/20"></div>
+
+  <div class="relative z-10 flex flex-col flex-1">
+    <header class="glass-nav sticky top-0 z-40 px-5 py-3.5 transition-all">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        
+        <a href="index.html" class="flex items-center gap-3 group focus:outline-none">
+          <div class="w-10 h-10 rounded-2xl glass-pill flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform">
+            <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/40 via-purple-500/30 to-pink-500/40"></div>
+            <span class="relative font-bold text-base tracking-tighter text-white drop-shadow">MP</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-base font-semibold tracking-tight text-white/95">MemePoint</span>
+            <span class="text-[10px] tracking-wide text-white/45 font-medium -mt-1 uppercase">Curated Feed</span>
+          </div>
         </a>
-      </div>
 
-      <div class="flex-1 max-w-md mx-2">
-        <div class="relative">
-          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">#</span>
-          <input 
-            type="text" 
-            id="tagSearchInput"
-            placeholder="Search tags only (e.g. gaming, cats)..." 
-            class="w-full bg-[#0f1117] border border-[#262b3a] rounded-lg pl-7 pr-8 py-1.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-pink-500"
-            oninput="handleTagSearch(this.value)"
-          />
-          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
-            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        <div class="flex-1 max-w-md mx-2">
+          <div class="glass-search rounded-full px-3.5 py-1.5 flex items-center gap-2">
+            <span class="text-white/40 text-xs font-semibold pl-1">#</span>
+            <input 
+              type="text" 
+              id="tagSearchInput"
+              placeholder="Search hashtags only..." 
+              class="w-full bg-transparent border-0 text-sm text-white placeholder-white/40 focus:outline-none"
+              oninput="handleTagSearch(this.value)"
+            />
+            <button id="clearSearchBtn" onclick="clearSearch()" class="hidden text-white/40 hover:text-white transition-colors p-1">
+              <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <nav class="flex items-center gap-2.5">
+          <button 
+            id="savedToggleBtn" 
+            onclick="toggleSavedFilter()" 
+            title="Saved Memes"
+            class="glass-pill rounded-full p-2 text-white/70 hover:text-white flex items-center justify-center">
+            <i data-lucide="bookmark" class="w-4 h-4"></i>
+          </button>
+
+          <a 
+            href="donate.html" 
+            class="glass-pill rounded-full px-4 py-2 text-amber-300 hover:text-amber-200 text-xs font-medium flex items-center gap-1.5 border-amber-400/20">
+            <i data-lucide="heart" class="w-3.5 h-3.5 fill-amber-400/20"></i>
+            <span class="hidden sm:inline">Donate</span>
+          </a>
+
+          <a 
+            href="post.html" 
+            class="glass-pill rounded-full px-4 py-2 text-white text-xs font-semibold flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border-white/25">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>Post</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-7xl w-full mx-auto px-5 py-8 flex-1 flex flex-col gap-7">
+      
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        
+        <div class="glass-panel rounded-full p-1.5 inline-flex items-center gap-1">
+          <button onclick="setFilter('trending')" id="tabTrending" class="glass-pill-active rounded-full px-4 py-1.5 text-xs font-medium transition-all">Trending</button>
+          <button onclick="setFilter('new')" id="tabNew" class="glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/70 hover:text-white transition-all">New</button>
+          <button onclick="setFilter('og')" id="tabOG" class="glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/70 hover:text-white transition-all">OG</button>
+          <button onclick="setFilter('clicks')" id="tabClicks" class="glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/70 hover:text-white transition-all">Most Clicks</button>
+        </div>
+
+        <div id="filterTagNotice" class="hidden items-center gap-2 text-xs text-indigo-300 glass-panel px-3.5 py-1.5 rounded-full border-indigo-400/30">
+          <span class="flex items-center gap-1">
+            <span class="text-white/50">Tag:</span>
+            <span id="activeTagLabel" class="font-semibold text-white"></span>
+          </span>
+          <button onclick="clearSearch()" class="text-white/40 hover:text-white ml-1">
+            <i data-lucide="x" class="w-3 h-3"></i>
           </button>
         </div>
+
       </div>
 
-      <div class="flex items-center gap-2.5">
-        <button 
-          id="savedToggleBtn" 
-          onclick="toggleSavedFilter()" 
-          title="Saved Memes"
-          class="p-2 rounded-lg bg-[#0f1117] border border-[#262b3a] text-slate-400 hover:text-white">
-          <i data-lucide="bookmark" class="w-4 h-4"></i>
-        </button>
+      <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
 
-        <a 
-          href="donate.html" 
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-sm font-medium transition-colors">
-          <i data-lucide="heart" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">Donate</span>
-        </a>
-
-        <a 
-          href="post.html" 
-          class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold transition-colors">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          <span>Post</span>
+      <div id="emptyView" class="hidden flex-col items-center justify-center py-28 text-center">
+        <div class="w-16 h-16 rounded-3xl glass-panel flex items-center justify-center text-white/40 mb-4 shadow-xl">
+          <i data-lucide="sparkles" class="w-7 h-7"></i>
+        </div>
+        <h2 class="text-base font-semibold text-white tracking-tight mb-1">No memes discovered yet</h2>
+        <p class="text-xs text-white/50 mb-5 max-w-xs">Be the first to share one in this feed or adjust your search tags.</p>
+        <a href="post.html" class="glass-pill rounded-full px-5 py-2.5 text-xs font-semibold text-white bg-white/10 hover:bg-white/20">
+          Post Meme
         </a>
       </div>
-    </div>
-  </header>
 
-  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6 flex flex-col gap-6">
-    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#262b3a] pb-3">
-      <div class="flex items-center gap-2">
-        <button onclick="setFilter('trending')" id="tabTrending" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-pink-600 text-white">Trending</button>
-        <button onclick="setFilter('new')" id="tabNew" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]">New</button>
-        <button onclick="setFilter('og')" id="tabOG" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]">OG</button>
-        <button onclick="setFilter('clicks')" id="tabClicks" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]">Most Clicks</button>
+    </main>
+
+    <footer class="glass-nav mt-auto py-5 px-5 text-center text-xs text-white/40">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+        <span class="tracking-wide">MemePoint &bull; Designed in Cupertino Glass Aesthetic</span>
+        <div class="flex items-center gap-5">
+          <a href="donate.html" class="hover:text-amber-300 transition-colors">Support Project</a>
+          <a href="post.html" class="hover:text-white transition-colors">Submit Feed</a>
+        </div>
       </div>
+    </footer>
 
-      <div id="filterTagNotice" class="hidden items-center gap-2 text-xs text-pink-400 bg-pink-500/10 px-3 py-1.5 rounded-lg border border-pink-500/20">
-        <span>Filtering by tag: <b id="activeTagLabel"></b></span>
-        <button onclick="clearSearch()" class="text-slate-400 hover:text-white underline">Clear</button>
-      </div>
-    </div>
-
-    <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-
-    <div id="emptyView" class="hidden flex-col items-center justify-center py-20 text-center">
-      <div class="w-14 h-14 rounded-full bg-[#161922] border border-[#262b3a] flex items-center justify-center text-slate-400 mb-3">
-        <i data-lucide="image-off" class="w-6 h-6"></i>
-      </div>
-      <h2 class="text-lg font-bold text-white mb-1">No memes found</h2>
-      <p class="text-sm text-slate-400 mb-4 max-w-sm">No memes match this tag or filter yet. Post one to get started.</p>
-      <a href="post.html" class="px-4 py-2 rounded-lg bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold">Post a Meme</a>
-    </div>
-  </main>
-
-  <footer class="w-full bg-[#161922] border-t border-[#262b3a] py-4 text-center text-xs text-slate-500">
-    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between">
-      <span>MemePoint &bull; 100% Free Meme Sharing</span>
-      <div class="flex items-center gap-3">
-        <a href="donate.html" class="hover:text-amber-400">Donate</a>
-        <a href="post.html" class="hover:text-slate-300">Submit Meme</a>
-      </div>
-    </div>
-  </footer>
+  </div>
 
   <script>
     let currentFilter = 'trending';
@@ -145,7 +246,7 @@
         } else {
           memes = [];
         }
-      } catch (err) {
+      } catch (e) {
         memes = [];
       }
 
@@ -166,17 +267,17 @@
         const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         if (!btn) return;
         if (t === currentFilter && !isShowingSaved) {
-          btn.className = "filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-pink-600 text-white";
+          btn.className = "glass-pill-active rounded-full px-4 py-1.5 text-xs font-medium transition-all";
         } else {
-          btn.className = "filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]";
+          btn.className = "glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/70 hover:text-white transition-all";
         }
       });
 
       const saveBtn = document.getElementById('savedToggleBtn');
       if (isShowingSaved) {
-        saveBtn.className = "p-2 rounded-lg bg-pink-600/20 border border-pink-500/40 text-pink-400";
+        saveBtn.className = "glass-pill-active rounded-full p-2 text-white flex items-center justify-center";
       } else {
-        saveBtn.className = "p-2 rounded-lg bg-[#0f1117] border border-[#262b3a] text-slate-400 hover:text-white";
+        saveBtn.className = "glass-pill rounded-full p-2 text-white/70 hover:text-white flex items-center justify-center";
       }
     }
 
@@ -281,54 +382,59 @@
       grid.innerHTML = list.map(m => {
         const isSaved = savedIds.has(m.id);
         const tags = (m.tags || []).map(t => 
-          `<button onclick="event.stopPropagation(); filterByClickedTag('${escapeAttr(t)}')" class="text-[11px] px-2 py-0.5 rounded bg-[#0f1117] hover:bg-[#262b3a] text-slate-400 hover:text-white transition-colors">#${escapeHtml(t)}</button>`
+          `<button onclick="event.stopPropagation(); filterByClickedTag('${escapeAttr(t)}')" class="text-[10px] px-2.5 py-0.5 rounded-full glass-pill text-white/70 hover:text-white transition-all">#${escapeHtml(t)}</button>`
         ).join('');
 
         let mediaHtml = '';
         if (m.type === 'video' || (m.url && m.url.match(/\.(mp4|webm|ogg)$/i))) {
           mediaHtml = `
-            <video src="${m.url}" controls class="w-full max-h-96 object-contain bg-black" preload="metadata"></video>
+            <div class="relative w-full aspect-square bg-black/40 flex items-center justify-center overflow-hidden">
+              <video src="${m.url}" controls class="w-full h-full object-contain" preload="metadata"></video>
+            </div>
           `;
         } else {
           mediaHtml = `
-            <div class="w-full aspect-square bg-[#0f1117] flex items-center justify-center overflow-hidden">
+            <div class="relative w-full aspect-square bg-black/30 flex items-center justify-center overflow-hidden group">
               <img 
                 src="${m.url}" 
                 alt="${escapeAttr(m.title || 'Meme')}" 
                 loading="lazy" 
-                class="w-full h-full object-cover group-hover:opacity-95" 
-                onerror="this.onerror=null; this.src='https://placehold.co/600x600/161922/e2e8f0?text=No+Media';"
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" 
+                onerror="this.onerror=null; this.src='https://placehold.co/600x600/181b24/e2e8f0?text=No+Media';"
               />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
           `;
         }
 
         return `
-          <article onclick="recordClickAndOpen('${m.id}', event)" class="group cursor-pointer bg-[#161922] border border-[#262b3a] hover:border-slate-600 rounded-xl overflow-hidden flex flex-col transition-all">
-            <div class="p-3 flex items-center justify-between border-b border-[#262b3a]">
-              <h2 class="text-sm font-semibold text-white truncate pr-2">${escapeHtml(m.title || 'Untitled Meme')}</h2>
+          <article onclick="recordClickAndOpen('${m.id}', event)" class="glass-card rounded-3xl overflow-hidden flex flex-col cursor-pointer group">
+            
+            <div class="px-4 py-3 flex items-center justify-between border-b border-white/[0.06]">
+              <h3 class="text-xs font-semibold text-white/90 truncate tracking-tight pr-2">${escapeHtml(m.title || 'Untitled Meme')}</h3>
               <button 
                 onclick="toggleSave('${m.id}', event)" 
                 title="${isSaved ? 'Remove bookmark' : 'Bookmark meme'}"
-                class="p-1.5 rounded hover:bg-[#0f1117] ${isSaved ? 'text-pink-500' : 'text-slate-400 hover:text-white'} transition-colors">
-                <i data-lucide="bookmark" class="w-4 h-4 ${isSaved ? 'fill-current' : ''}"></i>
+                class="glass-pill rounded-full p-1.5 ${isSaved ? 'text-rose-400 glass-pill-active' : 'text-white/60 hover:text-white'} transition-all">
+                <i data-lucide="bookmark" class="w-3.5 h-3.5 ${isSaved ? 'fill-current' : ''}"></i>
               </button>
             </div>
 
             ${mediaHtml}
 
-            <div class="p-3 flex flex-col gap-2 mt-auto border-t border-[#262b3a]">
-              <div class="flex flex-wrap gap-1">
+            <div class="p-3.5 flex flex-col gap-2.5 mt-auto border-t border-white/[0.06] bg-black/10">
+              <div class="flex flex-wrap gap-1 max-h-12 overflow-hidden">
                 ${tags}
               </div>
-              <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
-                <span class="flex items-center gap-1">
-                  <i data-lucide="mouse-pointer" class="w-3.5 h-3.5"></i>
+              <div class="flex items-center justify-between text-[11px] text-white/45 pt-0.5">
+                <span class="flex items-center gap-1.5 font-medium text-white/60">
+                  <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-white/40"></i>
                   ${m.clicks || 0} clicks
                 </span>
                 <span>${m.createdAt ? new Date(m.createdAt).toLocaleDateString() : ''}</span>
               </div>
             </div>
+
           </article>
         `;
       }).join('');
