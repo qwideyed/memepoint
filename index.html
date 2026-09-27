@@ -11,139 +11,128 @@
       box-sizing: border-box;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
     }
 
     body {
-      background-color: #08090d;
-      color: #ededed;
+      background-color: #06070a;
+      color: #f1f2f4;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Subtle grid pattern background */
-    .bg-grid {
-      background-size: 32px 32px;
+    .bg-canvas {
+      background-size: 28px 28px;
       background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     }
 
-    /* Linear/Vercel style crisp header */
-    .header-bar {
-      background: rgba(8, 9, 13, 0.78);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    .header-glow {
+      background: rgba(8, 9, 13, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Crisp cards */
-    .mp-card {
-      background: #0f1015;
+    .card-shell {
+      background: #0d0f14;
       border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .mp-card:hover {
-      background: #14151c;
-      border-color: rgba(255, 255, 255, 0.16);
+    .card-shell:hover {
+      background: #11141b;
+      border-color: rgba(255, 255, 255, 0.18);
       transform: translateY(-2px);
-      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.7);
     }
 
-    /* Sleek Segment Tab */
-    .tab-active {
-      background: rgba(255, 255, 255, 0.1);
+    .ad-banner {
+      background: linear-gradient(180deg, #0e1118 0%, #0a0c10 100%);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+    }
+
+    .tab-selected {
+      background: rgba(255, 255, 255, 0.12);
       color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 
-    .tab-inactive {
+    .tab-default {
       background: transparent;
-      color: #8a8f98;
-      border: 1px solid transparent;
+      color: #8c92a0;
     }
 
-    .tab-inactive:hover {
-      color: #d1d5db;
+    .tab-default:hover {
+      color: #e5e7eb;
       background: rgba(255, 255, 255, 0.04);
     }
 
-    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #08090d;
+      background: #06070a;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.16);
       border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
     }
   </style>
 </head>
-<body class="bg-grid flex flex-col min-h-screen selection:bg-white/20 selection:text-white">
+<body class="bg-canvas flex flex-col min-h-screen">
 
-  <header class="header-bar sticky top-0 z-40 px-4 sm:px-6 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+  <header class="header-glow sticky top-0 z-40 px-4 sm:px-6 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-6">
       
-      <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-2.5 text-white group flex-shrink-0">
-        <div class="w-8 h-8 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center text-white group-hover:border-white/25 transition-colors">
-          <i data-lucide="sparkle" class="w-4 h-4 text-neutral-200"></i>
+      <a href="index.html" class="flex items-center gap-2.5 text-white flex-shrink-0 group">
+        <div class="w-8 h-8 rounded-lg bg-neutral-900 border border-white/12 flex items-center justify-center text-white group-hover:border-white/30 transition-all shadow-inner">
+          <i data-lucide="sparkle" class="w-4 h-4 text-emerald-400"></i>
         </div>
         <div class="flex items-center gap-1.5">
-          <span class="font-semibold text-sm tracking-tight text-white">MemePoint</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+          <span class="font-bold text-sm tracking-tight text-white">MemePoint</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
         </div>
       </a>
 
-      <!-- Clean Search Tags Bar -->
-      <div class="flex-1 max-w-lg mx-2">
+      <div class="flex-1 max-w-xl mx-auto">
         <div class="relative flex items-center w-full">
           <i data-lucide="hash" class="w-3.5 h-3.5 absolute left-3.5 text-neutral-500 pointer-events-none"></i>
           <input 
             type="text" 
             id="tagSearchInput"
-            placeholder="Search tags... e.g. #gaming, #coding" 
-            class="w-full bg-[#111318] border border-white/8 rounded-lg pl-9 pr-9 py-1.5 text-xs text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-white/25 focus:bg-[#15171f] transition-all"
+            placeholder="Search tags... (e.g. gaming, classic, coding)" 
+            class="w-full bg-[#0d0f15] border border-white/10 rounded-lg pl-9 pr-9 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-white/25 focus:bg-[#12151e] transition-all shadow-inner"
             oninput="handleTagSearch(this.value)"
           />
-          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 text-neutral-500 hover:text-neutral-200 transition-colors">
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 text-neutral-500 hover:text-white transition-colors">
             <i data-lucide="x" class="w-3.5 h-3.5"></i>
           </button>
         </div>
       </div>
 
-      <!-- Action items -->
       <nav class="flex items-center gap-2 flex-shrink-0">
-        <!-- Saved Toggle -->
         <button 
           id="savedToggleBtn" 
           onclick="toggleSavedFilter()" 
           title="Saved Memes"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/15 text-xs text-neutral-300 transition-colors">
+          class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs text-neutral-300 transition-all">
           <i data-lucide="bookmark" id="savedIcon" class="w-3.5 h-3.5 text-neutral-400"></i>
-          <span class="hidden sm:inline font-medium">Saved</span>
-          <span id="savedCountBadge" class="hidden ml-0.5 text-[10px] bg-white/10 px-1.5 py-0.2 rounded-full text-neutral-300 font-mono">0</span>
+          <span class="hidden md:inline font-medium">Saved</span>
+          <span id="savedCountBadge" class="hidden text-[10px] bg-white/15 px-1.5 py-0.5 rounded-full text-white font-mono">0</span>
         </button>
 
-        <!-- Donate Button -->
         <a 
           href="donate.html" 
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/15 text-xs text-neutral-300 transition-colors font-medium">
-          <i data-lucide="heart" class="w-3.5 h-3.5 text-neutral-400"></i>
-          <span class="hidden sm:inline">Donate</span>
+          class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs text-neutral-300 transition-all font-medium">
+          <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400"></i>
+          <span class="hidden md:inline">Donate</span>
         </a>
 
-        <!-- Post Meme Button -->
         <a 
           href="post.html" 
-          class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-neutral-100 hover:bg-white text-neutral-950 font-semibold text-xs transition-colors shadow-sm">
+          class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-neutral-200 text-neutral-950 font-semibold text-xs transition-all shadow-sm">
           <i data-lucide="plus" class="w-3.5 h-3.5 stroke-[2.5]"></i>
           <span>Post</span>
         </a>
@@ -154,131 +143,100 @@
 
   <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 flex flex-col gap-6">
 
-    <!-- Control bar: Tabs + Quick Tags -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-2 border-b border-white/5">
-      
-      <!-- Filter Segmented Tabs -->
-      <div class="inline-flex items-center p-1 rounded-lg bg-[#0e1015] border border-white/8 self-start">
-        <button onclick="setFilter('trending')" id="tabTrending" class="tab-active px-3 py-1 text-xs font-medium rounded-md transition-colors">Trending</button>
-        <button onclick="setFilter('new')" id="tabNew" class="tab-inactive px-3 py-1 text-xs font-medium rounded-md transition-colors">New</button>
-        <button onclick="setFilter('og')" id="tabOG" class="tab-inactive px-3 py-1 text-xs font-medium rounded-md transition-colors">OG</button>
-        <button onclick="setFilter('clicks')" id="tabClicks" class="tab-inactive px-3 py-1 text-xs font-medium rounded-md transition-colors">Most Clicks</button>
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/5">
+      <div class="inline-flex items-center p-1 rounded-lg bg-[#0b0d12] border border-white/10 self-start">
+        <button onclick="setFilter('trending')" id="tabTrending" class="tab-selected px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Trending</button>
+        <button onclick="setFilter('new')" id="tabNew" class="tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all">New</button>
+        <button onclick="setFilter('og')" id="tabOG" class="tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all">OG</button>
+        <button onclick="setFilter('clicks')" id="tabClicks" class="tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Most Clicks</button>
       </div>
 
-      <!-- Quick Tag Chips -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs">
-        <span class="text-[11px] text-neutral-500 uppercase font-mono mr-1">Popular:</span>
-        <button onclick="filterByClickedTag('gaming')" class="px-2.5 py-1 rounded-md bg-[#12141a] hover:bg-[#1a1d26] border border-white/5 text-neutral-400 hover:text-neutral-200 transition-colors">#gaming</button>
-        <button onclick="filterByClickedTag('coding')" class="px-2.5 py-1 rounded-md bg-[#12141a] hover:bg-[#1a1d26] border border-white/5 text-neutral-400 hover:text-neutral-200 transition-colors">#coding</button>
-        <button onclick="filterByClickedTag('cats')" class="px-2.5 py-1 rounded-md bg-[#12141a] hover:bg-[#1a1d26] border border-white/5 text-neutral-400 hover:text-neutral-200 transition-colors">#cats</button>
-        <button onclick="filterByClickedTag('classic')" class="px-2.5 py-1 rounded-md bg-[#12141a] hover:bg-[#1a1d26] border border-white/5 text-neutral-400 hover:text-neutral-200 transition-colors">#classic</button>
-        <button onclick="filterByClickedTag('dank')" class="px-2.5 py-1 rounded-md bg-[#12141a] hover:bg-[#1a1d26] border border-white/5 text-neutral-400 hover:text-neutral-200 transition-colors">#dank</button>
-        <button onclick="filterByClickedTag('anime')" class="px-2.5 py-1 rounded-md bg-[#12141a] hover:bg-[#1a1d26] border border-white/5 text-neutral-400 hover:text-neutral-200 transition-colors">#anime</button>
-      </div>
-
+      <div id="dynamicTagsList" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs"></div>
     </div>
 
-    <!-- Active Tag Banner (if filtered) -->
-    <div id="activeTagBanner" class="hidden items-center justify-between px-3.5 py-2 rounded-lg bg-[#11131a] border border-white/10 text-xs">
+    <div id="activeTagBanner" class="hidden items-center justify-between px-3.5 py-2 rounded-lg bg-[#0e1118] border border-white/10 text-xs">
       <div class="flex items-center gap-2">
-        <span class="text-neutral-500">Filtered by:</span>
-        <span id="activeTagValue" class="text-white font-mono font-medium"></span>
+        <span class="text-neutral-400">Filter applied:</span>
+        <span id="activeTagValue" class="text-emerald-400 font-mono font-medium"></span>
       </div>
       <button onclick="clearSearch()" class="text-neutral-400 hover:text-white flex items-center gap-1 text-[11px]">
-        <span>Reset</span>
+        <span>Clear</span>
         <i data-lucide="x" class="w-3 h-3"></i>
       </button>
     </div>
 
-    <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    <div class="flex flex-col lg:flex-row items-start gap-6">
 
-    <!-- Empty State -->
-    <div id="emptyView" class="hidden flex-col items-center justify-center py-24 text-center">
-      <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-500 mb-3">
-        <i data-lucide="inbox" class="w-5 h-5"></i>
+      <div class="flex-1 w-full">
+        <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+
+        <div id="emptyView" class="hidden flex-col items-center justify-center py-20 px-4 text-center rounded-2xl border border-white/5 bg-[#090b10]">
+          <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-4 shadow-inner">
+            <i data-lucide="image-off" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-sm font-semibold text-white">No memes found</h3>
+          <p class="text-xs text-neutral-400 mt-1.5 max-w-sm">No memes have been published yet or matched your tag filter. Submit the very first one.</p>
+          <div class="mt-5 flex items-center gap-2.5">
+            <button id="emptyClearBtn" onclick="clearSearch()" class="hidden px-3.5 py-2 rounded-lg border border-white/10 text-xs text-neutral-300 hover:bg-white/5 transition-all">Reset Tag Filter</button>
+            <a href="post.html" class="px-4 py-2 rounded-lg bg-white text-neutral-950 font-semibold text-xs hover:bg-neutral-200 transition-all shadow-sm">Post a Meme</a>
+          </div>
+        </div>
       </div>
-      <h3 class="text-sm font-medium text-neutral-300">No memes matched</h3>
-      <p class="text-xs text-neutral-500 mt-1 max-w-sm">Try clearing your hashtag search or post a new meme to get this feed going.</p>
-      <div class="mt-4 flex items-center gap-2">
-        <button onclick="clearSearch()" class="px-3 py-1.5 rounded-lg border border-white/10 text-xs text-neutral-300 hover:bg-white/5 transition-colors">Clear Filter</button>
-        <a href="post.html" class="px-3.5 py-1.5 rounded-lg bg-white text-neutral-950 font-medium text-xs hover:bg-neutral-200 transition-colors">Submit Meme</a>
-      </div>
+
+      <aside class="w-full lg:w-72 xl:w-80 flex-shrink-0 flex flex-col gap-4">
+        
+        <div class="ad-banner rounded-xl p-4 flex flex-col items-center justify-center text-center min-h-[250px] relative overflow-hidden group">
+          <span class="absolute top-2.5 right-2.5 text-[9px] font-mono tracking-widest text-neutral-500 uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/5">Ad Space</span>
+          <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-2.5">
+            <i data-lucide="megaphone" class="w-5 h-5"></i>
+          </div>
+          <p class="text-xs font-semibold text-neutral-200">Advertise on MemePoint</p>
+          <p class="text-[11px] text-neutral-400 mt-1 max-w-[200px]">Reach meme lovers and web creators daily.</p>
+          <a href="donate.html" class="mt-4 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-medium text-white transition-all">
+            Promote Here
+          </a>
+        </div>
+
+        <div class="ad-banner rounded-xl p-4 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
+          <span class="absolute top-2.5 right-2.5 text-[9px] font-mono tracking-widest text-neutral-500 uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/5">Sponsor</span>
+          <div class="mt-4">
+            <div class="w-8 h-8 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-2">
+              <i data-lucide="server" class="w-4 h-4"></i>
+            </div>
+            <h4 class="text-xs font-semibold text-neutral-200">Keep MemePoint Running</h4>
+            <p class="text-[11px] text-neutral-400 mt-1 leading-relaxed">
+              This platform is 100% community powered with no paid subscriptions. Donations keep the servers and domain alive.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5">
+            <a href="donate.html" class="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium hover:bg-emerald-500/20 transition-all">
+              <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i>
+              <span>Donate Now</span>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
     </div>
 
   </main>
 
-  <footer class="mt-auto border-t border-white/5 py-5 px-6 text-xs text-neutral-500">
+  <footer class="mt-auto border-t border-white/5 py-5 px-6 text-xs text-neutral-400">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
-        <span>MemePoint</span>
+        <span class="text-neutral-300 font-medium">MemePoint</span>
         <span>&bull;</span>
-        <span class="text-neutral-600">The minimalist meme archive</span>
+        <span class="text-neutral-400">Community Archive</span>
       </div>
       <div class="flex items-center gap-4">
-        <a href="donate.html" class="hover:text-neutral-300 transition-colors">Support & Donate</a>
-        <a href="post.html" class="hover:text-neutral-300 transition-colors">Post Meme</a>
+        <a href="donate.html" class="hover:text-neutral-200 transition-colors">Support & Donate</a>
+        <a href="post.html" class="hover:text-neutral-200 transition-colors">Post Meme</a>
       </div>
     </div>
   </footer>
 
   <script>
-    const SAMPLE_MEMES = [
-      {
-        id: "mp-101",
-        title: "Deploying straight to production on a Friday afternoon",
-        type: "image",
-        url: "https://images.unsplash.com/photo-1534972195531-a756b1126f24?auto=format&fit=crop&w=800&q=80",
-        tags: ["coding", "relatable", "classic"],
-        clicks: 842,
-        createdAt: 1672531199000
-      },
-      {
-        id: "mp-102",
-        title: "Cats judging every single life decision you have ever made",
-        type: "image",
-        url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-        tags: ["cats", "dank"],
-        clicks: 1205,
-        createdAt: 1675209600000
-      },
-      {
-        id: "mp-103",
-        title: "When you finally beat the final boss with 1 HP remaining",
-        type: "image",
-        url: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
-        tags: ["gaming", "classic"],
-        clicks: 650,
-        createdAt: 1677628800000
-      },
-      {
-        id: "mp-104",
-        title: "Anime protagonists when their theme music starts playing",
-        type: "image",
-        url: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80",
-        tags: ["anime", "dank"],
-        clicks: 940,
-        createdAt: 1680307200000
-      },
-      {
-        id: "mp-105",
-        title: "Watching code pass all unit tests on first run",
-        type: "video",
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        tags: ["coding", "gaming"],
-        clicks: 1480,
-        createdAt: 1682899200000
-      },
-      {
-        id: "mp-106",
-        title: "The OG cat sitting at the dinner table",
-        type: "image",
-        url: "https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=800&q=80",
-        tags: ["cats", "classic", "og"],
-        clicks: 2190,
-        createdAt: 1609459200000
-      }
-    ];
-
     let currentFilter = 'trending';
     let currentTag = '';
     let isShowingSaved = false;
@@ -290,59 +248,93 @@
         const storedSaved = localStorage.getItem('mp_saved');
         if (storedSaved) savedIds = new Set(JSON.parse(storedSaved));
 
-        const storedMemes = localStorage.getItem('mp_memes');
-        if (storedMemes) {
-          memes = JSON.parse(storedMemes);
+        const storedPosts = localStorage.getItem('memepoint_posts') || localStorage.getItem('mp_memes');
+        if (storedPosts) {
+          memes = JSON.parse(storedPosts);
         } else {
-          memes = SAMPLE_MEMES;
-          localStorage.setItem('mp_memes', JSON.stringify(memes));
+          memes = [];
         }
       } catch (err) {
-        memes = SAMPLE_MEMES;
+        memes = [];
       }
 
-      updateSavedCountBadge();
+      updateSavedBadge();
+      renderTagPills();
       renderFeed();
       lucide.createIcons();
+    }
+
+    function renderTagPills() {
+      const container = document.getElementById('dynamicTagsList');
+      if (!container) return;
+
+      const tagMap = new Map();
+      memes.forEach(m => {
+        if (Array.isArray(m.tags)) {
+          m.tags.forEach(t => {
+            const clean = t.trim().toLowerCase().replace(/^#/, '');
+            if (clean) tagMap.set(clean, (tagMap.get(clean) || 0) + 1);
+          });
+        }
+      });
+
+      const topTags = Array.from(tagMap.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 7)
+        .map(entry => entry[0]);
+
+      if (topTags.length === 0) {
+        container.innerHTML = '';
+        return;
+      }
+
+      container.innerHTML = `
+        <span class="text-[11px] text-neutral-400 uppercase font-mono mr-1">Tags:</span>
+        ${topTags.map(tag => `
+          <button onclick="filterByClickedTag('${escapeAttr(tag)}')" class="px-2.5 py-1 rounded-md bg-[#0f1218] hover:bg-[#161a24] border border-white/10 text-neutral-300 hover:text-white transition-all">
+            #${escapeHtml(tag)}
+          </button>
+        `).join('')}
+      `;
     }
 
     function setFilter(type) {
       currentFilter = type;
       isShowingSaved = false;
-      updateFilterButtons();
+      updateFilterTabs();
       renderFeed();
     }
 
-    function updateFilterButtons() {
+    function updateFilterTabs() {
       const tabs = ['trending', 'new', 'og', 'clicks'];
       tabs.forEach(t => {
         const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         if (!btn) return;
         if (t === currentFilter && !isShowingSaved) {
-          btn.className = "tab-active px-3 py-1 text-xs font-medium rounded-md transition-colors";
+          btn.className = "tab-selected px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
         } else {
-          btn.className = "tab-inactive px-3 py-1 text-xs font-medium rounded-md transition-colors";
+          btn.className = "tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
         }
       });
 
       const saveBtn = document.getElementById('savedToggleBtn');
       const saveIcon = document.getElementById('savedIcon');
       if (isShowingSaved) {
-        saveBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/20 border border-white/25 text-xs text-white transition-colors";
+        saveBtn.className = "flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-xs text-white transition-all";
         saveIcon.className = "w-3.5 h-3.5 fill-current text-white";
       } else {
-        saveBtn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/8 hover:bg-white/10 hover:border-white/15 text-xs text-neutral-300 transition-colors";
+        saveBtn.className = "flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs text-neutral-300 transition-all";
         saveIcon.className = "w-3.5 h-3.5 text-neutral-400";
       }
     }
 
     function toggleSavedFilter() {
       isShowingSaved = !isShowingSaved;
-      updateFilterButtons();
+      updateFilterTabs();
       renderFeed();
     }
 
-    function updateSavedCountBadge() {
+    function updateSavedBadge() {
       const badge = document.getElementById('savedCountBadge');
       if (!badge) return;
       if (savedIds.size > 0) {
@@ -399,15 +391,16 @@
         savedIds.add(id);
       }
       localStorage.setItem('mp_saved', JSON.stringify(Array.from(savedIds)));
-      updateSavedCountBadge();
+      updateSavedBadge();
       renderFeed();
     }
 
     function recordClickAndOpen(id) {
-      const meme = memes.find(m => m.id === id);
+      const meme = memes.find(m => String(m.id) === String(id));
       if (meme) {
         meme.clicks = (meme.clicks || 0) + 1;
-        localStorage.setItem('mp_memes', JSON.stringify(memes));
+        const key = localStorage.getItem('memepoint_posts') ? 'memepoint_posts' : 'mp_memes';
+        localStorage.setItem(key, JSON.stringify(memes));
       }
       window.location.href = `entry.html?id=${id}`;
     }
@@ -415,17 +408,18 @@
     function renderFeed() {
       const grid = document.getElementById('memeGrid');
       const empty = document.getElementById('emptyView');
+      const emptyClearBtn = document.getElementById('emptyClearBtn');
 
       let list = [...memes];
 
       if (isShowingSaved) {
-        list = list.filter(m => savedIds.has(m.id));
+        list = list.filter(m => savedIds.has(String(m.id)));
       }
 
       if (currentTag) {
         list = list.filter(m => {
           if (!m.tags || !Array.isArray(m.tags)) return false;
-          return m.tags.some(t => t.toLowerCase().includes(currentTag));
+          return m.tags.some(t => t.toLowerCase().replace(/^#/, '').includes(currentTag));
         });
       }
 
@@ -447,6 +441,11 @@
         grid.innerHTML = '';
         empty.classList.remove('hidden');
         empty.classList.add('flex');
+        if (currentTag || isShowingSaved) {
+          emptyClearBtn.classList.remove('hidden');
+        } else {
+          emptyClearBtn.classList.add('hidden');
+        }
         return;
       }
 
@@ -454,39 +453,37 @@
       empty.classList.remove('flex');
 
       grid.innerHTML = list.map(m => {
-        const isSaved = savedIds.has(m.id);
-        const tags = (m.tags || []).map(t => 
-          `<button type="button" onclick="event.stopPropagation(); filterByClickedTag('${escapeAttr(t)}')" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-neutral-200 transition-colors">#${escapeHtml(t)}</button>`
-        ).join('');
+        const isSaved = savedIds.has(String(m.id));
+        const tags = (m.tags || []).map(t => {
+          const cleanTag = t.replace(/^#/, '');
+          return `<button type="button" onclick="event.stopPropagation(); filterByClickedTag('${escapeAttr(cleanTag)}')" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white transition-all">#${escapeHtml(cleanTag)}</button>`;
+        }).join('');
 
         let mediaHtml = '';
         if (m.type === 'video' || (m.url && m.url.match(/\.(mp4|webm|ogg)$/i))) {
           mediaHtml = `
-            <div class="relative w-full aspect-video bg-black/50 overflow-hidden">
+            <div class="relative w-full aspect-video bg-black/40 overflow-hidden">
               <video src="${m.url}" controls class="w-full h-full object-contain" preload="metadata"></video>
             </div>
           `;
         } else {
           mediaHtml = `
-            <div class="relative w-full aspect-video bg-black/30 overflow-hidden">
+            <div class="relative w-full aspect-video bg-black/20 overflow-hidden">
               <img 
                 src="${m.url}" 
                 alt="${escapeAttr(m.title || 'Meme')}" 
                 loading="lazy" 
                 class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
-                onerror="this.onerror=null; this.src='https://placehold.co/600x400/0f1015/737373?text=Media+Unavailable';"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x400/0d0f14/525252?text=Unavailable';"
               />
             </div>
           `;
         }
 
         return `
-          <article onclick="recordClickAndOpen('${m.id}')" class="mp-card rounded-xl overflow-hidden flex flex-col cursor-pointer group">
-            
+          <article onclick="recordClickAndOpen('${m.id}')" class="card-shell rounded-xl overflow-hidden flex flex-col cursor-pointer group">
             ${mediaHtml}
-
             <div class="p-3.5 flex flex-col flex-1 gap-2.5">
-              
               <div class="flex items-start justify-between gap-2">
                 <h2 class="text-xs font-medium text-neutral-200 line-clamp-2 leading-relaxed tracking-tight group-hover:text-white transition-colors">
                   ${escapeHtml(m.title || 'Untitled Meme')}
@@ -495,7 +492,7 @@
                   type="button"
                   onclick="toggleSave('${m.id}', event)" 
                   title="${isSaved ? 'Remove bookmark' : 'Bookmark meme'}"
-                  class="p-1 rounded-md text-neutral-500 hover:text-white hover:bg-white/5 transition-colors flex-shrink-0">
+                  class="p-1 rounded-md text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex-shrink-0">
                   <i data-lucide="bookmark" class="w-3.5 h-3.5 ${isSaved ? 'text-white fill-current' : ''}"></i>
                 </button>
               </div>
@@ -504,16 +501,14 @@
                 ${tags}
               </div>
 
-              <div class="flex items-center justify-between text-[11px] text-neutral-500 border-t border-white/5 pt-2">
-                <span class="flex items-center gap-1 font-mono">
-                  <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-neutral-600"></i>
+              <div class="flex items-center justify-between text-[11px] text-neutral-400 border-t border-white/5 pt-2">
+                <span class="flex items-center gap-1 font-mono text-neutral-400">
+                  <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-neutral-400"></i>
                   ${m.clicks || 0} clicks
                 </span>
-                <span>${m.createdAt ? new Date(m.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
+                <span class="text-neutral-400">${m.createdAt ? new Date(m.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
               </div>
-
             </div>
-
           </article>
         `;
       }).join('');
