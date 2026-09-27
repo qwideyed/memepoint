@@ -11,61 +11,69 @@
       box-sizing: border-box;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
     }
 
     body {
-      background-color: #06070a;
-      color: #f1f2f4;
+      background-color: #07080c;
+      color: #f3f4f6;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    .bg-canvas {
-      background-size: 28px 28px;
+    .bg-grid-ambient {
+      background-size: 32px 32px;
       background-image: 
-        radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     }
 
-    .header-glow {
-      background: rgba(8, 9, 13, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+    .header-frosted {
+      background: rgba(7, 8, 12, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .card-shell {
-      background: #0d0f14;
+    .meme-card {
+      background: #0d0f15;
       border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.22s ease, 
+                  box-shadow 0.22s ease;
     }
 
-    .card-shell:hover {
-      background: #11141b;
-      border-color: rgba(255, 255, 255, 0.18);
-      transform: translateY(-2px);
-      box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.7);
+    .meme-card:hover {
+      background: #11141d;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 36px -12px rgba(0, 0, 0, 0.75);
     }
 
-    .ad-banner {
-      background: linear-gradient(180deg, #0e1118 0%, #0a0c10 100%);
-      border: 1px dashed rgba(255, 255, 255, 0.12);
+    .ad-card {
+      background: linear-gradient(145deg, #0d0f17 0%, #090a10 100%);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      transition: all 0.22s ease;
     }
 
-    .tab-selected {
+    .ad-card:hover {
+      border-color: rgba(52, 211, 153, 0.35);
+      background: linear-gradient(145deg, #10131d 0%, #0c0e14 100%);
+    }
+
+    .tab-active {
       background: rgba(255, 255, 255, 0.12);
       color: #ffffff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     }
 
-    .tab-default {
+    .tab-idle {
       background: transparent;
-      color: #8c92a0;
+      color: #8a909d;
     }
 
-    .tab-default:hover {
-      color: #e5e7eb;
-      background: rgba(255, 255, 255, 0.04);
+    .tab-idle:hover {
+      color: #f3f4f6;
+      background: rgba(255, 255, 255, 0.05);
     }
 
     ::-webkit-scrollbar {
@@ -73,21 +81,21 @@
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #06070a;
+      background: #07080c;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.18);
       border-radius: 9999px;
     }
   </style>
 </head>
-<body class="bg-canvas flex flex-col min-h-screen">
+<body class="bg-grid-ambient flex flex-col min-h-screen">
 
-  <header class="header-glow sticky top-0 z-40 px-4 sm:px-6 py-3">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-6">
+  <header class="header-frosted sticky top-0 z-40 px-4 sm:px-8 py-3">
+    <div class="max-w-[1720px] mx-auto flex items-center justify-between gap-3 sm:gap-6">
       
-      <a href="index.html" class="flex items-center gap-2.5 text-white flex-shrink-0 group">
-        <div class="w-8 h-8 rounded-lg bg-neutral-900 border border-white/12 flex items-center justify-center text-white group-hover:border-white/30 transition-all shadow-inner">
+      <a href="index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
+        <div class="w-8 h-8 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center group-hover:border-emerald-500/40 transition-all shadow-inner">
           <i data-lucide="sparkle" class="w-4 h-4 text-emerald-400"></i>
         </div>
         <div class="flex items-center gap-1.5">
@@ -102,7 +110,7 @@
           <input 
             type="text" 
             id="tagSearchInput"
-            placeholder="Search tags... (e.g. gaming, classic, coding)" 
+            placeholder="Search tags... (e.g. #gaming, #dank, #coding)" 
             class="w-full bg-[#0d0f15] border border-white/10 rounded-lg pl-9 pr-9 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-white/25 focus:bg-[#12151e] transition-all shadow-inner"
             oninput="handleTagSearch(this.value)"
           />
@@ -112,7 +120,7 @@
         </div>
       </div>
 
-      <nav class="flex items-center gap-2 flex-shrink-0">
+      <nav class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
         <button 
           id="savedToggleBtn" 
           onclick="toggleSavedFilter()" 
@@ -141,97 +149,56 @@
     </div>
   </header>
 
-  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 flex flex-col gap-6">
+  <main class="max-w-[1720px] w-full mx-auto px-4 sm:px-8 py-6 flex-1 flex flex-col gap-6">
 
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/5">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-white/5">
       <div class="inline-flex items-center p-1 rounded-lg bg-[#0b0d12] border border-white/10 self-start">
-        <button onclick="setFilter('trending')" id="tabTrending" class="tab-selected px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Trending</button>
-        <button onclick="setFilter('new')" id="tabNew" class="tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all">New</button>
-        <button onclick="setFilter('og')" id="tabOG" class="tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all">OG</button>
-        <button onclick="setFilter('clicks')" id="tabClicks" class="tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Most Clicks</button>
+        <button onclick="setFilter('trending')" id="tabTrending" class="tab-active px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Trending</button>
+        <button onclick="setFilter('new')" id="tabNew" class="tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all">New</button>
+        <button onclick="setFilter('og')" id="tabOG" class="tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all">OG</button>
+        <button onclick="setFilter('clicks')" id="tabClicks" class="tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Most Clicks</button>
       </div>
 
-      <div id="dynamicTagsList" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs"></div>
+      <div id="dynamicTagsList" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs scrollbar-none"></div>
     </div>
 
     <div id="activeTagBanner" class="hidden items-center justify-between px-3.5 py-2 rounded-lg bg-[#0e1118] border border-white/10 text-xs">
       <div class="flex items-center gap-2">
-        <span class="text-neutral-400">Filter applied:</span>
+        <span class="text-neutral-400">Filtering tag:</span>
         <span id="activeTagValue" class="text-emerald-400 font-mono font-medium"></span>
       </div>
       <button onclick="clearSearch()" class="text-neutral-400 hover:text-white flex items-center gap-1 text-[11px]">
-        <span>Clear</span>
+        <span>Clear filter</span>
         <i data-lucide="x" class="w-3 h-3"></i>
       </button>
     </div>
 
-    <div class="flex flex-col lg:flex-row items-start gap-6">
+    <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full"></div>
 
-      <div class="flex-1 w-full">
-        <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-
-        <div id="emptyView" class="hidden flex-col items-center justify-center py-20 px-4 text-center rounded-2xl border border-white/5 bg-[#090b10]">
-          <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-4 shadow-inner">
-            <i data-lucide="image-off" class="w-6 h-6"></i>
-          </div>
-          <h3 class="text-sm font-semibold text-white">No memes found</h3>
-          <p class="text-xs text-neutral-400 mt-1.5 max-w-sm">No memes have been published yet or matched your tag filter. Submit the very first one.</p>
-          <div class="mt-5 flex items-center gap-2.5">
-            <button id="emptyClearBtn" onclick="clearSearch()" class="hidden px-3.5 py-2 rounded-lg border border-white/10 text-xs text-neutral-300 hover:bg-white/5 transition-all">Reset Tag Filter</button>
-            <a href="post.html" class="px-4 py-2 rounded-lg bg-white text-neutral-950 font-semibold text-xs hover:bg-neutral-200 transition-all shadow-sm">Post a Meme</a>
-          </div>
-        </div>
+    <div id="emptyView" class="hidden flex-col items-center justify-center py-24 px-4 text-center rounded-2xl border border-white/5 bg-[#090b10] w-full max-w-2xl mx-auto my-8">
+      <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-4 shadow-inner">
+        <i data-lucide="image-off" class="w-6 h-6 text-neutral-400"></i>
       </div>
-
-      <aside class="w-full lg:w-72 xl:w-80 flex-shrink-0 flex flex-col gap-4">
-        
-        <div class="ad-banner rounded-xl p-4 flex flex-col items-center justify-center text-center min-h-[250px] relative overflow-hidden group">
-          <span class="absolute top-2.5 right-2.5 text-[9px] font-mono tracking-widest text-neutral-500 uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/5">Ad Space</span>
-          <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-2.5">
-            <i data-lucide="megaphone" class="w-5 h-5"></i>
-          </div>
-          <p class="text-xs font-semibold text-neutral-200">Advertise on MemePoint</p>
-          <p class="text-[11px] text-neutral-400 mt-1 max-w-[200px]">Reach meme lovers and web creators daily.</p>
-          <a href="donate.html" class="mt-4 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-medium text-white transition-all">
-            Promote Here
-          </a>
-        </div>
-
-        <div class="ad-banner rounded-xl p-4 flex flex-col justify-between min-h-[300px] relative overflow-hidden">
-          <span class="absolute top-2.5 right-2.5 text-[9px] font-mono tracking-widest text-neutral-500 uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/5">Sponsor</span>
-          <div class="mt-4">
-            <div class="w-8 h-8 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-2">
-              <i data-lucide="server" class="w-4 h-4"></i>
-            </div>
-            <h4 class="text-xs font-semibold text-neutral-200">Keep MemePoint Running</h4>
-            <p class="text-[11px] text-neutral-400 mt-1 leading-relaxed">
-              This platform is 100% community powered with no paid subscriptions. Donations keep the servers and domain alive.
-            </p>
-          </div>
-          <div class="pt-4 border-t border-white/5">
-            <a href="donate.html" class="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium hover:bg-emerald-500/20 transition-all">
-              <i data-lucide="heart" class="w-3.5 h-3.5 fill-current"></i>
-              <span>Donate Now</span>
-            </a>
-          </div>
-        </div>
-
-      </aside>
-
+      <h3 class="text-base font-semibold text-white">No memes found</h3>
+      <p class="text-xs text-neutral-400 mt-1.5 max-w-sm">No memes have been published yet or matched your tag filter. Submit the very first one.</p>
+      <div class="mt-5 flex items-center gap-2.5">
+        <button id="emptyClearBtn" onclick="clearSearch()" class="hidden px-3.5 py-2 rounded-lg border border-white/10 text-xs text-neutral-300 hover:bg-white/5 transition-all">Reset Tag Filter</button>
+        <a href="post.html" class="px-4 py-2 rounded-lg bg-white text-neutral-950 font-semibold text-xs hover:bg-neutral-200 transition-all shadow-sm">Post a Meme</a>
+      </div>
     </div>
 
   </main>
 
-  <footer class="mt-auto border-t border-white/5 py-5 px-6 text-xs text-neutral-400">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+  <footer class="mt-auto border-t border-white/5 py-6 px-6 text-xs text-neutral-500">
+    <div class="max-w-[1720px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-2">
         <span class="text-neutral-300 font-medium">MemePoint</span>
         <span>&bull;</span>
-        <span class="text-neutral-400">Community Archive</span>
+        <span class="text-neutral-500">Free Community Archive</span>
       </div>
       <div class="flex items-center gap-4">
-        <a href="donate.html" class="hover:text-neutral-200 transition-colors">Support & Donate</a>
-        <a href="post.html" class="hover:text-neutral-200 transition-colors">Post Meme</a>
+        <a href="donate.html" class="hover:text-neutral-300 transition-colors">Support & Donate</a>
+        <a href="post.html" class="hover:text-neutral-300 transition-colors">Post Meme</a>
       </div>
     </div>
   </footer>
@@ -242,6 +209,33 @@
     let isShowingSaved = false;
     let savedIds = new Set();
     let memes = [];
+
+    const adTemplates = [
+      {
+        badge: "SPONSOR",
+        title: "Keep MemePoint Running",
+        desc: "MemePoint runs 100% free with community donations. Help keep domain and bandwidth active.",
+        buttonText: "Support Us",
+        link: "donate.html",
+        icon: "heart"
+      },
+      {
+        badge: "AD SPACE",
+        title: "Promote Your Project",
+        desc: "Reach thousands of meme lovers, developers, and web enthusiasts directly on the feed.",
+        buttonText: "Inquire Spot",
+        link: "donate.html",
+        icon: "megaphone"
+      },
+      {
+        badge: "COMMUNITY",
+        title: "Got Dank Media?",
+        desc: "Join creators sharing original templates, GIFs, and clips with zero algorithms.",
+        buttonText: "Post a Meme",
+        link: "post.html",
+        icon: "plus"
+      }
+    ];
 
     function init() {
       try {
@@ -280,7 +274,7 @@
 
       const topTags = Array.from(tagMap.entries())
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 7)
+        .slice(0, 8)
         .map(entry => entry[0]);
 
       if (topTags.length === 0) {
@@ -289,9 +283,9 @@
       }
 
       container.innerHTML = `
-        <span class="text-[11px] text-neutral-400 uppercase font-mono mr-1">Tags:</span>
+        <span class="text-[11px] text-neutral-500 uppercase font-mono mr-1 flex-shrink-0">TAGS:</span>
         ${topTags.map(tag => `
-          <button onclick="filterByClickedTag('${escapeAttr(tag)}')" class="px-2.5 py-1 rounded-md bg-[#0f1218] hover:bg-[#161a24] border border-white/10 text-neutral-300 hover:text-white transition-all">
+          <button onclick="filterByClickedTag('${escapeAttr(tag)}')" class="flex-shrink-0 px-2.5 py-1 rounded-md bg-[#0f1218] hover:bg-[#161a24] border border-white/10 text-neutral-300 hover:text-white transition-all text-xs">
             #${escapeHtml(tag)}
           </button>
         `).join('')}
@@ -311,9 +305,9 @@
         const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
         if (!btn) return;
         if (t === currentFilter && !isShowingSaved) {
-          btn.className = "tab-selected px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
+          btn.className = "tab-active px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
         } else {
-          btn.className = "tab-default px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
+          btn.className = "tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
         }
       });
 
@@ -452,7 +446,10 @@
       empty.classList.add('hidden');
       empty.classList.remove('flex');
 
-      grid.innerHTML = list.map(m => {
+      let cardsHtml = [];
+      let adIndex = 0;
+
+      list.forEach((m, idx) => {
         const isSaved = savedIds.has(String(m.id));
         const tags = (m.tags || []).map(t => {
           const cleanTag = t.replace(/^#/, '');
@@ -480,8 +477,8 @@
           `;
         }
 
-        return `
-          <article onclick="recordClickAndOpen('${m.id}')" class="card-shell rounded-xl overflow-hidden flex flex-col cursor-pointer group">
+        cardsHtml.push(`
+          <article onclick="recordClickAndOpen('${m.id}')" class="meme-card rounded-xl overflow-hidden flex flex-col cursor-pointer group">
             ${mediaHtml}
             <div class="p-3.5 flex flex-col flex-1 gap-2.5">
               <div class="flex items-start justify-between gap-2">
@@ -501,18 +498,49 @@
                 ${tags}
               </div>
 
-              <div class="flex items-center justify-between text-[11px] text-neutral-400 border-t border-white/5 pt-2">
+              <div class="flex items-center justify-between text-[11px] text-neutral-500 border-t border-white/5 pt-2">
                 <span class="flex items-center gap-1 font-mono text-neutral-400">
-                  <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-neutral-400"></i>
+                  <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-neutral-500"></i>
                   ${m.clicks || 0} clicks
                 </span>
-                <span class="text-neutral-400">${m.createdAt ? new Date(m.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
+                <span class="text-neutral-500">${m.createdAt ? new Date(m.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
               </div>
             </div>
           </article>
-        `;
-      }).join('');
+        `);
 
+        if ((idx + 1) % 6 === 0) {
+          const ad = adTemplates[adIndex % adTemplates.length];
+          adIndex++;
+          cardsHtml.push(`
+            <aside class="ad-card rounded-xl p-5 flex flex-col justify-between relative overflow-hidden min-h-[300px]">
+              <div class="flex items-center justify-between">
+                <span class="text-[9px] font-mono tracking-widest text-neutral-400 uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/10">
+                  ${ad.badge}
+                </span>
+                <i data-lucide="${ad.icon}" class="w-4 h-4 text-neutral-500"></i>
+              </div>
+
+              <div class="my-auto py-4 text-center">
+                <div class="w-10 h-10 mx-auto rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-300 mb-3 shadow-inner">
+                  <i data-lucide="${ad.icon}" class="w-5 h-5 text-emerald-400"></i>
+                </div>
+                <h3 class="text-xs font-semibold text-neutral-200">${ad.title}</h3>
+                <p class="text-[11px] text-neutral-400 mt-1.5 leading-relaxed max-w-[240px] mx-auto">
+                  ${ad.desc}
+                </p>
+              </div>
+
+              <a href="${ad.link}" class="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-medium text-white transition-all">
+                <span>${ad.buttonText}</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </aside>
+          `);
+        }
+      });
+
+      grid.innerHTML = cardsHtml.join('');
       lucide.createIcons();
     }
 
