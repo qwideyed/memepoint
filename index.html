@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MemePoint | The Ultimate Dank Meme Hub</title>
-  
-  <!-- Tailwind CSS CDN -->
+  <title>MemePoint</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,870 +11,322 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#fdf2f8',
-              400: '#f472b6',
-              500: '#ec4899',
-              600: '#db2777',
-              cyan: '#06b6d4',
-              purple: '#8b5cf6',
-              accent: '#f43f5e'
-            },
-            dark: {
-              bg: '#090d16',
-              surface: 'rgba(18, 24, 38, 0.75)',
-              border: 'rgba(255, 255, 255, 0.08)',
-              glow: 'rgba(236, 72, 153, 0.15)'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            impact: ['Impact', 'Haettenschweiler', 'sans-serif']
-          },
-          animation: {
-            'glow-pulse': 'glowPulse 4s ease-in-out infinite',
-            'float': 'float 3s ease-in-out infinite'
-          },
-          keyframes: {
-            glowPulse: {
-              '0%, 100%': { opacity: '0.4' },
-              '50%': { opacity: '0.8' }
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-6px)' }
+            mpdark: {
+              bg: '#0f1117',
+              card: '#161922',
+              border: '#262b3a',
+              hover: '#1f2430'
             }
           }
         }
       }
     }
   </script>
-
-  <!-- Google Font: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
-  <!-- Lucide Icons CDN -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Inter', sans-serif;
     }
     body {
-      background-color: #080c15;
-      color: #f1f5f9;
-      overflow-x: hidden;
-    }
-    .glass {
-      background: rgba(18, 25, 40, 0.72);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .glass-card {
-      background: rgba(16, 22, 36, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .glass-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(236, 72, 153, 0.35);
-      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5), 0 0 20px -3px rgba(236, 72, 153, 0.15);
-    }
-    .glass-pill {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.2s ease;
-    }
-    .glass-pill:hover, .glass-pill.active {
-      background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(139, 92, 246, 0.25));
-      border-color: rgba(236, 72, 153, 0.5);
-      color: #ffffff;
-      box-shadow: 0 0 14px rgba(236, 72, 153, 0.2);
-    }
-    .gradient-text {
-      background: linear-gradient(135deg, #f43f5e 0%, #ec4899 40%, #a855f7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .neon-border {
-      position: relative;
-    }
-    .neon-border::after {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      background: linear-gradient(90deg, #f43f5e, #8b5cf6, #06b6d4);
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0.3;
-      filter: blur(4px);
-    }
-    /* Custom clean scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(10, 15, 25, 0.5);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(236, 72, 153, 0.45);
+      background-color: #0f1117;
+      color: #e2e8f0;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-white">
+<body class="min-h-screen flex flex-col">
 
-  <!-- Background decorative glows -->
-  <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-[140px] pointer-events-none -z-10 animate-glow-pulse"></div>
-  <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[140px] pointer-events-none -z-10 animate-glow-pulse" style="animation-delay: 2s;"></div>
+  <header class="w-full bg-[#161922] border-b border-[#262b3a] sticky top-0 z-30 px-4 py-3">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-2 text-xl font-bold text-white tracking-tight">
+          <span class="w-8 h-8 rounded-lg bg-pink-600 flex items-center justify-center text-white text-sm font-black">MP</span>
+          <span>MemePoint</span>
+        </a>
+      </div>
 
-  <header class="sticky top-0 z-40 w-full glass border-b border-white/5 py-3 px-4 sm:px-8">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-      
-      <!-- Brand Logo -->
-      <a href="#" onclick="filterByCategory('all'); return false;" class="flex items-center gap-2 group cursor-pointer select-none">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 via-purple-600 to-cyan-400 p-[1.5px] shadow-lg shadow-pink-500/20 group-hover:scale-105 transition-transform duration-300">
-          <div class="w-full h-full bg-[#0d121f] rounded-[14px] flex items-center justify-center">
-            <span class="text-xl font-black gradient-text">MP</span>
-          </div>
-        </div>
-        <div>
-          <span class="text-2xl font-extrabold tracking-tight text-white flex items-center">
-            Meme<span class="gradient-text font-black">Point</span>
-            <span class="ml-1.5 px-1.5 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-pink-500/20 text-pink-400 border border-pink-500/30">v2.0</span>
-          </span>
-        </div>
-      </a>
-
-      <!-- Instant Search bar -->
-      <div class="flex-1 max-w-md hidden md:block">
+      <div class="flex-1 max-w-md mx-2">
         <div class="relative">
-          <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">#</span>
           <input 
             type="text" 
-            id="searchInput" 
-            placeholder="Search memes, tags, captions..." 
-            class="w-full pl-10 pr-10 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-pink-500/60 focus:ring-2 focus:ring-pink-500/20 transition-all"
-            oninput="handleSearch(this.value)"
+            id="tagSearchInput"
+            placeholder="Search tags only (e.g. gaming, cats)..." 
+            class="w-full bg-[#0f1117] border border-[#262b3a] rounded-lg pl-7 pr-8 py-1.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-pink-500"
+            oninput="handleTagSearch(this.value)"
           />
-          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
-            <i data-lucide="x" class="w-4 h-4"></i>
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-3.5 h-3.5"></i>
           </button>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Bookmark / Favorites Toggle -->
+      <div class="flex items-center gap-2.5">
         <button 
-          id="favToggleBtn" 
-          onclick="toggleFavFilter()" 
+          id="savedToggleBtn" 
+          onclick="toggleSavedFilter()" 
           title="Saved Memes"
-          class="relative p-2.5 rounded-full glass-pill hover:text-pink-400 text-slate-300">
-          <i data-lucide="bookmark" class="w-5 h-5"></i>
-          <span id="favCountBadge" class="hidden absolute -top-1 -right-1 w-4 h-4 rounded-full bg-pink-500 text-[10px] font-bold text-white flex items-center justify-center">0</span>
+          class="p-2 rounded-lg bg-[#0f1117] border border-[#262b3a] text-slate-400 hover:text-white">
+          <i data-lucide="bookmark" class="w-4 h-4"></i>
         </button>
 
-        <!-- Meme Studio Generator Button -->
-        <button 
-          onclick="openMemeStudio()"
-          class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white shadow-lg shadow-pink-500/25 active:scale-95 transition-all">
-          <i data-lucide="sparkles" class="w-4 h-4"></i>
-          <span>Meme Studio</span>
-        </button>
+        <a 
+          href="donate.html" 
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-sm font-medium transition-colors">
+          <i data-lucide="heart" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Donate</span>
+        </a>
 
-        <!-- Post Meme Quick Button -->
-        <button 
-          onclick="openPostModal()"
-          class="flex items-center gap-1.5 px-4 py-2 rounded-full font-semibold text-sm bg-white/10 hover:bg-white/15 text-white border border-white/15 active:scale-95 transition-all">
+        <a 
+          href="post.html" 
+          class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold transition-colors">
           <i data-lucide="plus" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">Post</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Search Row -->
-    <div class="mt-2.5 md:hidden">
-      <div class="relative">
-        <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
-        <input 
-          type="text" 
-          placeholder="Search memes, tags..." 
-          class="w-full pl-10 pr-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-pink-500/60"
-          oninput="handleSearch(this.value)"
-        />
+          <span>Post</span>
+        </a>
       </div>
     </div>
   </header>
 
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 flex flex-col gap-6">
-    
-    <!-- Hero / Category Pills & Sort Bar -->
-    <section class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
-      <!-- Category Bubbles -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none max-w-full">
-        <button onclick="filterByCategory('all')" data-cat="all" class="cat-pill active px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="flame" class="w-3.5 h-3.5 text-pink-400"></i> All Memes
-        </button>
-        <button onclick="filterByCategory('trending')" data-cat="trending" class="cat-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="trending-up" class="w-3.5 h-3.5 text-amber-400"></i> Trending
-        </button>
-        <button onclick="filterByCategory('gaming')" data-cat="gaming" class="cat-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-emerald-400"></i> Gaming
-        </button>
-        <button onclick="filterByCategory('tech')" data-cat="tech" class="cat-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="terminal" class="w-3.5 h-3.5 text-cyan-400"></i> Tech & Dev
-        </button>
-        <button onclick="filterByCategory('anime')" data-cat="anime" class="cat-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="tv" class="w-3.5 h-3.5 text-purple-400"></i> Anime
-        </button>
-        <button onclick="filterByCategory('relatable')" data-cat="relatable" class="cat-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="smile" class="w-3.5 h-3.5 text-yellow-400"></i> Relatable
-        </button>
-        <button onclick="filterByCategory('dank')" data-cat="dank" class="cat-pill px-4 py-2 rounded-full text-xs sm:text-sm font-semibold glass-pill flex items-center gap-1.5 whitespace-nowrap">
-          <i data-lucide="skull" class="w-3.5 h-3.5 text-rose-400"></i> Dank
-        </button>
-      </div>
-
-      <!-- Sorting Options & View Modes -->
-      <div class="flex items-center gap-3 self-end md:self-auto">
-        <span class="text-xs uppercase font-bold tracking-wider text-slate-400">Sort:</span>
-        <div class="flex items-center bg-white/5 rounded-full p-1 border border-white/10 text-xs">
-          <button onclick="changeSort('hot')" id="sortHot" class="px-3 py-1.5 rounded-full font-medium transition-all bg-pink-500/20 text-pink-400 border border-pink-500/30">Hot</button>
-          <button onclick="changeSort('top')" id="sortTop" class="px-3 py-1.5 rounded-full font-medium text-slate-400 hover:text-white transition-all">Top</button>
-          <button onclick="changeSort('fresh')" id="sortFresh" class="px-3 py-1.5 rounded-full font-medium text-slate-400 hover:text-white transition-all">Fresh</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Active filter alert notice if any -->
-    <div id="filterBanner" class="hidden items-center justify-between px-4 py-2.5 rounded-xl bg-pink-500/10 border border-pink-500/20 text-sm text-pink-300">
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6 flex flex-col gap-6">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#262b3a] pb-3">
       <div class="flex items-center gap-2">
-        <i data-lucide="filter" class="w-4 h-4"></i>
-        <span id="filterBannerText">Showing bookmarks</span>
+        <button onclick="setFilter('trending')" id="tabTrending" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-pink-600 text-white">Trending</button>
+        <button onclick="setFilter('new')" id="tabNew" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]">New</button>
+        <button onclick="setFilter('og')" id="tabOG" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]">OG</button>
+        <button onclick="setFilter('clicks')" id="tabClicks" class="filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]">Most Clicks</button>
       </div>
-      <button onclick="resetAllFilters()" class="text-xs font-semibold underline hover:text-white">Clear Filter</button>
-    </div>
 
-    <div id="memeFeed" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Meme cards will be injected by JavaScript -->
-    </div>
-
-    <!-- Empty Feed State -->
-    <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
-      <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mb-4 text-slate-500">
-        <i data-lucide="ghost" class="w-10 h-10"></i>
+      <div id="filterTagNotice" class="hidden items-center gap-2 text-xs text-pink-400 bg-pink-500/10 px-3 py-1.5 rounded-lg border border-pink-500/20">
+        <span>Filtering by tag: <b id="activeTagLabel"></b></span>
+        <button onclick="clearSearch()" class="text-slate-400 hover:text-white underline">Clear</button>
       </div>
-      <h3 class="text-xl font-bold text-slate-200 mb-1">No memes found</h3>
-      <p class="text-sm text-slate-400 max-w-sm mb-5">Try tweaking your search term or category filters, or craft the first dank meme!</p>
-      <button onclick="openMemeStudio()" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 font-semibold text-sm text-white shadow-lg">
-        Create with Meme Studio
-      </button>
     </div>
 
+    <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+    <div id="emptyView" class="hidden flex-col items-center justify-center py-20 text-center">
+      <div class="w-14 h-14 rounded-full bg-[#161922] border border-[#262b3a] flex items-center justify-center text-slate-400 mb-3">
+        <i data-lucide="image-off" class="w-6 h-6"></i>
+      </div>
+      <h2 class="text-lg font-bold text-white mb-1">No memes found</h2>
+      <p class="text-sm text-slate-400 mb-4 max-w-sm">No memes match this tag or filter yet. Post one to get started.</p>
+      <a href="post.html" class="px-4 py-2 rounded-lg bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold">Post a Meme</a>
+    </div>
   </main>
 
-  <!-- Mobile Floating Action Bar -->
-  <div class="sm:hidden fixed bottom-6 right-6 z-30 flex flex-col gap-3">
-    <button 
-      onclick="openMemeStudio()"
-      class="w-14 h-14 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center text-white shadow-2xl shadow-pink-500/50 active:scale-90 transition-transform">
-      <i data-lucide="sparkles" class="w-6 h-6"></i>
-    </button>
-  </div>
-
-  <div id="studioModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
-    <div class="relative w-full max-w-4xl glass-card rounded-3xl p-6 sm:p-8 my-auto border border-white/10 shadow-2xl">
-      <!-- Close Button -->
-      <button onclick="closeMemeStudio()" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-full bg-white/5">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-6">
-        <div class="p-2.5 rounded-2xl bg-pink-500/20 text-pink-400 border border-pink-500/30">
-          <i data-lucide="palette" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <h2 class="text-2xl font-black text-white">Meme Studio</h2>
-          <p class="text-xs sm:text-sm text-slate-400">Generate high-impact dank memes in seconds</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Canvas Preview Left/Top -->
-        <div class="lg:col-span-7 flex flex-col items-center justify-center">
-          <div class="w-full max-w-md aspect-square bg-[#0b0f19] rounded-2xl border border-white/10 overflow-hidden flex items-center justify-center relative shadow-inner">
-            <canvas id="memeCanvas" width="600" height="600" class="max-w-full max-h-full object-contain rounded-lg"></canvas>
-            <div id="canvasLoader" class="hidden absolute inset-0 bg-black/60 flex items-center justify-center text-pink-400">
-              <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
-            </div>
-          </div>
-          <div class="flex items-center gap-3 mt-4 w-full max-w-md">
-            <button onclick="downloadCanvasMeme()" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 font-semibold text-sm text-slate-200 flex items-center justify-center gap-2 transition-all">
-              <i data-lucide="download" class="w-4 h-4"></i> Download PNG
-            </button>
-            <button onclick="publishFromStudio()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 font-semibold text-sm text-white shadow-lg shadow-pink-500/20 hover:opacity-95 active:scale-98 transition-all flex items-center justify-center gap-2">
-              <i data-lucide="send" class="w-4 h-4"></i> Post to Feed
-            </button>
-          </div>
-        </div>
-
-        <!-- Controls Right/Bottom -->
-        <div class="lg:col-span-5 flex flex-col gap-4 overflow-y-auto max-h-[65vh] pr-1">
-          <!-- Template selector -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Pick a Template</label>
-            <div class="grid grid-cols-4 gap-2 mb-3">
-              <button onclick="selectTemplate('drake')" class="template-btn p-1 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500 focus:border-pink-500 overflow-hidden text-center">
-                <div class="w-full aspect-square bg-slate-800 rounded flex items-center justify-center text-xs font-bold text-pink-400">Drake</div>
-              </button>
-              <button onclick="selectTemplate('doge')" class="template-btn p-1 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500 focus:border-pink-500 overflow-hidden text-center">
-                <div class="w-full aspect-square bg-slate-800 rounded flex items-center justify-center text-xs font-bold text-amber-400">Doge</div>
-              </button>
-              <button onclick="selectTemplate('distracted')" class="template-btn p-1 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500 focus:border-pink-500 overflow-hidden text-center">
-                <div class="w-full aspect-square bg-slate-800 rounded flex items-center justify-center text-xs font-bold text-cyan-400">Guy</div>
-              </button>
-              <button onclick="selectTemplate('brain')" class="template-btn p-1 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500 focus:border-pink-500 overflow-hidden text-center">
-                <div class="w-full aspect-square bg-slate-800 rounded flex items-center justify-center text-xs font-bold text-purple-400">Galaxy</div>
-              </button>
-            </div>
-            <!-- Custom Image Upload -->
-            <label class="cursor-pointer flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-white/20 hover:border-pink-500 bg-white/5 text-xs text-slate-300 transition-all">
-              <i data-lucide="upload" class="w-4 h-4 text-pink-400"></i> Upload Custom Image
-              <input type="file" id="studioFileInput" accept="image/*" class="hidden" onchange="handleStudioCustomImage(event)" />
-            </label>
-          </div>
-
-          <!-- Meme Title for Feed -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Meme Title</label>
-            <input type="text" id="studioMemeTitle" value="My Epic Creation" placeholder="Enter title for feed..." class="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500" />
-          </div>
-
-          <!-- Top Text -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Top Caption</label>
-            <input type="text" id="studioTopText" value="WHEN THE CODE FINALLY" oninput="renderCanvasMeme()" placeholder="TOP TEXT HERE..." class="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white uppercase focus:outline-none focus:border-pink-500" />
-          </div>
-
-          <!-- Bottom Text -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Bottom Caption</label>
-            <input type="text" id="studioBottomText" value="COMPILES ON FIRST TRY" oninput="renderCanvasMeme()" placeholder="BOTTOM TEXT HERE..." class="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white uppercase focus:outline-none focus:border-pink-500" />
-          </div>
-
-          <!-- Styling Controls (Font size, Color, uppercase toggle) -->
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Font Size: <span id="fontSizeDisplay">48px</span></label>
-              <input type="range" id="studioFontSize" min="24" max="72" value="48" class="w-full accent-pink-500" oninput="document.getElementById('fontSizeDisplay').innerText = this.value + 'px'; renderCanvasMeme();" />
-            </div>
-            <div>
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Text Color</label>
-              <div class="flex items-center gap-2">
-                <input type="color" id="studioTextColor" value="#ffffff" class="w-8 h-8 rounded border-none cursor-pointer bg-transparent" onchange="renderCanvasMeme()" />
-                <span class="text-xs text-slate-400">White default</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Category Selector -->
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Category</label>
-            <select id="studioCategory" class="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500">
-              <option value="tech">Tech & Dev</option>
-              <option value="gaming">Gaming</option>
-              <option value="relatable">Relatable</option>
-              <option value="anime">Anime</option>
-              <option value="dank">Dank / Brainrot</option>
-            </select>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="postModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
-    <div class="relative w-full max-w-lg glass-card rounded-3xl p-6 sm:p-8 my-auto border border-white/10 shadow-2xl">
-      <button onclick="closePostModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-full bg-white/5">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-6">
-        <div class="p-2.5 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
-          <i data-lucide="upload-cloud" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <h2 class="text-2xl font-black text-white">Post a Meme</h2>
-          <p class="text-xs sm:text-sm text-slate-400">Share your favorite images or links directly</p>
-        </div>
-      </div>
-
-      <form id="postMemeForm" onsubmit="handleDirectPost(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Title / Caption</label>
-          <input type="text" id="postTitle" required placeholder="E.g. Me debugging at 3 AM" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500" />
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Image URL or Local Upload</label>
-          <input type="url" id="postImageUrl" placeholder="https://example.com/meme.jpg" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500 mb-2" oninput="previewDirectPostUrl(this.value)" />
-          
-          <div class="flex items-center justify-center">
-            <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">OR</span>
-          </div>
-
-          <label class="mt-2 cursor-pointer flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-dashed border-white/20 hover:border-pink-500 bg-white/5 text-xs text-slate-300">
-            <i data-lucide="image" class="w-4 h-4 text-cyan-400"></i> Choose File
-            <input type="file" id="postFileInput" accept="image/*" class="hidden" onchange="handleDirectFileUpload(event)" />
-          </label>
-        </div>
-
-        <!-- Image Preview Box -->
-        <div id="directPostPreviewContainer" class="hidden w-full h-44 rounded-xl border border-white/10 bg-black/40 overflow-hidden flex items-center justify-center relative">
-          <img id="directPostPreviewImg" src="" alt="Meme preview" class="max-w-full max-h-full object-contain" />
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Category</label>
-            <select id="postCategory" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500">
-              <option value="gaming">Gaming</option>
-              <option value="tech">Tech</option>
-              <option value="anime">Anime</option>
-              <option value="relatable">Relatable</option>
-              <option value="dank">Dank</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Tags (comma-separated)</label>
-            <input type="text" id="postTags" placeholder="funny, bugs, gamer" class="w-full px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white focus:outline-none focus:border-pink-500" />
-          </div>
-        </div>
-
-        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 font-bold text-white shadow-lg shadow-pink-500/25 hover:opacity-95 active:scale-98 transition-all">
-          Publish to MemePoint
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 overflow-y-auto">
-    <div class="relative w-full max-w-5xl glass-card rounded-3xl overflow-hidden border border-white/15 shadow-2xl flex flex-col lg:flex-row my-auto max-h-[90vh]">
-      <!-- Close button -->
-      <button onclick="closeLightbox()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white p-2 rounded-full bg-black/60">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <!-- Left Media Area -->
-      <div class="lg:w-3/5 bg-black/60 flex items-center justify-center p-4 relative min-h-[300px]">
-        <img id="lightboxImg" src="" alt="Meme detail" class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl" />
-      </div>
-
-      <!-- Right Discussion & Info Area -->
-      <div class="lg:w-2/5 flex flex-col justify-between p-6 bg-slate-900/90 border-t lg:border-t-0 lg:border-l border-white/10">
-        <div>
-          <!-- Header detail -->
-          <div class="flex items-center gap-2 mb-2">
-            <span id="lightboxCategory" class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-pink-500/20 text-pink-400 border border-pink-500/30">Category</span>
-            <span id="lightboxDate" class="text-xs text-slate-400">Just now</span>
-          </div>
-          <h2 id="lightboxTitle" class="text-xl sm:text-2xl font-black text-white mb-2 leading-tight">Meme Title</h2>
-          <div id="lightboxTags" class="flex flex-wrap gap-1.5 mb-4"></div>
-
-          <!-- Votes summary inside lightbox -->
-          <div class="flex items-center gap-4 py-3 border-y border-white/10 mb-4">
-            <div class="flex items-center gap-2">
-              <button id="lightboxUpvoteBtn" class="p-2 rounded-full bg-white/5 hover:bg-emerald-500/20 text-emerald-400">
-                <i data-lucide="arrow-big-up" class="w-5 h-5"></i>
-              </button>
-              <span id="lightboxScore" class="font-extrabold text-sm text-slate-200">0</span>
-              <button id="lightboxDownvoteBtn" class="p-2 rounded-full bg-white/5 hover:bg-rose-500/20 text-rose-400">
-                <i data-lucide="arrow-big-down" class="w-5 h-5"></i>
-              </button>
-            </div>
-            <button id="lightboxShareBtn" class="ml-auto text-xs font-semibold px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 flex items-center gap-1.5">
-              <i data-lucide="share-2" class="w-3.5 h-3.5"></i> Share
-            </button>
-          </div>
-
-          <!-- Comments Feed -->
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
-            <i data-lucide="message-square" class="w-3.5 h-3.5"></i> 
-            Comments (<span id="lightboxCommentCount">0</span>)
-          </h3>
-          <div id="lightboxCommentsList" class="flex flex-col gap-3 max-h-48 overflow-y-auto pr-1 text-sm">
-            <!-- Comments injected here -->
-          </div>
-        </div>
-
-        <!-- Add Comment Form -->
-        <form onsubmit="handleSendComment(event)" class="mt-4 pt-3 border-t border-white/10 flex gap-2">
-          <input 
-            type="text" 
-            id="lightboxNewComment" 
-            placeholder="Drop your thoughts..." 
-            class="flex-1 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500" 
-            required 
-          />
-          <button type="submit" class="px-4 py-2 rounded-xl bg-pink-500 hover:bg-pink-600 font-semibold text-xs text-white flex items-center justify-center">
-            <i data-lucide="send" class="w-4 h-4"></i>
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 px-5 py-3 rounded-full bg-slate-900/90 backdrop-blur-md border border-pink-500/40 shadow-2xl flex items-center gap-2 text-sm font-semibold text-white">
-    <i data-lucide="check-circle-2" class="w-4 h-4 text-pink-400"></i>
-    <span id="toastMsg">Action confirmed</span>
-  </div>
-
-  <!-- Footer -->
-  <footer class="mt-auto py-6 border-t border-white/5 glass text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-2">
-        <span class="font-bold text-slate-400">MemePoint</span> &copy; 2026. Built for dank laughs and community humor.
-      </div>
-      <div class="flex items-center gap-4 text-slate-400">
-        <a href="#" onclick="showToast('Built with HTML5, Canvas & Tailwind CSS'); return false;" class="hover:text-pink-400 transition-colors">About</a>
-        <a href="#" onclick="showToast('No copyright infringements intended. Free memes forever.'); return false;" class="hover:text-pink-400 transition-colors">Privacy</a>
-        <a href="#" onclick="openMemeStudio(); return false;" class="hover:text-pink-400 transition-colors">Generator</a>
+  <footer class="w-full bg-[#161922] border-t border-[#262b3a] py-4 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between">
+      <span>MemePoint &bull; 100% Free Meme Sharing</span>
+      <div class="flex items-center gap-3">
+        <a href="donate.html" class="hover:text-amber-400">Donate</a>
+        <a href="post.html" class="hover:text-slate-300">Submit Meme</a>
       </div>
     </div>
   </footer>
 
   <script>
-    /* =========================================================================
-       DEFAULT MEME DATASET & SVG GRAPHIC PRESETS
-       ========================================================================= */
-    const SVG_TEMPLATES = {
-      drake: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-        <rect width="600" height="600" fill="%23131722"/>
-        <line x1="0" y1="300" x2="600" y2="300" stroke="%23334155" stroke-width="4"/>
-        <line x1="300" y1="0" x2="300" y2="600" stroke="%23334155" stroke-width="4"/>
-        <!-- Top Drake: Dislike -->
-        <rect x="20" y="20" width="260" height="260" rx="16" fill="%231e293b"/>
-        <text x="150" y="140" font-size="80" text-anchor="middle">🙅‍♂️</text>
-        <text x="150" y="220" font-family="sans-serif" font-weight="bold" fill="%23f43f5e" font-size="22" text-anchor="middle">NAH / NOPE</text>
-        <!-- Bottom Drake: Approves -->
-        <rect x="20" y="320" width="260" height="260" rx="16" fill="%231e293b"/>
-        <text x="150" y="440" font-size="80" text-anchor="middle">👉😏</text>
-        <text x="150" y="520" font-family="sans-serif" font-weight="bold" fill="%2310b981" font-size="22" text-anchor="middle">THAT'S IT!</text>
-      </svg>`,
-      doge: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23d97706"/><stop offset="100%" stop-color="%23b45309"/></linearGradient></defs>
-        <rect width="600" height="600" fill="%230f172a"/>
-        <circle cx="300" cy="300" r="220" fill="url(%23g)" opacity="0.3"/>
-        <text x="300" y="340" font-size="160" text-anchor="middle">🐕</text>
-        <text x="140" y="160" font-family="sans-serif" font-weight="900" fill="%23ec4899" font-size="28" transform="rotate(-12, 140, 160)">much code</text>
-        <text x="440" y="180" font-family="sans-serif" font-weight="900" fill="%2306b6d4" font-size="28" transform="rotate(15, 440, 180)">very framework</text>
-        <text x="120" y="450" font-family="sans-serif" font-weight="900" fill="%2310b981" font-size="26" transform="rotate(8, 120, 450)">wow such dev</text>
-        <text x="420" y="460" font-family="sans-serif" font-weight="900" fill="%23eab308" font-size="28" transform="rotate(-10, 420, 460)">so commit</text>
-      </svg>`,
-      distracted: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-        <rect width="600" height="600" fill="%230b0f19"/>
-        <rect x="30" y="40" width="540" height="520" rx="20" fill="%23172033" stroke="%23334155" stroke-width="2"/>
-        <text x="150" y="240" font-size="90" text-anchor="middle">💃</text>
-        <text x="150" y="320" font-family="sans-serif" font-weight="bold" fill="%23f43f5e" font-size="20" text-anchor="middle">New JS Framework</text>
-        <text x="320" y="240" font-size="90" text-anchor="middle">👀🚶‍♂️</text>
-        <text x="320" y="320" font-family="sans-serif" font-weight="bold" fill="%2338bdf8" font-size="20" text-anchor="middle">Me (Developer)</text>
-        <text x="470" y="240" font-size="90" text-anchor="middle">😒👩‍💼</text>
-        <text x="470" y="320" font-family="sans-serif" font-weight="bold" fill="%23e2e8f0" font-size="20" text-anchor="middle">My Current Project</text>
-      </svg>`,
-      brain: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-        <rect width="600" height="600" fill="%23020617"/>
-        <g transform="translate(40, 30)">
-          <rect width="520" height="110" rx="12" fill="%230f172a" stroke="%231e293b"/>
-          <text x="50" y="70" font-size="40">🧠</text>
-          <text x="130" y="65" font-family="sans-serif" font-weight="bold" fill="%2394a3b8" font-size="18">Console.log debugging</text>
-        </g>
-        <g transform="translate(40, 160)">
-          <rect width="520" height="110" rx="12" fill="%23111c38" stroke="%233b82f6" stroke-opacity="0.4"/>
-          <text x="50" y="70" font-size="45">⚡🧠</text>
-          <text x="130" y="65" font-family="sans-serif" font-weight="bold" fill="%2360a5fa" font-size="18">Using actual IDE breakpoints</text>
-        </g>
-        <g transform="translate(40, 290)">
-          <rect width="520" height="110" rx="12" fill="%232e1065" stroke="%23a855f7" stroke-opacity="0.6"/>
-          <text x="50" y="70" font-size="50">🌌🧠✨</text>
-          <text x="130" y="65" font-family="sans-serif" font-weight="bold" fill="%23c084fc" font-size="18">Staring blankly until code fixes itself</text>
-        </g>
-        <g transform="translate(40, 420)">
-          <rect width="520" height="110" rx="12" fill="%234c0519" stroke="%23f43f5e"/>
-          <text x="50" y="70" font-size="55">💥🌌👑</text>
-          <text x="130" y="65" font-family="sans-serif" font-weight="bold" fill="%23fb7185" font-size="18">Deleting code and telling PM it was a feature</text>
-        </g>
-      </svg>`
-    };
-
-    const INITIAL_MEMES = [
-      {
-        id: 'meme_1',
-        title: 'Friday Deployment In A Nutshell',
-        category: 'tech',
-        imageUrl: SVG_TEMPLATES.drake,
-        score: 1420,
-        tags: ['coding', 'production', 'devlife'],
-        author: 'ByteMaster',
-        comments: [
-          { user: 'SudoCoder', text: 'Never push on Friday at 4:59 PM bro.', time: '1h ago' },
-          { user: 'CloudLord', text: 'Pushed to prod, server went for weekend coffee ☕', time: '20m ago' }
-        ],
-        createdAt: 1716500000000
-      },
-      {
-        id: 'meme_2',
-        title: 'When NPCs See You In Stealth Mode',
-        category: 'gaming',
-        imageUrl: SVG_TEMPLATES.doge,
-        score: 2890,
-        tags: ['stealth', 'rpg', 'skyrim'],
-        author: 'ShadowNinja',
-        comments: [
-          { user: 'ArrowKnee', text: '"Must have been the wind" with 3 arrows in head lmao', time: '2h ago' }
-        ],
-        createdAt: 1716510000000
-      },
-      {
-        id: 'meme_3',
-        title: 'Selecting JavaScript Frameworks Every Monday',
-        category: 'tech',
-        imageUrl: SVG_TEMPLATES.distracted,
-        score: 3410,
-        tags: ['javascript', 'webdev', 'frontend'],
-        author: 'ReactEnjoyer',
-        comments: [
-          { user: 'VueFan', text: 'Wait till you hear about next week’s framework!', time: '4h ago' }
-        ],
-        createdAt: 1716520000000
-      },
-      {
-        id: 'meme_4',
-        title: 'Evolution of Debugging Strategies',
-        category: 'relatable',
-        imageUrl: SVG_TEMPLATES.brain,
-        score: 4120,
-        tags: ['brainrot', 'galaxybrain', 'relatable'],
-        author: 'GalaxyCoder',
-        comments: [
-          { user: 'SleepyDev', text: 'Level 4 is standard enterprise procedure.', time: '3h ago' }
-        ],
-        createdAt: 1716530000000
-      },
-      {
-        id: 'meme_5',
-        title: 'Anime Protag Right Before The Opening Song Drops',
-        category: 'anime',
-        imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80',
-        score: 955,
-        tags: ['anime', 'hype', 'shonen'],
-        author: 'OtakuSupreme',
-        comments: [
-          { user: 'Goku_007', text: 'The villain has 3 minutes to regret existing.', time: '5h ago' }
-        ],
-        createdAt: 1716540000000
-      },
-      {
-        id: 'meme_6',
-        title: 'My 14th playthrough trying to be evil',
-        category: 'gaming',
-        imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80',
-        score: 1820,
-        tags: ['gaming', 'baldursgate', 'rpg'],
-        author: 'ParagonGood',
-        comments: [
-          { user: 'NiceGuy', text: 'Accidentally apologized to a goblin and gave him gold again.', time: '1h ago' }
-        ],
-        createdAt: 1716550000000
-      }
-    ];
-
-    /* =========================================================================
-       STATE VARIABLES
-       ========================================================================= */
+    let currentFilter = 'trending';
+    let currentTag = '';
+    let isShowingSaved = false;
+    let savedIds = new Set();
     let memes = [];
-    let currentCategory = 'all';
-    let currentSort = 'hot';
-    let currentSearchTerm = '';
-    let filterSavedOnly = false;
-    let userVotes = {}; // memeId -> 1 (up) or -1 (down)
-    let savedMemeIds = new Set();
-    let activeLightboxId = null;
 
-    // Meme Studio state
-    let activeStudioTemplate = 'drake';
-    let loadedStudioImage = null;
-
-    function initApp() {
-      // Load votes & favorites
+    function init() {
       try {
-        const storedVotes = localStorage.getItem('memepoint_votes');
-        if (storedVotes) userVotes = JSON.parse(storedVotes);
+        const storedSaved = localStorage.getItem('mp_saved');
+        if (storedSaved) savedIds = new Set(JSON.parse(storedSaved));
 
-        const storedSaved = localStorage.getItem('memepoint_saved');
-        if (storedSaved) savedMemeIds = new Set(JSON.parse(storedSaved));
-
-        const storedMemes = localStorage.getItem('memepoint_memes');
+        const storedMemes = localStorage.getItem('mp_memes');
         if (storedMemes) {
           memes = JSON.parse(storedMemes);
         } else {
-          memes = [...INITIAL_MEMES];
-          localStorage.setItem('memepoint_memes', JSON.stringify(memes));
+          memes = [];
         }
-      } catch (e) {
-        console.warn('Storage parse fallback', e);
-        memes = [...INITIAL_MEMES];
+      } catch (err) {
+        memes = [];
       }
 
-      updateFavBadge();
       renderFeed();
-      setupStudioDefaults();
       lucide.createIcons();
     }
 
-    /* Save memes list to localStorage */
-    function persistMemes() {
-      localStorage.setItem('memepoint_memes', JSON.stringify(memes));
+    function setFilter(type) {
+      currentFilter = type;
+      isShowingSaved = false;
+      updateFilterButtons();
+      renderFeed();
     }
-    function persistVotes() {
-      localStorage.setItem('memepoint_votes', JSON.stringify(userVotes));
+
+    function updateFilterButtons() {
+      const tabs = ['trending', 'new', 'og', 'clicks'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (!btn) return;
+        if (t === currentFilter && !isShowingSaved) {
+          btn.className = "filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-pink-600 text-white";
+        } else {
+          btn.className = "filter-tab px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#161922] text-slate-400 hover:text-white border border-[#262b3a]";
+        }
+      });
+
+      const saveBtn = document.getElementById('savedToggleBtn');
+      if (isShowingSaved) {
+        saveBtn.className = "p-2 rounded-lg bg-pink-600/20 border border-pink-500/40 text-pink-400";
+      } else {
+        saveBtn.className = "p-2 rounded-lg bg-[#0f1117] border border-[#262b3a] text-slate-400 hover:text-white";
+      }
     }
-    function persistSaved() {
-      localStorage.setItem('memepoint_saved', JSON.stringify(Array.from(savedMemeIds)));
+
+    function toggleSavedFilter() {
+      isShowingSaved = !isShowingSaved;
+      updateFilterButtons();
+      renderFeed();
+    }
+
+    function handleTagSearch(val) {
+      currentTag = val.trim().toLowerCase().replace(/^#/, '');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const notice = document.getElementById('filterTagNotice');
+      const label = document.getElementById('activeTagLabel');
+
+      if (currentTag) {
+        clearBtn.classList.remove('hidden');
+        notice.classList.remove('hidden');
+        notice.classList.add('flex');
+        label.innerText = '#' + currentTag;
+      } else {
+        clearBtn.classList.add('hidden');
+        notice.classList.add('hidden');
+        notice.classList.remove('flex');
+      }
+      renderFeed();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('tagSearchInput');
+      input.value = '';
+      currentTag = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      document.getElementById('filterTagNotice').classList.add('hidden');
+      document.getElementById('filterTagNotice').classList.remove('flex');
+      renderFeed();
+    }
+
+    function filterByClickedTag(tag) {
+      const input = document.getElementById('tagSearchInput');
+      input.value = tag;
+      handleTagSearch(tag);
+    }
+
+    function toggleSave(id, e) {
+      if (e) e.stopPropagation();
+      if (savedIds.has(id)) {
+        savedIds.delete(id);
+      } else {
+        savedIds.add(id);
+      }
+      localStorage.setItem('mp_saved', JSON.stringify(Array.from(savedIds)));
+      renderFeed();
+    }
+
+    function recordClickAndOpen(id, e) {
+      const meme = memes.find(m => m.id === id);
+      if (meme) {
+        meme.clicks = (meme.clicks || 0) + 1;
+        localStorage.setItem('mp_memes', JSON.stringify(memes));
+      }
+      window.location.href = `entry.html?id=${id}`;
     }
 
     function renderFeed() {
-      const feedContainer = document.getElementById('memeFeed');
-      const emptyState = document.getElementById('emptyState');
-      
-      let filtered = [...memes];
+      const grid = document.getElementById('memeGrid');
+      const empty = document.getElementById('emptyView');
 
-      // Filter by favorites
-      if (filterSavedOnly) {
-        filtered = filtered.filter(m => savedMemeIds.has(m.id));
+      let list = [...memes];
+
+      if (isShowingSaved) {
+        list = list.filter(m => savedIds.has(m.id));
       }
 
-      // Filter by category
-      if (currentCategory === 'trending') {
-        filtered = filtered.filter(m => m.score >= 1500);
-      } else if (currentCategory !== 'all') {
-        filtered = filtered.filter(m => m.category.toLowerCase() === currentCategory.toLowerCase());
+      if (currentTag) {
+        list = list.filter(m => {
+          if (!m.tags || !Array.isArray(m.tags)) return false;
+          return m.tags.some(t => t.toLowerCase().includes(currentTag));
+        });
       }
 
-      // Filter by search query
-      if (currentSearchTerm.trim() !== '') {
-        const q = currentSearchTerm.toLowerCase();
-        filtered = filtered.filter(m => 
-          m.title.toLowerCase().includes(q) ||
-          m.category.toLowerCase().includes(q) ||
-          (m.tags && m.tags.some(t => t.toLowerCase().includes(q)))
-        );
+      if (currentFilter === 'trending') {
+        list.sort((a, b) => ((b.clicks || 0) * 2 + (b.createdAt || 0) / 100000000) - ((a.clicks || 0) * 2 + (a.createdAt || 0) / 100000000));
+      } else if (currentFilter === 'new') {
+        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      } else if (currentFilter === 'og') {
+        list.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+      } else if (currentFilter === 'clicks') {
+        list.sort((a, b) => (b.clicks || 0) - (a.clicks || 0));
       }
 
-      // Sorting
-      if (currentSort === 'hot') {
-        filtered.sort((a, b) => (b.score + (b.comments ? b.comments.length * 50 : 0)) - (a.score + (a.comments ? a.comments.length * 50 : 0)));
-      } else if (currentSort === 'top') {
-        filtered.sort((a, b) => b.score - a.score);
-      } else if (currentSort === 'fresh') {
-        filtered.sort((a, b) => b.createdAt - a.createdAt);
-      }
-
-      // Render cards
-      if (filtered.length === 0) {
-        feedContainer.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        emptyState.classList.add('flex');
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        empty.classList.add('flex');
         return;
       }
 
-      emptyState.classList.add('hidden');
-      emptyState.classList.remove('flex');
+      empty.classList.add('hidden');
+      empty.classList.remove('flex');
 
-      feedContainer.innerHTML = filtered.map(meme => {
-        const voteState = userVotes[meme.id] || 0;
-        const isFav = savedMemeIds.has(meme.id);
-        const tagsHtml = (meme.tags || []).map(t => 
-          `<span onclick="event.stopPropagation(); filterByTag('${t}')" class="px-2 py-0.5 rounded-full text-[11px] bg-white/5 hover:bg-pink-500/20 hover:text-pink-300 cursor-pointer border border-white/5 transition-colors">#${t}</span>`
+      grid.innerHTML = list.map(m => {
+        const isSaved = savedIds.has(m.id);
+        const tags = (m.tags || []).map(t => 
+          `<button onclick="event.stopPropagation(); filterByClickedTag('${escapeAttr(t)}')" class="text-[11px] px-2 py-0.5 rounded bg-[#0f1117] hover:bg-[#262b3a] text-slate-400 hover:text-white transition-colors">#${escapeHtml(t)}</button>`
         ).join('');
 
+        let mediaHtml = '';
+        if (m.type === 'video' || (m.url && m.url.match(/\.(mp4|webm|ogg)$/i))) {
+          mediaHtml = `
+            <video src="${m.url}" controls class="w-full max-h-96 object-contain bg-black" preload="metadata"></video>
+          `;
+        } else {
+          mediaHtml = `
+            <div class="w-full aspect-square bg-[#0f1117] flex items-center justify-center overflow-hidden">
+              <img 
+                src="${m.url}" 
+                alt="${escapeAttr(m.title || 'Meme')}" 
+                loading="lazy" 
+                class="w-full h-full object-cover group-hover:opacity-95" 
+                onerror="this.onerror=null; this.src='https://placehold.co/600x600/161922/e2e8f0?text=No+Media';"
+              />
+            </div>
+          `;
+        }
+
         return `
-          <article class="glass-card rounded-2xl sm:rounded-3xl overflow-hidden flex flex-col group" data-id="${meme.id}">
-            <!-- Card Header -->
-            <div class="p-4 pb-3 flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center font-bold text-xs text-white">
-                  ${meme.author ? meme.author[0].toUpperCase() : 'M'}
-                </div>
-                <div>
-                  <h4 class="text-xs font-semibold text-slate-300">u/${meme.author || 'Anonymous'}</h4>
-                  <span class="text-[10px] uppercase font-bold tracking-wider text-pink-400/80">${meme.category}</span>
-                </div>
-              </div>
-              <button onclick="toggleSaveMeme('${meme.id}')" title="Bookmark" class="p-1.5 rounded-full hover:bg-white/10 ${isFav ? 'text-pink-500' : 'text-slate-400'} transition-colors">
-                <i data-lucide="bookmark" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>
+          <article onclick="recordClickAndOpen('${m.id}', event)" class="group cursor-pointer bg-[#161922] border border-[#262b3a] hover:border-slate-600 rounded-xl overflow-hidden flex flex-col transition-all">
+            <div class="p-3 flex items-center justify-between border-b border-[#262b3a]">
+              <h2 class="text-sm font-semibold text-white truncate pr-2">${escapeHtml(m.title || 'Untitled Meme')}</h2>
+              <button 
+                onclick="toggleSave('${m.id}', event)" 
+                title="${isSaved ? 'Remove bookmark' : 'Bookmark meme'}"
+                class="p-1.5 rounded hover:bg-[#0f1117] ${isSaved ? 'text-pink-500' : 'text-slate-400 hover:text-white'} transition-colors">
+                <i data-lucide="bookmark" class="w-4 h-4 ${isSaved ? 'fill-current' : ''}"></i>
               </button>
             </div>
 
-            <!-- Card Title -->
-            <h3 onclick="openLightbox('${meme.id}')" class="px-4 text-base font-bold text-white hover:text-pink-400 cursor-pointer transition-colors leading-snug line-clamp-2 mb-2.5">
-              ${escapeHtml(meme.title)}
-            </h3>
+            ${mediaHtml}
 
-            <!-- Card Media Container -->
-            <div onclick="openLightbox('${meme.id}')" class="relative w-full aspect-square bg-black/40 overflow-hidden cursor-pointer flex items-center justify-center">
-              <img 
-                src="${meme.imageUrl}" 
-                alt="${escapeHtml(meme.title)}" 
-                loading="lazy" 
-                class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                onerror="this.onerror=null; this.src='https://placehold.co/600x600/1e293b/ec4899?text=MemePoint';"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                <span class="text-xs text-white/90 flex items-center gap-1"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> Click to inspect</span>
+            <div class="p-3 flex flex-col gap-2 mt-auto border-t border-[#262b3a]">
+              <div class="flex flex-wrap gap-1">
+                ${tags}
               </div>
-            </div>
-
-            <!-- Tags Row -->
-            <div class="px-4 pt-3 flex flex-wrap gap-1.5">
-              ${tagsHtml}
-            </div>
-
-            <!-- Card Footer / Actions -->
-            <div class="mt-auto p-4 pt-3 flex items-center justify-between border-t border-white/5">
-              <!-- Upvote / Downvote Pill -->
-              <div class="flex items-center bg-white/5 rounded-full p-1 border border-white/10">
-                <button onclick="voteMeme('${meme.id}', 1)" class="p-1.5 rounded-full hover:bg-emerald-500/20 ${voteState === 1 ? 'text-emerald-400 bg-emerald-500/20' : 'text-slate-400 hover:text-emerald-400'} transition-all">
-                  <i data-lucide="arrow-big-up" class="w-4 h-4 ${voteState === 1 ? 'fill-current' : ''}"></i>
-                </button>
-                <span class="px-2 text-xs font-extrabold ${voteState === 1 ? 'text-emerald-400' : voteState === -1 ? 'text-rose-400' : 'text-slate-200'}">
-                  ${formatScore(meme.score)}
+              <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="mouse-pointer" class="w-3.5 h-3.5"></i>
+                  ${m.clicks || 0} clicks
                 </span>
-                <button onclick="voteMeme('${meme.id}', -1)" class="p-1.5 rounded-full hover:bg-rose-500/20 ${voteState === -1 ? 'text-rose-400 bg-rose-500/20' : 'text-slate-400 hover:text-rose-400'} transition-all">
-                  <i data-lucide="arrow-big-down" class="w-4 h-4 ${voteState === -1 ? 'fill-current' : ''}"></i>
-                </button>
-              </div>
-
-              <!-- Comments and Share actions -->
-              <div class="flex items-center gap-1.5">
-                <button onclick="openLightbox('${meme.id}')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-300 bg-white/5 hover:bg-white/10 border border-white/5 transition-all">
-                  <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-                  <span>${meme.comments ? meme.comments.length : 0}</span>
-                </button>
-                <button onclick="copyMemeLink('${meme.id}')" title="Share Meme" class="p-2 rounded-full text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 transition-all">
-                  <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                </button>
+                <span>${m.createdAt ? new Date(m.createdAt).toLocaleDateString() : ''}</span>
               </div>
             </div>
           </article>
@@ -886,546 +336,22 @@
       lucide.createIcons();
     }
 
-    function voteMeme(memeId, dir) {
-      const meme = memes.find(m => m.id === memeId);
-      if (!meme) return;
-
-      const current = userVotes[memeId] || 0;
-      if (current === dir) {
-        // Undo vote
-        meme.score -= dir;
-        delete userVotes[memeId];
-      } else {
-        // Change vote
-        meme.score += (dir - current);
-        userVotes[memeId] = dir;
-      }
-
-      persistMemes();
-      persistVotes();
-      renderFeed();
-
-      if (activeLightboxId === memeId) {
-        updateLightboxDetails(meme);
-      }
-    }
-
-    function toggleSaveMeme(memeId) {
-      if (savedMemeIds.has(memeId)) {
-        savedMemeIds.delete(memeId);
-        showToast('Removed from saved bookmarks');
-      } else {
-        savedMemeIds.add(memeId);
-        showToast('Saved to your bookmarks! ⭐');
-      }
-      persistSaved();
-      updateFavBadge();
-      renderFeed();
-    }
-
-    function toggleFavFilter() {
-      filterSavedOnly = !filterSavedOnly;
-      const btn = document.getElementById('favToggleBtn');
-      const banner = document.getElementById('filterBanner');
-      const bannerText = document.getElementById('filterBannerText');
-
-      if (filterSavedOnly) {
-        btn.classList.add('bg-pink-500/20', 'text-pink-400');
-        bannerText.innerText = 'Showing Bookmarked Memes';
-        banner.classList.remove('hidden');
-        banner.classList.add('flex');
-      } else {
-        btn.classList.remove('bg-pink-500/20', 'text-pink-400');
-        banner.classList.add('hidden');
-        banner.classList.remove('flex');
-      }
-      renderFeed();
-    }
-
-    function updateFavBadge() {
-      const badge = document.getElementById('favCountBadge');
-      const count = savedMemeIds.size;
-      if (count > 0) {
-        badge.innerText = count;
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
-      }
-    }
-
-    function copyMemeLink(id) {
-      const dummyUrl = window.location.origin + window.location.pathname + '#meme-' + id;
-      copyToClipboard(dummyUrl);
-      showToast('Meme link copied to clipboard! 🚀');
-    }
-
-    function copyToClipboard(text) {
-      const input = document.createElement('textarea');
-      input.value = text;
-      document.body.appendChild(input);
-      input.select();
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        console.error('Fallback copy error', err);
-      }
-      document.body.removeChild(input);
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      const msgSpan = document.getElementById('toastMsg');
-      msgSpan.innerText = msg;
-      toast.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      clearTimeout(toast._timeout);
-      toast._timeout = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none');
-      }, 2600);
-    }
-
-    function filterByCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.cat-pill').forEach(btn => {
-        if (btn.getAttribute('data-cat') === cat) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-      renderFeed();
-    }
-
-    function filterByTag(tag) {
-      currentSearchTerm = tag;
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput) searchInput.value = tag;
-      
-      const banner = document.getElementById('filterBanner');
-      const bannerText = document.getElementById('filterBannerText');
-      bannerText.innerText = `Tag: #${tag}`;
-      banner.classList.remove('hidden');
-      banner.classList.add('flex');
-
-      renderFeed();
-    }
-
-    function handleSearch(val) {
-      currentSearchTerm = val;
-      const clearBtn = document.getElementById('clearSearchBtn');
-      if (val.trim() !== '') {
-        clearBtn.classList.remove('hidden');
-      } else {
-        clearBtn.classList.add('hidden');
-      }
-      renderFeed();
-    }
-
-    function clearSearch() {
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput) searchInput.value = '';
-      currentSearchTerm = '';
-      document.getElementById('clearSearchBtn').classList.add('hidden');
-      renderFeed();
-    }
-
-    function resetAllFilters() {
-      filterSavedOnly = false;
-      document.getElementById('favToggleBtn').classList.remove('bg-pink-500/20', 'text-pink-400');
-      currentSearchTerm = '';
-      const s = document.getElementById('searchInput');
-      if (s) s.value = '';
-      document.getElementById('filterBanner').classList.add('hidden');
-      document.getElementById('filterBanner').classList.remove('flex');
-      filterByCategory('all');
-    }
-
-    function changeSort(sortType) {
-      currentSort = sortType;
-      ['hot', 'top', 'fresh'].forEach(t => {
-        const btn = document.getElementById('sort' + t.charAt(0).toUpperCase() + t.slice(1));
-        if (t === sortType) {
-          btn.className = "px-3 py-1.5 rounded-full font-medium transition-all bg-pink-500/20 text-pink-400 border border-pink-500/30";
-        } else {
-          btn.className = "px-3 py-1.5 rounded-full font-medium text-slate-400 hover:text-white transition-all";
-        }
-      });
-      renderFeed();
-    }
-
-    function openLightbox(memeId) {
-      const meme = memes.find(m => m.id === memeId);
-      if (!meme) return;
-      activeLightboxId = memeId;
-
-      const modal = document.getElementById('lightboxModal');
-      document.getElementById('lightboxImg').src = meme.imageUrl;
-      document.getElementById('lightboxTitle').innerText = meme.title;
-      document.getElementById('lightboxCategory').innerText = meme.category;
-      document.getElementById('lightboxDate').innerText = new Date(meme.createdAt).toLocaleDateString();
-
-      const tagsContainer = document.getElementById('lightboxTags');
-      tagsContainer.innerHTML = (meme.tags || []).map(t => `<span class="px-2 py-0.5 rounded-full text-xs bg-white/5 border border-white/5 text-slate-300">#${t}</span>`).join('');
-
-      updateLightboxDetails(meme);
-      renderLightboxComments(meme);
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      lucide.createIcons();
-    }
-
-    function updateLightboxDetails(meme) {
-      const scoreSpan = document.getElementById('lightboxScore');
-      scoreSpan.innerText = formatScore(meme.score);
-
-      const upBtn = document.getElementById('lightboxUpvoteBtn');
-      const downBtn = document.getElementById('lightboxDownvoteBtn');
-      const currentVote = userVotes[meme.id] || 0;
-
-      upBtn.onclick = () => voteMeme(meme.id, 1);
-      downBtn.onclick = () => voteMeme(meme.id, -1);
-      document.getElementById('lightboxShareBtn').onclick = () => copyMemeLink(meme.id);
-
-      if (currentVote === 1) {
-        upBtn.className = "p-2 rounded-full bg-emerald-500/20 text-emerald-400";
-        downBtn.className = "p-2 rounded-full bg-white/5 text-slate-400";
-      } else if (currentVote === -1) {
-        upBtn.className = "p-2 rounded-full bg-white/5 text-slate-400";
-        downBtn.className = "p-2 rounded-full bg-rose-500/20 text-rose-400";
-      } else {
-        upBtn.className = "p-2 rounded-full bg-white/5 text-slate-400 hover:text-emerald-400";
-        downBtn.className = "p-2 rounded-full bg-white/5 text-slate-400 hover:text-rose-400";
-      }
-    }
-
-    function renderLightboxComments(meme) {
-      const container = document.getElementById('lightboxCommentsList');
-      const countEl = document.getElementById('lightboxCommentCount');
-      const list = meme.comments || [];
-      countEl.innerText = list.length;
-
-      if (list.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 py-3 text-center italic">No comments yet. Drop the first joke!</p>';
-        return;
-      }
-
-      container.innerHTML = list.map(c => `
-        <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
-          <div class="flex items-center justify-between text-xs mb-1">
-            <span class="font-bold text-pink-400">${escapeHtml(c.user)}</span>
-            <span class="text-[10px] text-slate-500">${c.time || 'recently'}</span>
-          </div>
-          <p class="text-xs text-slate-200">${escapeHtml(c.text)}</p>
-        </div>
-      `).join('');
-    }
-
-    function handleSendComment(e) {
-      e.preventDefault();
-      if (!activeLightboxId) return;
-      const input = document.getElementById('lightboxNewComment');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const meme = memes.find(m => m.id === activeLightboxId);
-      if (meme) {
-        if (!meme.comments) meme.comments = [];
-        meme.comments.unshift({
-          user: 'You',
-          text: text,
-          time: 'Just now'
-        });
-        persistMemes();
-        renderLightboxComments(meme);
-        renderFeed();
-        input.value = '';
-        showToast('Comment posted! 💬');
-      }
-    }
-
-    function closeLightbox() {
-      activeLightboxId = null;
-      const modal = document.getElementById('lightboxModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function openMemeStudio() {
-      const modal = document.getElementById('studioModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      selectTemplate('drake');
-      lucide.createIcons();
-    }
-
-    function closeMemeStudio() {
-      const modal = document.getElementById('studioModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function setupStudioDefaults() {
-      loadTemplateImage(SVG_TEMPLATES.drake);
-    }
-
-    function selectTemplate(templateKey) {
-      activeStudioTemplate = templateKey;
-      if (SVG_TEMPLATES[templateKey]) {
-        loadTemplateImage(SVG_TEMPLATES[templateKey]);
-      }
-    }
-
-    function loadTemplateImage(src) {
-      const loader = document.getElementById('canvasLoader');
-      if (loader) loader.classList.remove('hidden');
-
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        loadedStudioImage = img;
-        if (loader) loader.classList.add('hidden');
-        renderCanvasMeme();
-      };
-      img.src = src;
-    }
-
-    function handleStudioCustomImage(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        loadTemplateImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function renderCanvasMeme() {
-      const canvas = document.getElementById('memeCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw background/base image
-      if (loadedStudioImage) {
-        ctx.drawImage(loadedStudioImage, 0, 0, width, height);
-      } else {
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(0, 0, width, height);
-      }
-
-      // Configure Meme Font
-      const fontSize = parseInt(document.getElementById('studioFontSize').value || '48', 10);
-      const textColor = document.getElementById('studioTextColor').value || '#ffffff';
-      const topText = (document.getElementById('studioTopText').value || '').toUpperCase();
-      const bottomText = (document.getElementById('studioBottomText').value || '').toUpperCase();
-
-      ctx.font = `900 ${fontSize}px Impact, sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillStyle = textColor;
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = Math.max(4, fontSize / 9);
-      ctx.lineJoin = 'round';
-
-      // Draw Top Text
-      if (topText) {
-        wrapMemeText(ctx, topText, width / 2, fontSize + 20, width - 40, fontSize * 1.15);
-      }
-
-      // Draw Bottom Text
-      if (bottomText) {
-        wrapMemeText(ctx, bottomText, width / 2, height - 30, width - 40, fontSize * 1.15, true);
-      }
-    }
-
-    function wrapMemeText(ctx, text, x, y, maxWidth, lineHeight, isBottom = false) {
-      const words = text.split(' ');
-      let lines = [];
-      let currentLine = words[0] || '';
-
-      for (let i = 1; i < words.length; i++) {
-        const word = words[i];
-        const width = ctx.measureText(currentLine + " " + word).width;
-        if (width < maxWidth) {
-          currentLine += " " + word;
-        } else {
-          lines.push(currentLine);
-          currentLine = word;
-        }
-      }
-      lines.push(currentLine);
-
-      if (isBottom) {
-        y = y - ((lines.length - 1) * lineHeight);
-      }
-
-      for (let k = 0; k < lines.length; k++) {
-        ctx.strokeText(lines[k], x, y + (k * lineHeight));
-        ctx.fillText(lines[k], x, y + (k * lineHeight));
-      }
-    }
-
-    function downloadCanvasMeme() {
-      const canvas = document.getElementById('memeCanvas');
-      const dataUrl = canvas.toDataURL('image/png');
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = `memepoint-${Date.now()}.png`;
-      a.click();
-      showToast('Meme downloaded to your device!');
-    }
-
-    function publishFromStudio() {
-      const canvas = document.getElementById('memeCanvas');
-      const dataUrl = canvas.toDataURL('image/png');
-      const title = document.getElementById('studioMemeTitle').value.trim() || 'My Epic Meme';
-      const cat = document.getElementById('studioCategory').value || 'dank';
-
-      const newMeme = {
-        id: 'meme_' + Date.now(),
-        title: title,
-        category: cat,
-        imageUrl: dataUrl,
-        score: 1,
-        tags: ['generator', cat, 'original'],
-        author: 'You',
-        comments: [],
-        createdAt: Date.now()
-      };
-
-      memes.unshift(newMeme);
-      userVotes[newMeme.id] = 1;
-      persistMemes();
-      persistVotes();
-      closeMemeStudio();
-      renderFeed();
-      showToast('Meme generated & posted to live feed! 🔥');
-    }
-
-    let directUploadDataUrl = '';
-
-    function openPostModal() {
-      const modal = document.getElementById('postModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      lucide.createIcons();
-    }
-
-    function closePostModal() {
-      const modal = document.getElementById('postModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      document.getElementById('postMemeForm').reset();
-      directUploadDataUrl = '';
-      document.getElementById('directPostPreviewContainer').classList.add('hidden');
-    }
-
-    function previewDirectPostUrl(url) {
-      if (!url) return;
-      const previewCont = document.getElementById('directPostPreviewContainer');
-      const previewImg = document.getElementById('directPostPreviewImg');
-      previewImg.src = url;
-      directUploadDataUrl = url;
-      previewCont.classList.remove('hidden');
-    }
-
-    function handleDirectFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        directUploadDataUrl = e.target.result;
-        const previewCont = document.getElementById('directPostPreviewContainer');
-        const previewImg = document.getElementById('directPostPreviewImg');
-        previewImg.src = directUploadDataUrl;
-        previewCont.classList.remove('hidden');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function handleDirectPost(e) {
-      e.preventDefault();
-      const title = document.getElementById('postTitle').value.trim();
-      const category = document.getElementById('postCategory').value;
-      const tagsRaw = document.getElementById('postTags').value;
-      const parsedTags = tagsRaw.split(',').map(t => t.trim().toLowerCase()).filter(t => t.length > 0);
-
-      const finalImage = directUploadDataUrl || document.getElementById('postImageUrl').value.trim();
-      if (!finalImage) {
-        showToast('Please provide an image URL or choose a file!');
-        return;
-      }
-
-      const newMeme = {
-        id: 'meme_' + Date.now(),
-        title: title,
-        category: category,
-        imageUrl: finalImage,
-        score: 1,
-        tags: parsedTags.length > 0 ? parsedTags : [category, 'new'],
-        author: 'You',
-        comments: [],
-        createdAt: Date.now()
-      };
-
-      memes.unshift(newMeme);
-      userVotes[newMeme.id] = 1;
-      persistMemes();
-      persistVotes();
-      closePostModal();
-      renderFeed();
-      showToast('Meme shared with the community! 🚀');
-    }
-
-    function formatScore(num) {
-      if (Math.abs(num) >= 1000) {
-        return (num / 1000).toFixed(1) + 'k';
-      }
-      return num.toString();
-    }
-
     function escapeHtml(str) {
       if (!str) return '';
-      return str.replace(/[&<>"']/g, function(m) {
-        return ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#039;'
-        })[m];
-      });
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
-    // Modal background click dismiss listener
-    window.addEventListener('click', (e) => {
-      const studioModal = document.getElementById('studioModal');
-      const postModal = document.getElementById('postModal');
-      const lightboxModal = document.getElementById('lightboxModal');
+    function escapeAttr(str) {
+      if (!str) return '';
+      return String(str).replace(/"/g, '&quot;');
+    }
 
-      if (e.target === studioModal) closeMemeStudio();
-      if (e.target === postModal) closePostModal();
-      if (e.target === lightboxModal) closeLightbox();
-    });
-
-    // Keyboard ESC listener
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeMemeStudio();
-        closePostModal();
-        closeLightbox();
-      }
-    });
-
-    // Initialize application when DOM is ready
-    window.addEventListener('DOMContentLoaded', initApp);
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
