@@ -113,7 +113,7 @@
         <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Create Meme Entry</h1>
         <span class="px-2 py-0.5 text-[10px] uppercase font-mono tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded">Instant Feed</span>
       </div>
-      <p class="text-xs sm:text-sm text-neutral-400">Upload an image, animated GIF, or video clip. All content is saved locally to your device storage.</p>
+      <p class="text-xs sm:text-sm text-neutral-400">Images and GIFs are 100% free to post. Video uploads require a server bandwidth pass.</p>
     </div>
 
     <form id="memePostForm" onsubmit="handlePostSubmit(event)" class="card-panel rounded-2xl p-5 sm:p-7 flex flex-col gap-6 shadow-xl">
@@ -165,20 +165,30 @@
               <i data-lucide="upload" class="w-4 h-4"></i>
             </div>
             <p class="text-xs font-medium text-neutral-200">Click to choose media or drop file here</p>
-            <p class="text-[11px] text-neutral-500 mt-1 font-mono">PNG, JPG, WebP, GIF, MP4 (Max ~10MB)</p>
+            <p class="text-[11px] text-neutral-500 mt-1 font-mono">PNG, JPG, WebP, GIF (Free) &bull; MP4, WebM (Pro)</p>
           </label>
         </div>
 
-        <div class="flex items-center gap-3">
-          <span class="text-xs text-neutral-400 font-mono text-[11px]">Type:</span>
-          <label class="flex items-center gap-1.5 cursor-pointer text-xs text-neutral-300">
-            <input type="radio" name="mediaType" value="image" checked onchange="handleTypeChange()" class="accent-emerald-400 bg-neutral-900 border-white/10 text-emerald-400">
-            <span>Image / GIF</span>
-          </label>
-          <label class="flex items-center gap-1.5 cursor-pointer text-xs text-neutral-300">
-            <input type="radio" name="mediaType" value="video" onchange="handleTypeChange()" class="accent-emerald-400 bg-neutral-900 border-white/10 text-emerald-400">
-            <span>Video (MP4/WebM)</span>
-          </label>
+        <div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-[#080a0f] border border-white/5">
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-neutral-400 font-mono text-[11px]">Format:</span>
+            <label class="flex items-center gap-1.5 cursor-pointer text-xs text-neutral-300">
+              <input type="radio" name="mediaType" value="image" checked onchange="handleTypeChange('image')" class="accent-emerald-400 bg-neutral-900 border-white/10 text-emerald-400">
+              <span>Image / GIF</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Free</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer text-xs text-neutral-300">
+              <input type="radio" name="mediaType" value="video" onchange="handleTypeChange('video')" class="accent-amber-400 bg-neutral-900 border-white/10 text-amber-400">
+              <span>Video (MP4/WebM)</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold">Pro / Paid</span>
+            </label>
+          </div>
+
+          <div id="videoPassStatusBadge" class="hidden items-center gap-1.5 text-[11px] font-mono text-neutral-400">
+            <span id="passStateDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span id="passStateText">Pass Needed</span>
+            <button type="button" onclick="openVideoPayModal()" class="text-amber-400 hover:underline ml-1">Unlock</button>
+          </div>
         </div>
 
         <div class="mt-1 flex flex-col gap-2">
@@ -237,11 +247,75 @@
           id="submitBtn" 
           class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-neutral-200 text-neutral-950 font-semibold text-xs transition-all shadow-sm">
           <i data-lucide="send" class="w-3.5 h-3.5 stroke-[2.5]"></i>
-          <span>Publish Meme</span>
+          <span id="submitBtnText">Publish Meme</span>
         </button>
       </div>
     </form>
   </main>
+
+  <div id="videoPayModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="card-panel max-w-md w-full rounded-2xl p-6 sm:p-7 flex flex-col gap-5 border border-white/15 shadow-2xl relative">
+      <button type="button" onclick="closeVideoPayModal()" class="absolute top-4 right-4 p-1.5 text-neutral-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 flex-shrink-0 shadow-inner">
+          <i data-lucide="video" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-sm sm:text-base font-bold text-white">Video Hosting Pass</h2>
+          <span class="text-[11px] text-amber-400 font-mono">Paid Feature &bull; Server Bandwidth Cost</span>
+        </div>
+      </div>
+
+      <div class="p-3.5 rounded-xl bg-[#080a0f] border border-white/5 flex flex-col gap-2 text-xs text-neutral-300 leading-relaxed">
+        <p>MemePoint is a 100% free community archive for images and GIFs. Because video files consume high bandwidth and storage, we ask for a tiny $1 hosting pass or donor pass to post clips.</p>
+        <div class="flex items-center justify-between pt-2 border-t border-white/5 font-mono text-[11px]">
+          <span class="text-neutral-400">Single Video Pass:</span>
+          <span class="text-emerald-400 font-bold">$1.00 / one-time</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="passCodeInput" class="text-xs font-medium text-neutral-300 flex items-center justify-between">
+          <span>Enter Pass Key or Donor ID</span>
+          <span class="text-[10px] text-neutral-500 font-mono">Code: MEMEPRO</span>
+        </label>
+        <div class="flex gap-2">
+          <input 
+            type="text" 
+            id="passCodeInput" 
+            placeholder="e.g. MEMEPRO or receipt ID" 
+            class="flex-1 bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-white/30 transition-all font-mono"
+          />
+          <button 
+            type="button" 
+            onclick="validatePassCode()" 
+            class="px-3.5 py-2 bg-white/10 hover:bg-white/20 border border-white/15 text-xs text-white font-medium rounded-xl transition-all">
+            Verify
+          </button>
+        </div>
+        <div id="passFeedback" class="hidden text-[11px] font-mono"></div>
+      </div>
+
+      <div class="flex items-center justify-between gap-3 pt-2 border-t border-white/5">
+        <a 
+          href="donate.html" 
+          target="_blank" 
+          class="text-xs text-amber-400 hover:underline flex items-center gap-1 font-medium">
+          <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400"></i>
+          <span>Get Pass on Donate Page</span>
+        </a>
+        <button 
+          type="button" 
+          onclick="simulateInstantPass()" 
+          class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-neutral-950 font-semibold text-xs transition-all shadow-sm">
+          Simulate $1 Pass
+        </button>
+      </div>
+    </div>
+  </div>
 
   <footer class="mt-auto border-t border-white/5 py-6 px-6 text-xs text-neutral-500">
     <div class="max-w-[1720px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -261,10 +335,96 @@
     let mediaMode = 'url';
     let currentMediaData = '';
     let parsedTags = [];
+    let hasVideoPass = false;
 
     function init() {
       setupDropzone();
+      checkSavedVideoPass();
+      updatePassUI();
       lucide.createIcons();
+    }
+
+    function checkSavedVideoPass() {
+      const stored = localStorage.getItem('mp_video_pass');
+      if (stored === 'active' || stored === 'true') {
+        hasVideoPass = true;
+      }
+    }
+
+    function updatePassUI() {
+      const statusContainer = document.getElementById('videoPassStatusBadge');
+      const dot = document.getElementById('passStateDot');
+      const text = document.getElementById('passStateText');
+      const submitText = document.getElementById('submitBtnText');
+      const currentType = getSelectedMediaType();
+
+      if (currentType === 'video') {
+        statusContainer.classList.remove('hidden');
+        statusContainer.classList.add('flex');
+        if (hasVideoPass) {
+          dot.className = "w-2 h-2 rounded-full bg-emerald-400";
+          text.innerText = "Pass Active";
+          text.className = "text-emerald-400 font-mono";
+          submitText.innerText = "Publish Video Meme";
+        } else {
+          dot.className = "w-2 h-2 rounded-full bg-amber-400 animate-pulse";
+          text.innerText = "Pass Required ($1)";
+          text.className = "text-amber-400 font-mono";
+          submitText.innerText = "Unlock Video & Publish";
+        }
+      } else {
+        statusContainer.classList.add('hidden');
+        statusContainer.classList.remove('flex');
+        submitText.innerText = "Publish Meme";
+      }
+    }
+
+    function openVideoPayModal() {
+      const modal = document.getElementById('videoPayModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeVideoPayModal() {
+      const modal = document.getElementById('videoPayModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function validatePassCode() {
+      const input = document.getElementById('passCodeInput');
+      const feedback = document.getElementById('passFeedback');
+      const code = input.value.trim().toUpperCase();
+
+      if (code === 'MEMEPRO' || code === 'VIP' || code.startsWith('DONOR_') || code.length >= 6) {
+        hasVideoPass = true;
+        localStorage.setItem('mp_video_pass', 'active');
+        feedback.innerText = "Pass verified! Video posting unlocked.";
+        feedback.className = "text-[11px] font-mono text-emerald-400";
+        feedback.classList.remove('hidden');
+        setTimeout(() => {
+          closeVideoPayModal();
+          updatePassUI();
+        }, 900);
+      } else {
+        feedback.innerText = "Invalid code. Use 'MEMEPRO' or donate on donate.html";
+        feedback.className = "text-[11px] font-mono text-rose-400";
+        feedback.classList.remove('hidden');
+      }
+    }
+
+    function simulateInstantPass() {
+      hasVideoPass = true;
+      localStorage.setItem('mp_video_pass', 'active');
+      const feedback = document.getElementById('passFeedback');
+      feedback.innerText = "1-Time $1 Pass Activated!";
+      feedback.className = "text-[11px] font-mono text-emerald-400";
+      feedback.classList.remove('hidden');
+      setTimeout(() => {
+        closeVideoPayModal();
+        updatePassUI();
+      }, 700);
     }
 
     function setMediaMode(mode) {
@@ -297,6 +457,9 @@
       currentMediaData = trimmed;
       if (trimmed.match(/\.(mp4|webm|ogg)(\?.*)?$/i)) {
         setMediaTypeRadio('video');
+        if (!hasVideoPass) {
+          openVideoPayModal();
+        }
       } else if (trimmed.match(/\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i)) {
         setMediaTypeRadio('image');
       }
@@ -308,6 +471,7 @@
       for (const r of radios) {
         if (r.value === type) r.checked = true;
       }
+      updatePassUI();
     }
 
     function getSelectedMediaType() {
@@ -318,7 +482,11 @@
       return 'image';
     }
 
-    function handleTypeChange() {
+    function handleTypeChange(type) {
+      if (type === 'video' && !hasVideoPass) {
+        openVideoPayModal();
+      }
+      updatePassUI();
       renderPreview();
     }
 
@@ -355,6 +523,9 @@
 
       if (file.type.startsWith('video/')) {
         setMediaTypeRadio('video');
+        if (!hasVideoPass) {
+          openVideoPayModal();
+        }
       } else {
         setMediaTypeRadio('image');
       }
@@ -462,6 +633,12 @@
       }
 
       const mediaType = getSelectedMediaType();
+
+      if (mediaType === 'video' && !hasVideoPass) {
+        openVideoPayModal();
+        return;
+      }
+
       const newPostId = 'mp_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
 
       const newPost = {
