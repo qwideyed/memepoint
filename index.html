@@ -1,546 +1,1042 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MemePoint</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORKSPACE // Digital Creator & Developer Hub</title>
+  
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: {
+              950: '#07080b',
+              900: '#0a0c10',
+              850: '#0f131a',
+              800: '#141824',
+              700: '#1c2233',
+              600: '#2b334a',
+            },
+            electric: {
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              accent: '#58a6ff',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    * {
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-    }
-    body {
-      background-color: #07080c;
-      color: #f3f4f6;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    .bg-grid-ambient {
-      background-size: 32px 32px;
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    }
-    .header-frosted {
-      background: rgba(7, 8, 12, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .meme-card {
-      background: #0d0f15;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .meme-card:hover {
-      background: #11141e;
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-3px);
-      box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.8);
-    }
-    .ad-card {
-      background: linear-gradient(145deg, #0d0f17 0%, #090a10 100%);
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      transition: all 0.2s ease;
-    }
-    .ad-card:hover {
-      border-color: rgba(52, 211, 153, 0.4);
-      background: linear-gradient(145deg, #10131e 0%, #0c0e14 100%);
-    }
-    .tab-active {
-      background: rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-    }
-    .tab-idle {
-      background: transparent;
-      color: #8a909d;
-    }
-    .tab-idle:hover {
-      color: #f3f4f6;
-      background: rgba(255, 255, 255, 0.05);
-    }
+    /* Custom scrollbars */
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #07080c;
+      background: #0a0c10;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.18);
-      border-radius: 9999px;
+      background: #1c2233;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2b334a;
+    }
+
+    .glass-card {
+      background: rgba(15, 19, 26, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(88, 166, 255, 0.12);
+    }
+    
+    .glass-card-hover {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(88, 166, 255, 0.38);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(56, 189, 248, 0.12);
+    }
+
+    .radial-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, rgba(10, 12, 16, 0) 70%);
+    }
+
+    .grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     }
   </style>
 </head>
-<body class="bg-grid-ambient flex flex-col min-h-screen">
-  <header class="header-frosted sticky top-0 z-40 px-4 sm:px-8 py-3">
-    <div class="max-w-[1720px] mx-auto flex items-center justify-between gap-3 sm:gap-6">
-      <a href="index.html" class="flex items-center gap-2.5 flex-shrink-0 group">
-        <div class="w-8 h-8 rounded-lg bg-neutral-900 border border-white/10 flex items-center justify-center group-hover:border-emerald-500/40 transition-all shadow-inner">
-          <i data-lucide="sparkle" class="w-4 h-4 text-emerald-400"></i>
+
+<body class="bg-obsidian-900 text-slate-200 font-sans selection:bg-electric-500 selection:text-white antialiased relative min-h-screen">
+
+  <!-- Ambient lighting backdrops -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-electric-accent/10 rounded-full blur-[140px]"></div>
+    <div class="absolute top-[40%] right-[-10%] w-[500px] h-[400px] bg-cyan-600/5 rounded-full blur-[120px]"></div>
+    <div class="absolute inset-0 grid-pattern opacity-40"></div>
+  </div>
+
+  <header class="fixed top-0 left-0 right-0 z-40 bg-obsidian-900/85 backdrop-blur-xl border-b border-obsidian-700/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#home" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-obsidian-800 border border-obsidian-700 group-hover:border-electric-accent/50 flex items-center justify-center transition-all duration-300 shadow-md shadow-black/40">
+          <svg class="w-5 h-5 text-electric-accent transition-transform duration-300 group-hover:rotate-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
         </div>
-        <div class="flex items-center gap-1.5">
-          <span class="font-bold text-sm tracking-tight text-white">MemePoint</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <div class="flex flex-col">
+          <span class="font-bold tracking-tight text-white flex items-center gap-1.5 text-base">
+            WORKSPACE<span class="text-electric-accent font-mono text-xs px-1.5 py-0.5 rounded bg-electric-accent/10 border border-electric-accent/25">HUB</span>
+          </span>
+          <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">Creator & Dev</span>
         </div>
       </a>
 
-      <div class="flex-1 max-w-xl mx-auto">
-        <div class="relative flex items-center w-full">
-          <i data-lucide="hash" class="w-3.5 h-3.5 absolute left-3.5 text-neutral-500 pointer-events-none"></i>
-          <input 
-            type="text" 
-            id="tagSearchInput"
-            placeholder="Search tags... (e.g. #gaming, #dank, #tech)" 
-            class="w-full bg-[#0d0f15] border border-white/10 rounded-lg pl-9 pr-9 py-2 text-xs text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-white/25 focus:bg-[#12151e] transition-all shadow-inner"
-            oninput="handleTagSearch(this.value)"
-          />
-          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 text-neutral-500 hover:text-white transition-colors">
-            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#projects" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Showcase</a>
+        <a href="#skills" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Gear & Stack</a>
+        <a href="#stats" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Metrics</a>
+        <a href="#contact" class="text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200">Contact</a>
+      </nav>
+
+      <!-- Status Indicator & Action CTA -->
+      <div class="hidden sm:flex items-center gap-4">
+        <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-obsidian-800/90 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          Open for Commissions
+        </div>
+        <a href="#contact" class="px-4 py-2 rounded-lg bg-electric-accent text-obsidian-950 font-semibold text-xs tracking-wide uppercase hover:bg-white transition-all duration-200 shadow-lg shadow-electric-accent/20">
+          Inquire Now
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" aria-label="Toggle menu" class="md:hidden p-2 rounded-lg bg-obsidian-800 border border-obsidian-700 text-slate-300 hover:text-white">
+        <svg id="menuIcon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden px-4 pt-3 pb-6 border-t border-obsidian-800 bg-obsidian-900/95 backdrop-blur-2xl">
+      <div class="flex flex-col gap-3">
+        <a href="#projects" class="mobile-link text-slate-200 py-2 font-medium">Showcase</a>
+        <a href="#skills" class="mobile-link text-slate-200 py-2 font-medium">Gear & Specs</a>
+        <a href="#stats" class="mobile-link text-slate-200 py-2 font-medium">Metrics</a>
+        <a href="#contact" class="mobile-link text-slate-200 py-2 font-medium">Contact</a>
+        <div class="pt-3 border-t border-obsidian-800 flex items-center justify-between">
+          <span class="text-xs font-mono text-emerald-400 flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 inline-block"></span> Ready for hire
+          </span>
+          <a href="#contact" class="px-3.5 py-1.5 rounded-md bg-electric-accent text-obsidian-950 text-xs font-semibold uppercase">
+            Message
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="relative z-10 pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <section id="home" class="py-12 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-12">
+      <div class="lg:w-7/12 space-y-6 text-center lg:text-left">
+        
+        <!-- Live status badge -->
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-obsidian-850 border border-obsidian-700/80 shadow-inner">
+          <span class="text-electric-accent font-mono text-xs tracking-wider uppercase font-semibold">System V2.4 Active</span>
+          <span class="text-obsidian-600">/</span>
+          <span class="text-slate-400 text-xs font-mono">Front-End • 3D • Motion</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+          Crafting visual logic & <br class="hidden sm:block">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-electric-400 via-sky-300 to-indigo-400">
+            kinetic digital experiences.
+          </span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+          Multi-disciplinary creator operating at the intersection of reactive web engineering, Blender 3D animation, and high-impact motion editing. Ready for zero-cost deployment on static infrastructures.
+        </p>
+
+        <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+          <a href="#projects" class="px-6 py-3.5 rounded-xl bg-electric-accent text-obsidian-950 font-bold text-sm hover:bg-sky-200 transition-all duration-200 shadow-lg shadow-electric-accent/25 flex items-center gap-2 group">
+            Explore Showcase
+            <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+          <a href="#contact" class="px-6 py-3.5 rounded-xl bg-obsidian-850 border border-obsidian-700 hover:border-slate-500 text-slate-200 font-semibold text-sm transition-all duration-200 hover:bg-obsidian-800">
+            Let's Collaborate
+          </a>
+        </div>
+      </div>
+
+      <!-- Interactive Quick Spec Card -->
+      <div class="lg:w-5/12 w-full max-w-md">
+        <div class="glass-card rounded-2xl p-6 sm:p-7 relative overflow-hidden shadow-2xl">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-electric-accent/10 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="flex items-center justify-between pb-5 border-b border-obsidian-700/70">
+            <div class="flex items-center gap-3">
+              <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+              <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+            </div>
+            <span class="text-[11px] font-mono text-slate-400 font-medium">terminal@node-hub ~</span>
+          </div>
+
+          <div class="mt-5 space-y-4 font-mono text-xs sm:text-sm">
+            <div class="flex justify-between items-center text-slate-400">
+              <span class="text-slate-500">$ operator</span>
+              <span class="text-white font-medium">Freelance Creative & Dev</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-400">
+              <span class="text-slate-500">$ location</span>
+              <span class="text-slate-300">Remote / Worldwide (EST)</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-400">
+              <span class="text-slate-500">$ latency</span>
+              <span class="text-emerald-400 flex items-center gap-1.5 font-bold">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> 24ms (Global CDN)
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-slate-400">
+              <span class="text-slate-500">$ hosting_cost</span>
+              <span class="text-electric-accent font-semibold">$0.00 / month forever</span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-obsidian-700/60 grid grid-cols-2 gap-3 text-center">
+            <div class="p-3 rounded-xl bg-obsidian-950/70 border border-obsidian-800">
+              <span class="text-xl sm:text-2xl font-bold font-mono text-white block">100%</span>
+              <span class="text-[11px] uppercase tracking-wider text-slate-400">Client Delivery</span>
+            </div>
+            <div class="p-3 rounded-xl bg-obsidian-950/70 border border-obsidian-800">
+              <span class="text-xl sm:text-2xl font-bold font-mono text-electric-accent block">&lt; 12h</span>
+              <span class="text-[11px] uppercase tracking-wider text-slate-400">Response Window</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stats" class="my-10">
+      <div class="glass-card rounded-2xl p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-obsidian-700/60">
+        
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono text-white counter" data-target="48">0</div>
+          <p class="text-xs uppercase tracking-wider font-medium text-slate-400 mt-1">Projects Shipped</p>
+        </div>
+
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono text-electric-accent counter" data-target="18400">0</div>
+          <p class="text-xs uppercase tracking-wider font-medium text-slate-400 mt-1">Frames Rendered</p>
+        </div>
+
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono text-white counter" data-target="99">0</div>
+          <span class="text-xs uppercase tracking-wider font-medium text-slate-400 mt-1 block">Lighthouse Speed</span>
+        </div>
+
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl sm:text-4xl font-extrabold font-mono text-sky-400 counter" data-target="912">0</div>
+          <p class="text-xs uppercase tracking-wider font-medium text-slate-400 mt-1">Cups of Coffee</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects" class="py-14 sm:py-20">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div>
+          <div class="flex items-center gap-2 text-electric-accent font-mono text-xs uppercase tracking-widest mb-2">
+            <span>// Curated Works</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Showcase & Repositories</h2>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-obsidian-950/80 border border-obsidian-700/70" id="filterContainer">
+          <button data-filter="all" class="filter-btn active-filter px-4 py-2 rounded-lg text-xs font-medium font-mono transition-all duration-200 bg-electric-accent text-obsidian-950 font-semibold shadow">
+            All Works
+          </button>
+          <button data-filter="dev" class="filter-btn px-4 py-2 rounded-lg text-xs font-medium font-mono text-slate-400 hover:text-white transition-all duration-200">
+            Dev & Web
+          </button>
+          <button data-filter="video" class="filter-btn px-4 py-2 rounded-lg text-xs font-medium font-mono text-slate-400 hover:text-white transition-all duration-200">
+            Video & Motion
+          </button>
+          <button data-filter="3d" class="filter-btn px-4 py-2 rounded-lg text-xs font-medium font-mono text-slate-400 hover:text-white transition-all duration-200">
+            3D & Blender
+          </button>
+          <button data-filter="tools" class="filter-btn px-4 py-2 rounded-lg text-xs font-medium font-mono text-slate-400 hover:text-white transition-all duration-200">
+            Tools
           </button>
         </div>
       </div>
 
-      <nav class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
-        <button 
-          id="savedToggleBtn" 
-          onclick="toggleSavedFilter()" 
-          title="Saved Memes"
-          class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs text-neutral-300 transition-all">
-          <i data-lucide="bookmark" id="savedIcon" class="w-3.5 h-3.5 text-neutral-400"></i>
-          <span class="hidden md:inline font-medium">Saved</span>
-          <span id="savedCountBadge" class="hidden text-[10px] bg-white/15 px-1.5 py-0.5 rounded-full text-white font-mono">0</span>
-        </button>
+      <!-- Portfolio Item Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="portfolioGrid">
+        
+        <!-- Card 1: Web Dev -->
+        <div class="project-card glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col" data-category="dev">
+          <div class="relative h-48 bg-gradient-to-tr from-obsidian-950 to-obsidian-800 p-4 overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://placehold.co/600x400/0f131a/58a6ff?text=WebGL+Audio+Visualizer');"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-2.5 py-1 rounded-md bg-electric-accent/20 border border-electric-accent/40 text-electric-accent font-mono text-[10px] uppercase font-bold tracking-wider">Dev & Web</span>
+              <span class="text-xs font-mono text-slate-400">2026</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between">
+              <div class="flex items-center gap-1.5 text-xs text-slate-300 font-mono">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 60 FPS Engine
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2 group-hover:text-electric-accent transition-colors">Aether: WebGL Reactive Audio Visualizer</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Real-time frequency parsing application converting microphone audio into customizable 3D vertex displacement mesh in the browser.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Three.js</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">WebAudio API</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Vanilla JS</span>
+              </div>
+            </div>
+            
+            <div class="pt-4 border-t border-obsidian-800 flex items-center justify-between">
+              <button onclick="openModal('aether')" class="text-xs font-mono text-electric-accent hover:text-white flex items-center gap-1 font-medium transition-colors">
+                View Breakdown &rarr;
+              </button>
+              <a href="#contact" class="text-xs font-mono text-slate-400 hover:text-slate-200">Request Repo</a>
+            </div>
+          </div>
+        </div>
 
-        <a 
-          href="donate.html" 
-          class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs text-neutral-300 transition-all font-medium">
-          <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400"></i>
-          <span class="hidden md:inline">Donate</span>
-        </a>
+        <!-- Card 2: 3D Blender -->
+        <div class="project-card glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col" data-category="3d">
+          <div class="relative h-48 bg-gradient-to-tr from-obsidian-950 to-obsidian-800 p-4 overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://placehold.co/600x400/0f131a/58a6ff?text=Cybernetic+Chassis+3D');"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-2.5 py-1 rounded-md bg-purple-500/20 border border-purple-500/40 text-purple-300 font-mono text-[10px] uppercase font-bold tracking-wider">3D & Blender</span>
+              <span class="text-xs font-mono text-slate-400">Cycles X</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <span class="text-xs text-slate-300 font-mono">4K Procedural Hard Surface</span>
+            </div>
+          </div>
+          
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">Chassis V9: Hard-Surface Mech Frame</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Subdivision-ready conceptual robotics chassis built entirely with geometric node arrays, baked ambient occlusion, and procedural metallic wear shaders.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Blender 4.2</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Substance 3D</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Geometry Nodes</span>
+              </div>
+            </div>
+            
+            <div class="pt-4 border-t border-obsidian-800 flex items-center justify-between">
+              <button onclick="openModal('chassis')" class="text-xs font-mono text-electric-accent hover:text-white flex items-center gap-1 font-medium transition-colors">
+                View 3D Renders &rarr;
+              </button>
+              <span class="text-xs font-mono text-slate-500">Free CC0 Asset</span>
+            </div>
+          </div>
+        </div>
 
-        <a 
-          href="post.html" 
-          class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-neutral-200 text-neutral-950 font-semibold text-xs transition-all shadow-sm">
-          <i data-lucide="plus" class="w-3.5 h-3.5 stroke-[2.5]"></i>
-          <span>Post</span>
-        </a>
-      </nav>
-    </div>
-  </header>
+        <!-- Card 3: Video Motion -->
+        <div class="project-card glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col" data-category="video">
+          <div class="relative h-48 bg-gradient-to-tr from-obsidian-950 to-obsidian-800 p-4 overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://placehold.co/600x400/0f131a/58a6ff?text=Kinetic+Typography+Trailer');"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-2.5 py-1 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 font-mono text-[10px] uppercase font-bold tracking-wider">Video & Motion</span>
+              <span class="text-xs font-mono text-slate-400">120 FPS Cut</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <span class="text-xs text-slate-300 font-mono">Dynamic Audio Sync</span>
+            </div>
+          </div>
+          
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">Chronos: Kinetic Esports Launch Reel</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Fast-paced motion sequence featuring synchronized beat slicing, custom glitch shaders, speed ramping, and typography spatial tracking.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">After Effects</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Premiere Pro</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Sound Design</span>
+              </div>
+            </div>
+            
+            <div class="pt-4 border-t border-obsidian-800 flex items-center justify-between">
+              <button onclick="openModal('chronos')" class="text-xs font-mono text-electric-accent hover:text-white flex items-center gap-1 font-medium transition-colors">
+                Play Reel &rarr;
+              </button>
+              <span class="text-xs font-mono text-slate-500">Commercial</span>
+            </div>
+          </div>
+        </div>
 
-  <main class="max-w-[1720px] w-full mx-auto px-4 sm:px-8 py-6 flex-1 flex flex-col gap-6">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-white/5">
-      <div class="inline-flex items-center p-1 rounded-lg bg-[#0b0d12] border border-white/10 self-start">
-        <button onclick="setFilter('trending')" id="tabTrending" class="tab-active px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Trending</button>
-        <button onclick="setFilter('new')" id="tabNew" class="tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all">New</button>
-        <button onclick="setFilter('og')" id="tabOG" class="tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all">OG</button>
-        <button onclick="setFilter('clicks')" id="tabClicks" class="tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all">Most Clicks</button>
+        <!-- Card 4: Tools -->
+        <div class="project-card glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col" data-category="tools">
+          <div class="relative h-48 bg-gradient-to-tr from-obsidian-950 to-obsidian-800 p-4 overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://placehold.co/600x400/0f131a/58a6ff?text=FFmpeg+Automation+CLI');"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-2.5 py-1 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] uppercase font-bold tracking-wider">Tools</span>
+              <span class="text-xs font-mono text-slate-400">Open Source</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <span class="text-xs text-slate-300 font-mono">Bash & Python Utility</span>
+            </div>
+          </div>
+          
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">StreamSqueeze: Lossless Web Batch Transcoder</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Terminal automation script for content creators that compresses raw ProRes captures to AV1 & VP9 web containers at 70% reduced filesize.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Python</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">FFmpeg</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Shell</span>
+              </div>
+            </div>
+            
+            <div class="pt-4 border-t border-obsidian-800 flex items-center justify-between">
+              <button onclick="openModal('streamsqueeze')" class="text-xs font-mono text-electric-accent hover:text-white flex items-center gap-1 font-medium transition-colors">
+                View Script Spec &rarr;
+              </button>
+              <span class="text-xs font-mono text-slate-500">MIT Licensed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Dev & Web -->
+        <div class="project-card glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col" data-category="dev">
+          <div class="relative h-48 bg-gradient-to-tr from-obsidian-950 to-obsidian-800 p-4 overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://placehold.co/600x400/0f131a/58a6ff?text=Obsidian+Static+Engine');"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-2.5 py-1 rounded-md bg-electric-accent/20 border border-electric-accent/40 text-electric-accent font-mono text-[10px] uppercase font-bold tracking-wider">Dev & Web</span>
+              <span class="text-xs font-mono text-slate-400">Zero-Config</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <span class="text-xs text-slate-300 font-mono">100/100 Core Web Vitals</span>
+            </div>
+          </div>
+          
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">ZeroHost: Single-Bundle Site Template</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Production boilerplate geared towards creators needing high visual fidelity on GitHub Pages without dependency vulnerabilities or build servers.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">HTML5</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Tailwind</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">SEO Engine</span>
+              </div>
+            </div>
+            
+            <div class="pt-4 border-t border-obsidian-800 flex items-center justify-between">
+              <button onclick="openModal('zerohost')" class="text-xs font-mono text-electric-accent hover:text-white flex items-center gap-1 font-medium transition-colors">
+                View Architecture &rarr;
+              </button>
+              <span class="text-xs font-mono text-slate-500">Live Repo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: 3D & Blender -->
+        <div class="project-card glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col" data-category="3d">
+          <div class="relative h-48 bg-gradient-to-tr from-obsidian-950 to-obsidian-800 p-4 overflow-hidden group">
+            <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://placehold.co/600x400/0f131a/58a6ff?text=Volumetric+Nebula+Environment');"></div>
+            <div class="relative z-10 flex justify-between items-start">
+              <span class="px-2.5 py-1 rounded-md bg-purple-500/20 border border-purple-500/40 text-purple-300 font-mono text-[10px] uppercase font-bold tracking-wider">3D & Blender</span>
+              <span class="text-xs font-mono text-slate-400">Eevee Next</span>
+            </div>
+            <div class="absolute bottom-4 left-4 right-4 z-10">
+              <span class="text-xs text-slate-300 font-mono">Volumetric Scatter Shader</span>
+            </div>
+          </div>
+          
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-white mb-2">Cosmic Void: Deep Space Shader Rig</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                Procedural gas giant and planetary ring simulation using multiple layered Voronoi node outputs and zero image textures for lightweight 3D assets.
+              </p>
+              <div class="flex flex-wrap gap-1.5 mb-6">
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Blender Shading</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Volumetrics</span>
+                <span class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 font-mono text-[11px] border border-obsidian-700">Vector Math</span>
+              </div>
+            </div>
+            
+            <div class="pt-4 border-t border-obsidian-800 flex items-center justify-between">
+              <button onclick="openModal('cosmic')" class="text-xs font-mono text-electric-accent hover:text-white flex items-center gap-1 font-medium transition-colors">
+                View Shader Tree &rarr;
+              </button>
+              <span class="text-xs font-mono text-slate-500">Asset Pack</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="skills" class="py-14 sm:py-20 border-t border-obsidian-800">
+      
+      <div class="max-w-3xl mb-12">
+        <div class="flex items-center gap-2 text-electric-accent font-mono text-xs uppercase tracking-widest mb-2">
+          <span>// Production Toolkit</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Hard Skills, Software & Rig Specs</h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-2">
+          Precision gear and software pipelines tuned for high-throughput creation with minimal friction.
+        </p>
       </div>
 
-      <div id="dynamicTagsList" class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs scrollbar-none"></div>
-    </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Column 1: Web & Dev -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-electric-accent/10 border border-electric-accent/30 flex items-center justify-center text-electric-accent mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Code & Frontend</h3>
+            <p class="text-xs text-slate-400 mb-6">Clean, accessible DOM architecture and modular vanilla JS logic.</p>
+            
+            <div class="space-y-3 font-mono text-xs">
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>HTML5 / Semantic DOM</span>
+                <span class="text-electric-accent font-semibold">100%</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Tailwind CSS</span>
+                <span class="text-electric-accent font-semibold">Proficient</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Vanilla JS (ES6+)</span>
+                <span class="text-electric-accent font-semibold">Native</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Three.js / WebGL</span>
+                <span class="text-electric-accent font-semibold">Shaders & Meshes</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Git / GitHub Pages</span>
+                <span class="text-electric-accent font-semibold">CI/CD Deploy</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div id="activeTagBanner" class="hidden items-center justify-between px-3.5 py-2 rounded-lg bg-[#0e1118] border border-white/10 text-xs">
-      <div class="flex items-center gap-2">
-        <span class="text-neutral-400">Filtering tag:</span>
-        <span id="activeTagValue" class="text-emerald-400 font-mono font-medium"></span>
-      </div>
-      <button onclick="clearSearch()" class="text-neutral-400 hover:text-white flex items-center gap-1 text-[11px]">
-        <span>Clear filter</span>
-        <i data-lucide="x" class="w-3 h-3"></i>
-      </button>
-    </div>
+        <!-- Column 2: Creative & 3D Tools -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Video & 3D Motion</h3>
+            <p class="text-xs text-slate-400 mb-6">Precision keyframing, timeline pacing, and procedural modeling.</p>
+            
+            <div class="space-y-3 font-mono text-xs">
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Blender 3D</span>
+                <span class="text-purple-400 font-semibold">Geo Nodes & Cycles</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Adobe Premiere Pro</span>
+                <span class="text-purple-400 font-semibold">Narrative & Rhythms</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>After Effects</span>
+                <span class="text-purple-400 font-semibold">VFX & Compositing</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>DaVinci Resolve</span>
+                <span class="text-purple-400 font-semibold">Color Grading</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span>Audacity / EQ</span>
+                <span class="text-purple-400 font-semibold">Mastering</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full"></div>
+        <!-- Column 3: Workstation Specs -->
+        <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Workstation Rig</h3>
+            <p class="text-xs text-slate-400 mb-6">Hardware configured for high-res real-time rendering & compiling.</p>
+            
+            <div class="space-y-3 font-mono text-xs">
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span class="text-slate-400">Processor</span>
+                <span class="text-white font-medium">16-Core 5.4GHz</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span class="text-slate-400">GPU VRAM</span>
+                <span class="text-white font-medium">16GB GDDR6X</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span class="text-slate-400">RAM</span>
+                <span class="text-white font-medium">64GB DDR5 6000MHz</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span class="text-slate-400">Displays</span>
+                <span class="text-white font-medium">Dual 4K HDR Color-Calibrated</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-obsidian-950/80 border border-obsidian-800 flex justify-between items-center">
+                <span class="text-slate-400">Editor</span>
+                <span class="text-cyan-400 font-medium">VS Code Obsidian Theme</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div id="emptyView" class="hidden flex-col items-center justify-center py-24 px-4 text-center rounded-2xl border border-white/5 bg-[#090b10] w-full max-w-2xl mx-auto my-8">
-      <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-400 mb-4 shadow-inner">
-        <i data-lucide="image-off" class="w-6 h-6 text-neutral-400"></i>
       </div>
-      <h3 class="text-base font-semibold text-white">No memes posted yet. Be the first to share one!</h3>
-      <p class="text-xs text-neutral-400 mt-1.5 max-w-sm">Post original humor, GIFs, or short video clips to start the community feed.</p>
-      <div class="mt-5 flex items-center gap-2.5">
-        <button id="emptyClearBtn" onclick="clearSearch()" class="hidden px-3.5 py-2 rounded-lg border border-white/10 text-xs text-neutral-300 hover:bg-white/5 transition-all">Reset Tag Filter</button>
-        <a href="post.html" class="px-4 py-2 rounded-lg bg-white text-neutral-950 font-semibold text-xs hover:bg-neutral-200 transition-all shadow-sm">Post a Meme</a>
+    </section>
+
+    <section id="contact" class="py-14 sm:py-20 border-t border-obsidian-800">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        
+        <!-- Contact Information & Direct Copy buttons -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="flex items-center gap-2 text-electric-accent font-mono text-xs uppercase tracking-widest">
+            <span>// Initiate Contact</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Let's build something unforgettable.</h2>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Need video editing for your channel, responsive web architecture, 3D product animations, or custom scripts? Send a dispatch directly or copy my handle with one click.
+          </p>
+
+          <div class="space-y-3 pt-2">
+            <!-- Copy Email Button -->
+            <button onclick="copyToClipboard('creator@yourdomain.com', this)" class="w-full p-4 rounded-xl glass-card flex items-center justify-between group hover:border-electric-accent/50 transition-all text-left">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-electric-accent/10 border border-electric-accent/25 flex items-center justify-center text-electric-accent">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-[11px] font-mono text-slate-500 uppercase block">Primary Email</span>
+                  <span class="text-xs sm:text-sm font-mono text-slate-200">creator@yourdomain.com</span>
+                </div>
+              </div>
+              <span class="copy-label text-xs font-mono text-electric-accent group-hover:underline">Copy</span>
+            </button>
+
+            <!-- Copy Discord Button -->
+            <button onclick="copyToClipboard('creator_hub#0001', this)" class="w-full p-4 rounded-xl glass-card flex items-center justify-between group hover:border-indigo-400/50 transition-all text-left">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/25 flex items-center justify-center text-indigo-400">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                  </svg>
+                </div>
+                <div>
+                  <span class="text-[11px] font-mono text-slate-500 uppercase block">Discord Handle</span>
+                  <span class="text-xs sm:text-sm font-mono text-slate-200">creator_hub#0001</span>
+                </div>
+              </div>
+              <span class="copy-label text-xs font-mono text-indigo-400 group-hover:underline">Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Interactive Form Card -->
+        <div class="lg:col-span-7">
+          <div class="glass-card rounded-2xl p-6 sm:p-8">
+            <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2" for="senderName">Your Name / Handle</label>
+                  <input required type="text" id="senderName" class="w-full bg-obsidian-950 border border-obsidian-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electric-accent transition-colors" placeholder="Alex Rivers">
+                </div>
+                <div>
+                  <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2" for="senderEmail">Email Address</label>
+                  <input required type="email" id="senderEmail" class="w-full bg-obsidian-950 border border-obsidian-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electric-accent transition-colors" placeholder="alex@domain.com">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2" for="projectType">Service Needed</label>
+                <select id="projectType" class="w-full bg-obsidian-950 border border-obsidian-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electric-accent transition-colors">
+                  <option value="Front-End Development">Web / Front-End Development</option>
+                  <option value="Video Editing">YouTube / Commercial Video Editing</option>
+                  <option value="3D Animation">3D Modeling & Motion Graphics</option>
+                  <option value="Full Project Inquiry">Full Project Consultation</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2" for="projectBrief">Project Brief / Scope</label>
+                <textarea required id="projectBrief" rows="4" class="w-full bg-obsidian-950 border border-obsidian-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-electric-accent transition-colors" placeholder="Share timeline, reference links, and target goals..."></textarea>
+              </div>
+
+              <div class="pt-2">
+                <button type="submit" id="submitBtn" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-electric-accent text-obsidian-950 font-bold text-sm hover:bg-sky-200 transition-all duration-200 shadow-lg shadow-electric-accent/20 flex items-center justify-center gap-2">
+                  <span>Send Transmission</span>
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Instant client-side confirmation banner -->
+              <div id="formSuccessAlert" class="hidden mt-4 p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-mono flex items-center gap-3">
+                <svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Dispatch received! Since this is a static showcase demo, your message is parsed locally. Connect via the direct email button above!</span>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </section>
+
   </main>
 
-  <footer class="mt-auto border-t border-white/5 py-6 px-6 text-xs text-neutral-500">
-    <div class="max-w-[1720px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+  <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-obsidian-950/80 backdrop-blur-md">
+    <div class="glass-card w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl border border-obsidian-700 flex flex-col max-h-[90vh] animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-obsidian-800 flex items-center justify-between bg-obsidian-900/90">
+        <div>
+          <span id="modalCategory" class="text-[11px] font-mono font-semibold text-electric-accent uppercase tracking-wider block">Category</span>
+          <h3 id="modalTitle" class="text-xl font-bold text-white">Project Title</h3>
+        </div>
+        <button onclick="closeModal()" class="p-2 rounded-lg bg-obsidian-800 text-slate-400 hover:text-white hover:bg-obsidian-700 transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-6">
+        
+        <!-- Media Visual Stage -->
+        <div id="modalMediaStage" class="relative rounded-xl overflow-hidden bg-obsidian-950 border border-obsidian-800 h-64 sm:h-80 flex items-center justify-center text-center p-6">
+          <div class="space-y-2">
+            <div class="w-12 h-12 rounded-full bg-electric-accent/10 border border-electric-accent/30 text-electric-accent mx-auto flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p class="text-xs font-mono text-slate-300" id="modalMediaLabel">Interactive Preview Stream</p>
+            <p class="text-[11px] text-slate-500 max-w-sm">Ready for self-hosted MP4/WebM videos, Vimeo embeds, or Three.js interactive canvas hooks.</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Technical Overview</h4>
+          <p id="modalDescription" class="text-sm text-slate-300 leading-relaxed">Detailed breakdown of the architectural pipeline, keyframing methodology, and workflow.</p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Stack & Capabilities</h4>
+          <div id="modalTags" class="flex flex-wrap gap-2">
+            <!-- Dynamically populated tags -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-obsidian-800 bg-obsidian-900/90 flex items-center justify-end gap-3">
+        <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-obsidian-800 hover:bg-obsidian-700 text-xs font-mono text-slate-300">
+          Close Window
+        </button>
+        <a href="#contact" onclick="closeModal()" class="px-4 py-2 rounded-lg bg-electric-accent text-obsidian-950 font-bold text-xs uppercase font-mono tracking-wide hover:bg-white transition-colors">
+          Inquire Similar Work
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="border-t border-obsidian-800/80 bg-obsidian-950/80 py-10 relative z-10 text-xs font-mono text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="text-neutral-300 font-medium">MemePoint</span>
-        <span>&bull;</span>
-        <span class="text-neutral-500">Free Community Archive</span>
+        <span class="w-2 h-2 rounded-full bg-electric-accent"></span>
+        <span class="text-slate-400">Zero-Cost Static Architecture (GitHub Pages + Cloudflare DNS)</span>
       </div>
-      <div class="flex items-center gap-4">
-        <a href="donate.html" class="hover:text-neutral-300 transition-colors">Support & Donate</a>
-        <a href="post.html" class="hover:text-neutral-300 transition-colors">Post Meme</a>
-      </div>
+      <p>&copy; <span id="currentYear"></span> WORKSPACE // Digital Hub. All Rights Reserved.</p>
     </div>
   </footer>
 
   <script>
-    let currentFilter = 'trending';
-    let currentTag = '';
-    let isShowingSaved = false;
-    let savedIds = new Set();
-    let memes = [];
+    // Set dynamic year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-    const adTemplates = [
-      {
-        badge: "SPONSOR",
-        title: "Keep MemePoint Running",
-        desc: "MemePoint runs 100% free with community donations. Help keep domain and bandwidth active.",
-        buttonText: "Support Us",
-        link: "donate.html",
-        icon: "heart"
-      },
-      {
-        badge: "AD SPACE",
-        title: "Promote Your Project",
-        desc: "Reach thousands of meme lovers, developers, and web enthusiasts directly on the feed.",
-        buttonText: "Inquire Spot",
-        link: "donate.html",
-        icon: "megaphone"
-      },
-      {
-        badge: "COMMUNITY",
-        title: "Got Dank Media?",
-        desc: "Join creators sharing original templates, GIFs, and clips with zero algorithms.",
-        buttonText: "Post a Meme",
-        link: "post.html",
-        icon: "plus"
-      }
-    ];
+    // Mobile Navigation Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
 
-    function init() {
-      try {
-        const storedSaved = localStorage.getItem('mp_saved');
-        if (storedSaved) savedIds = new Set(JSON.parse(storedSaved));
+    // Close mobile menu on anchor click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
 
-        const storedPosts = localStorage.getItem('memepoint_posts');
-        if (storedPosts) {
-          memes = JSON.parse(storedPosts);
-          if (!Array.isArray(memes)) memes = [];
-        } else {
-          memes = [];
-        }
-      } catch (err) {
-        memes = [];
-      }
+    // Portfolio Category Filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
 
-      updateSavedBadge();
-      renderTagPills();
-      renderFeed();
-      lucide.createIcons();
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active states
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-electric-accent', 'text-obsidian-950', 'active-filter', 'font-semibold', 'shadow');
+          b.classList.add('text-slate-400');
+        });
+        
+        // Add active state to clicked button
+        btn.classList.add('bg-electric-accent', 'text-obsidian-950', 'active-filter', 'font-semibold', 'shadow');
+        btn.classList.remove('text-slate-400');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filterValue === 'all' || category === filterValue) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Animated Numbers Counter on Load / Scroll
+    let animated = false;
+    const counters = document.querySelectorAll('.counter');
+    
+    function runCounters() {
+      if (animated) return;
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const step = Math.ceil(target / 40);
+        
+        const updateCount = () => {
+          count += step;
+          if (count < target) {
+            counter.innerText = count.toLocaleString();
+            requestAnimationFrame(updateCount);
+          } else {
+            counter.innerText = target.toLocaleString() + (target === 99 ? "%" : "+");
+          }
+        };
+        updateCount();
+      });
+      animated = true;
     }
 
-    function renderTagPills() {
-      const container = document.getElementById('dynamicTagsList');
-      if (!container) return;
+    // Trigger counters
+    window.addEventListener('DOMContentLoaded', runCounters);
 
-      const tagMap = new Map();
-      memes.forEach(m => {
-        if (Array.isArray(m.tags)) {
-          m.tags.forEach(t => {
-            const clean = t.trim().toLowerCase().replace(/^#/, '');
-            if (clean) tagMap.set(clean, (tagMap.get(clean) || 0) + 1);
-          });
-        }
+    // Modal Details Database
+    const projectData = {
+      aether: {
+        title: "Aether: WebGL Reactive Audio Visualizer",
+        category: "Dev & Web Architecture",
+        desc: "A pure client-side audio visualizer running on WebGL shaders. Converts local microphone feeds or audio uploads into FFT (Fast Fourier Transform) frequency arrays, deforming thousands of geometry vertices in real-time at a locked 60 FPS.",
+        tags: ["Three.js", "WebAudio API", "GLSL Shaders", "ES6 Modules", "Zero Dependencies"]
+      },
+      chassis: {
+        title: "Chassis V9: Hard-Surface Mech Frame",
+        category: "3D & Blender Pipeline",
+        desc: "Fully procedural hard surface modeling using non-destructive geometry node pipelines in Blender. Designed with clean topology suitable for game engines and cinematic offline raytracing with Cycles X.",
+        tags: ["Blender 4.2", "Geometry Nodes", "Procedural Materials", "4K Textures", "Subdivision Topology"]
+      },
+      chronos: {
+        title: "Chronos: Kinetic Esports Launch Reel",
+        category: "Video & Motion Sequence",
+        desc: "High-octane commercial motion cut featuring synchronized beat snapping, custom chromatic aberration displacement, 3D camera tracking typography, and hand-crafted sound foley pass.",
+        tags: ["After Effects", "Premiere Pro", "Kinetic Typography", "Sound Design", "Audio Beat Sync"]
+      },
+      streamsqueeze: {
+        title: "StreamSqueeze: Lossless Web Batch Transcoder",
+        category: "Creator Utility & CLI",
+        desc: "CLI utility designed for video editors to batch-process 4K ProRes captures down into multi-bitrate AV1 & WebM streams, saving gigabytes of static storage space while retaining maximum visual clarity.",
+        tags: ["Python 3", "FFmpeg", "Shell Scripting", "AV1 Codec", "Web Optimization"]
+      },
+      zerohost: {
+        title: "ZeroHost: Single-Bundle Site Template",
+        category: "Dev & Web Architecture",
+        desc: "Modern zero-cost static website baseline engineered to run indefinitely on GitHub Pages or Cloudflare Pages with no paid subscriptions, auto-renewing Let's Encrypt certificates, and full responsiveness.",
+        tags: ["Single File HTML", "Tailwind CSS", "Vanilla JavaScript", "SEO Optimized", "Zero Cost Host"]
+      },
+      cosmic: {
+        title: "Cosmic Void: Deep Space Shader Rig",
+        category: "3D & Blender Pipeline",
+        desc: "Lightweight space environment simulation without high-resolution external texture maps. Employs procedural mathematical noise textures and volumetric density fields for customizable skyboxes.",
+        tags: ["Volumetric Shader", "Procedural Math", "Eevee Next", "Blender Shading", "Real-Time 3D"]
+      }
+    };
+
+    // Modal Control Functions
+    const modal = document.getElementById('projectModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalDesc = document.getElementById('modalDescription');
+    const modalTags = document.getElementById('modalTags');
+    const modalMediaLabel = document.getElementById('modalMediaLabel');
+
+    function openModal(projectId) {
+      const data = projectData[projectId];
+      if (!data) return;
+
+      modalTitle.textContent = data.title;
+      modalCategory.textContent = data.category;
+      modalDesc.textContent = data.desc;
+      modalMediaLabel.textContent = `Streaming asset preview: ${data.title}`;
+
+      // Clear & render tags
+      modalTags.innerHTML = '';
+      data.tags.forEach(tag => {
+        const tagEl = document.createElement('span');
+        tagEl.className = 'px-2.5 py-1 rounded-md bg-obsidian-850 text-slate-300 font-mono text-xs border border-obsidian-700';
+        tagEl.textContent = tag;
+        modalTags.appendChild(tagEl);
       });
 
-      const topTags = Array.from(tagMap.entries())
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 8)
-        .map(entry => entry[0]);
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
 
-      if (topTags.length === 0) {
-        container.innerHTML = '';
-        return;
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Copy to clipboard helper
+    function copyToClipboard(text, buttonElement) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      const label = buttonElement.querySelector('.copy-label');
+      if (label) {
+        const originalText = label.textContent;
+        label.textContent = 'Copied!';
+        label.classList.add('text-emerald-400');
+        setTimeout(() => {
+          label.textContent = originalText;
+          label.classList.remove('text-emerald-400');
+        }, 2000);
       }
+    }
 
-      container.innerHTML = `
-        <span class="text-[11px] text-neutral-500 uppercase font-mono mr-1 flex-shrink-0">TAGS:</span>
-        ${topTags.map(tag => `
-          <button onclick="filterByClickedTag('${escapeAttr(tag)}')" class="flex-shrink-0 px-2.5 py-1 rounded-md bg-[#0f1218] hover:bg-[#161a24] border border-white/10 text-neutral-300 hover:text-white transition-all text-xs">
-            #${escapeHtml(tag)}
-          </button>
-        `).join('')}
+    // Client-side Contact Form Handler
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const alertBox = document.getElementById('formSuccessAlert');
+
+      // Visual feedback
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-obsidian-950 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span>Transmitting...</span>
       `;
+
+      setTimeout(() => {
+        alertBox.classList.remove('hidden');
+        submitBtn.innerHTML = `<span>Sent Successfully</span>`;
+        submitBtn.classList.remove('bg-electric-accent');
+        submitBtn.classList.add('bg-emerald-400');
+        document.getElementById('contactForm').reset();
+      }, 700);
     }
-
-    function setFilter(type) {
-      currentFilter = type;
-      isShowingSaved = false;
-      updateFilterTabs();
-      renderFeed();
-    }
-
-    function updateFilterTabs() {
-      const tabs = ['trending', 'new', 'og', 'clicks'];
-      tabs.forEach(t => {
-        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
-        if (!btn) return;
-        if (t === currentFilter && !isShowingSaved) {
-          btn.className = "tab-active px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
-        } else {
-          btn.className = "tab-idle px-3 py-1.5 text-xs font-semibold rounded-md transition-all";
-        }
-      });
-
-      const saveBtn = document.getElementById('savedToggleBtn');
-      const saveIcon = document.getElementById('savedIcon');
-      if (isShowingSaved) {
-        saveBtn.className = "flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/20 border border-white/30 text-xs text-white transition-all";
-        saveIcon.className = "w-3.5 h-3.5 fill-current text-white";
-      } else {
-        saveBtn.className = "flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs text-neutral-300 transition-all";
-        saveIcon.className = "w-3.5 h-3.5 text-neutral-400";
-      }
-    }
-
-    function toggleSavedFilter() {
-      isShowingSaved = !isShowingSaved;
-      updateFilterTabs();
-      renderFeed();
-    }
-
-    function updateSavedBadge() {
-      const badge = document.getElementById('savedCountBadge');
-      if (!badge) return;
-      if (savedIds.size > 0) {
-        badge.innerText = savedIds.size;
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
-      }
-    }
-
-    function handleTagSearch(val) {
-      currentTag = val.trim().toLowerCase().replace(/^#/, '');
-      const clearBtn = document.getElementById('clearSearchBtn');
-      const banner = document.getElementById('activeTagBanner');
-      const bannerVal = document.getElementById('activeTagValue');
-
-      if (currentTag) {
-        clearBtn.classList.remove('hidden');
-        banner.classList.remove('hidden');
-        banner.classList.add('flex');
-        bannerVal.innerText = '#' + currentTag;
-      } else {
-        clearBtn.classList.add('hidden');
-        banner.classList.add('hidden');
-        banner.classList.remove('flex');
-      }
-      renderFeed();
-    }
-
-    function clearSearch() {
-      const input = document.getElementById('tagSearchInput');
-      input.value = '';
-      currentTag = '';
-      document.getElementById('clearSearchBtn').classList.add('hidden');
-      document.getElementById('activeTagBanner').classList.add('hidden');
-      document.getElementById('activeTagBanner').classList.remove('flex');
-      renderFeed();
-    }
-
-    function filterByClickedTag(tag) {
-      const input = document.getElementById('tagSearchInput');
-      input.value = '#' + tag;
-      handleTagSearch(tag);
-    }
-
-    function toggleSave(id, e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      if (savedIds.has(id)) {
-        savedIds.delete(id);
-      } else {
-        savedIds.add(id);
-      }
-      localStorage.setItem('mp_saved', JSON.stringify(Array.from(savedIds)));
-      updateSavedBadge();
-      renderFeed();
-    }
-
-    function recordClickAndOpen(id) {
-      const meme = memes.find(m => String(m.id) === String(id));
-      if (meme) {
-        meme.clicks = (meme.clicks || 0) + 1;
-        localStorage.setItem('memepoint_posts', JSON.stringify(memes));
-      }
-      window.location.href = `entry.html?id=${id}`;
-    }
-
-    function renderFeed() {
-      const grid = document.getElementById('memeGrid');
-      const empty = document.getElementById('emptyView');
-      const emptyClearBtn = document.getElementById('emptyClearBtn');
-
-      let list = [...memes];
-
-      if (isShowingSaved) {
-        list = list.filter(m => savedIds.has(String(m.id)));
-      }
-
-      if (currentTag) {
-        list = list.filter(m => {
-          if (!m.tags || !Array.isArray(m.tags)) return false;
-          return m.tags.some(t => t.toLowerCase().replace(/^#/, '').includes(currentTag));
-        });
-      }
-
-      if (currentFilter === 'trending') {
-        list.sort((a, b) => {
-          const scoreB = (b.clicks || 0) * 1.5 + (b.createdAt || 0) / 100000000;
-          const scoreA = (a.clicks || 0) * 1.5 + (a.createdAt || 0) / 100000000;
-          return scoreB - scoreA;
-        });
-      } else if (currentFilter === 'new') {
-        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-      } else if (currentFilter === 'og') {
-        list.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-      } else if (currentFilter === 'clicks') {
-        list.sort((a, b) => (b.clicks || 0) - (a.clicks || 0));
-      }
-
-      if (list.length === 0) {
-        grid.innerHTML = '';
-        empty.classList.remove('hidden');
-        empty.classList.add('flex');
-        if (currentTag || isShowingSaved) {
-          emptyClearBtn.classList.remove('hidden');
-        } else {
-          emptyClearBtn.classList.add('hidden');
-        }
-        return;
-      }
-
-      empty.classList.add('hidden');
-      empty.classList.remove('flex');
-
-      let cardsHtml = [];
-      let adIndex = 0;
-
-      list.forEach((m, idx) => {
-        const isSaved = savedIds.has(String(m.id));
-        const tags = (m.tags || []).map(t => {
-          const cleanTag = t.replace(/^#/, '');
-          return `<button type="button" onclick="event.stopPropagation(); filterByClickedTag('${escapeAttr(cleanTag)}')" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white transition-all">#${escapeHtml(cleanTag)}</button>`;
-        }).join('');
-
-        let mediaHtml = '';
-        if (m.type === 'video' || (m.url && m.url.match(/\.(mp4|webm|ogg)$/i))) {
-          mediaHtml = `
-            <div class="relative w-full aspect-video bg-black/40 overflow-hidden">
-              <video src="${m.url}" controls class="w-full h-full object-contain" preload="metadata"></video>
-            </div>
-          `;
-        } else {
-          mediaHtml = `
-            <div class="relative w-full aspect-video bg-black/20 overflow-hidden">
-              <img 
-                src="${m.url}" 
-                alt="${escapeAttr(m.title || 'Meme')}" 
-                loading="lazy" 
-                class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
-                onerror="this.onerror=null; this.src='https://placehold.co/600x400/0d0f14/525252?text=Unavailable';"
-              />
-            </div>
-          `;
-        }
-
-        cardsHtml.push(`
-          <article onclick="recordClickAndOpen('${m.id}')" class="meme-card rounded-xl overflow-hidden flex flex-col cursor-pointer group">
-            ${mediaHtml}
-            <div class="p-3.5 flex flex-col flex-1 gap-2.5">
-              <div class="flex items-start justify-between gap-2">
-                <h2 class="text-xs font-medium text-neutral-200 line-clamp-2 leading-relaxed tracking-tight group-hover:text-white transition-colors">
-                  ${escapeHtml(m.title || 'Untitled Meme')}
-                </h2>
-                <button 
-                  type="button"
-                  onclick="toggleSave('${m.id}', event)" 
-                  title="${isSaved ? 'Remove bookmark' : 'Bookmark meme'}"
-                  class="p-1 rounded-md text-neutral-400 hover:text-white hover:bg-white/5 transition-all flex-shrink-0">
-                  <i data-lucide="bookmark" class="w-3.5 h-3.5 ${isSaved ? 'text-white fill-current' : ''}"></i>
-                </button>
-              </div>
-
-              <div class="flex flex-wrap gap-1 mt-auto pt-1">
-                ${tags}
-              </div>
-
-              <div class="flex items-center justify-between text-[11px] text-neutral-500 border-t border-white/5 pt-2">
-                <span class="flex items-center gap-1 font-mono text-neutral-400">
-                  <i data-lucide="mouse-pointer-2" class="w-3 h-3 text-neutral-500"></i>
-                  ${m.clicks || 0} clicks
-                </span>
-                <span class="text-neutral-500">${m.createdAt ? new Date(m.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</span>
-              </div>
-            </div>
-          </article>
-        `);
-
-        if ((idx + 1) % 6 === 0) {
-          const ad = adTemplates[adIndex % adTemplates.length];
-          adIndex++;
-          cardsHtml.push(`
-            <aside class="ad-card rounded-xl p-5 flex flex-col justify-between relative overflow-hidden min-h-[300px]">
-              <div class="flex items-center justify-between">
-                <span class="text-[9px] font-mono tracking-widest text-neutral-400 uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/10">
-                  ${ad.badge}
-                </span>
-                <i data-lucide="${ad.icon}" class="w-4 h-4 text-neutral-500"></i>
-              </div>
-
-              <div class="my-auto py-4 text-center">
-                <div class="w-10 h-10 mx-auto rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-neutral-300 mb-3 shadow-inner">
-                  <i data-lucide="${ad.icon}" class="w-5 h-5 text-emerald-400"></i>
-                </div>
-                <h3 class="text-xs font-semibold text-neutral-200">${ad.title}</h3>
-                <p class="text-[11px] text-neutral-400 mt-1.5 leading-relaxed max-w-[240px] mx-auto">
-                  ${ad.desc}
-                </p>
-              </div>
-
-              <a href="${ad.link}" class="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-medium text-white transition-all">
-                <span>${ad.buttonText}</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-              </a>
-            </aside>
-          `);
-        }
-      });
-
-      grid.innerHTML = cardsHtml.join('');
-      lucide.createIcons();
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function escapeAttr(str) {
-      if (!str) return '';
-      return String(str).replace(/"/g, '&quot;');
-    }
-
-    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
