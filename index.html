@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEXUS // Engineering & Motion Lab</title>
+  <title>AETHERIA // Imperial Archive & Star Codex</title>
 
-  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <!-- Google Fonts: Cinzel Decorative, Cormorant Garamond, and Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,24 +19,30 @@
       theme: {
         extend: {
           colors: {
-            obsidian: {
-              950: '#060709',
-              900: '#090a0f',
-              850: '#0e1118',
-              800: '#141824',
-              700: '#1f2537',
-              600: '#2d354d',
+            void: {
+              950: '#040508',
+              900: '#080b12',
+              850: '#0e121d',
+              800: '#141a29',
+              700: '#1f273d',
+              600: '#2b3652',
             },
-            accent: {
+            celestial: {
+              gold: '#f59e0b',
+              amber: '#d97706',
+              light: '#fef3c7',
+            },
+            astral: {
+              violet: '#8b5cf6',
+              purple: '#a78bfa',
+              indigo: '#6366f1',
               cyan: '#38bdf8',
-              blue: '#60a5fa',
-              purple: '#a855f7',
-              emerald: '#10b981',
             }
           },
           fontFamily: {
-            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            serif: ['"Cinzel"', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif'],
+            lore: ['"Cormorant Garamond"', 'serif'],
           }
         }
       }
@@ -49,503 +55,526 @@
       width: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #060709;
+      background: #040508;
     }
     ::-webkit-scrollbar-thumb {
-      background: #1f2537;
+      background: #1f273d;
       border-radius: 999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #38bdf8;
+      background: #f59e0b;
     }
 
-    /* Subtle grid pattern */
-    .bg-grid {
-      background-size: 40px 40px;
+    /* Ambient starfield grid pattern */
+    .bg-starlight {
+      background-size: 60px 60px;
       background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(to right, rgba(245, 158, 11, 0.02) 1px, transparent 1px);
     }
 
-    /* Ambient card border glow */
-    .neo-border {
-      position: relative;
-      background: #0e1118;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Celestial Card Borders */
+    .celestial-card {
+      background: rgba(14, 18, 29, 0.75);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .neo-border:hover {
-      border-color: rgba(56, 189, 248, 0.4);
-      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.8), 0 0 20px -3px rgba(56, 189, 248, 0.15);
-      transform: translateY(-2px);
+    .celestial-card:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(245, 158, 11, 0.12);
+      transform: translateY(-3px);
     }
 
-    .shimmer-text {
-      background: linear-gradient(110deg, #f8fafc 20%, #94a3b8 40%, #f8fafc 60%, #38bdf8 80%);
-      background-size: 200% auto;
-      color: transparent;
+    /* Shimmer Gold Gradient Header */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fffbeb 0%, #fde68a 30%, #f59e0b 60%, #b45309 100%);
       -webkit-background-clip: text;
-      animation: shimmer 8s linear infinite;
+      -webkit-text-fill-color: transparent;
     }
 
-    @keyframes shimmer {
-      to { background-position: 200% center; }
+    .amethyst-gradient-text {
+      background: linear-gradient(135deg, #f5d0fe 0%, #c084fc 40%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Star pulse animations */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.08); }
+    }
+    .glow-pulse {
+      animation: pulseGlow 6s infinite ease-in-out;
     }
   </style>
 </head>
 
-<body class="bg-obsidian-950 text-slate-200 font-sans antialiased min-h-screen selection:bg-accent-cyan selection:text-obsidian-950 relative overflow-x-hidden">
+<body class="bg-void-950 text-slate-200 font-body antialiased min-h-screen selection:bg-celestial-gold selection:text-void-950 relative overflow-x-hidden">
 
   <!-- Ambient Light Orbs -->
   <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[400px] bg-accent-cyan/8 rounded-full blur-[140px]"></div>
-    <div class="absolute top-[35%] -left-32 w-[500px] h-[450px] bg-accent-purple/5 rounded-full blur-[160px]"></div>
-    <div class="absolute top-[65%] -right-32 w-[550px] h-[400px] bg-accent-blue/6 rounded-full blur-[160px]"></div>
-    <div class="absolute inset-0 bg-grid opacity-75"></div>
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[500px] bg-celestial-gold/5 rounded-full blur-[160px] glow-pulse"></div>
+    <div class="absolute top-[40%] -left-32 w-[600px] h-[550px] bg-astral-violet/6 rounded-full blur-[170px]"></div>
+    <div class="absolute top-[70%] -right-32 w-[650px] h-[550px] bg-astral-cyan/5 rounded-full blur-[180px]"></div>
+    <div class="absolute inset-0 bg-starlight opacity-80"></div>
   </div>
 
-  <header class="fixed top-0 inset-x-0 z-40 bg-obsidian-950/80 backdrop-blur-xl border-b border-white/[0.06]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <!-- Primary Imperial Header -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-void-950/85 backdrop-blur-xl border-b border-celestial-gold/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
-      <!-- Brand Logo -->
-      <a href="#hero" class="flex items-center gap-2.5 group">
-        <div class="w-8 h-8 rounded-lg bg-obsidian-850 border border-white/10 group-hover:border-accent-cyan/60 flex items-center justify-center transition-colors">
-          <svg class="w-4 h-4 text-accent-cyan transition-transform group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      <!-- Brand Crest -->
+      <a href="#prologue" class="flex items-center gap-3.5 group">
+        <div class="w-10 h-10 rounded-full bg-void-850 border border-celestial-gold/30 group-hover:border-celestial-gold flex items-center justify-center transition-all duration-500 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+          <svg class="w-5 h-5 text-celestial-gold transition-transform group-hover:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v18M3 12h18"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor"/>
           </svg>
         </div>
-        <div class="flex items-center gap-1.5 font-bold tracking-tight text-white text-sm">
-          <span>NEXUS</span>
-          <span class="font-mono text-[10px] uppercase px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400">LAB</span>
+        <div>
+          <div class="font-serif font-bold tracking-widest text-sm text-slate-100 group-hover:text-celestial-gold transition-colors">
+            AETHERIA
+          </div>
+          <div class="text-[9px] font-sans tracking-[0.25em] text-celestial-gold/80 uppercase">
+            Imperial Star Codex
+          </div>
         </div>
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-7 text-xs font-mono">
-        <a href="#vault" class="text-slate-400 hover:text-white transition-colors">// Vault</a>
-        <a href="#reels" class="text-slate-400 hover:text-white transition-colors">// Media Reel</a>
-        <a href="#stack" class="text-slate-400 hover:text-white transition-colors">// Stack</a>
-        <a href="#console" class="text-slate-400 hover:text-white transition-colors">// Terminal</a>
-        <a href="#contact" class="text-slate-400 hover:text-white transition-colors">// Contact</a>
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden lg:flex items-center gap-8 text-xs uppercase tracking-widest font-semibold text-slate-400">
+        <a href="#starmap" class="hover:text-celestial-gold transition-colors">Astrogation Map</a>
+        <a href="#codex" class="hover:text-celestial-gold transition-colors">Archive Vault</a>
+        <a href="#chronicles" class="hover:text-celestial-gold transition-colors">Epoch Timeline</a>
+        <a href="#factions" class="hover:text-celestial-gold transition-colors">Great Houses</a>
+        <a href="#scribe" class="hover:text-celestial-gold transition-colors">Scribe Chamber</a>
       </nav>
 
-      <!-- Availability Badge & CTA -->
-      <div class="flex items-center gap-3">
-        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-obsidian-850 border border-accent-emerald/30 text-accent-emerald text-[11px] font-mono">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-emerald opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-emerald"></span>
+      <!-- Atmospheric Drone Toggle & Star Sector Status -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Ambient Sound Synthesizer Button -->
+        <button id="audioToggleBtn" onclick="toggleAtmosphereAudio()" class="px-3 py-1.5 rounded-full bg-void-850 border border-celestial-gold/30 hover:border-celestial-gold text-slate-300 hover:text-celestial-gold transition-all text-xs flex items-center gap-2">
+          <span id="audioWaveIcon" class="relative flex h-2 w-2">
+            <span class="inline-flex rounded-full h-2 w-2 bg-slate-500"></span>
           </span>
-          <span>Available Q4</span>
-        </div>
-        <a href="#contact" class="px-3.5 py-1.5 rounded-lg bg-white text-obsidian-950 hover:bg-accent-cyan transition-colors text-xs font-semibold tracking-wide">
-          Connect
+          <span id="audioLabel" class="text-[11px] tracking-wide">Atmosphere: Off</span>
+        </button>
+
+        <a href="#codex" class="hidden sm:inline-flex px-4 py-2 rounded-lg bg-gradient-to-r from-celestial-gold to-celestial-amber text-void-950 font-serif font-bold text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.25)]">
+          Open Dossiers
         </a>
       </div>
 
     </div>
   </header>
 
-  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 space-y-24">
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 space-y-32">
 
-    <!-- Hero -->
-    <section id="hero" class="pt-10 md:pt-16 pb-6 max-w-4xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-obsidian-850 border border-white/10 text-[11px] font-mono text-slate-400 mb-6">
-        <span class="h-1.5 w-1.5 rounded-full bg-accent-cyan"></span>
-        <span>Independent Developer & Digital Artist</span>
-        <span class="text-slate-600">•</span>
-        <span class="text-accent-cyan font-medium">Free Static Hosting Ready</span>
+    <section id="prologue" class="pt-8 md:pt-16 max-w-4xl">
+      <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-void-900 border border-celestial-gold/30 text-xs font-serif text-celestial-light mb-8 shadow-inner">
+        <span class="h-2 w-2 rounded-full bg-celestial-gold animate-ping"></span>
+        <span class="tracking-widest uppercase text-[10px]">Imperial Epoch 4,812 // Zenith Cycle</span>
+        <span class="text-slate-600">✦</span>
+        <span class="text-slate-400 font-sans text-[11px]">Omni-Sector 9</span>
       </div>
 
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-6">
-        Building high-fidelity <br>
-        <span class="shimmer-text">code, visuals & motion.</span>
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight leading-[1.08] mb-6">
+        The Shattered Stars & <br>
+        <span class="gold-gradient-text">Eternal Sovereignty.</span>
       </h1>
 
-      <p class="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed mb-8">
-        Crafting scalable web systems, cinematic 3D renders, and kinetic editorial media. Engineered with zero external bloat, optimal performance, and single-file portability.
+      <p class="font-lore text-xl sm:text-2xl text-slate-300 leading-relaxed italic mb-8 max-w-3xl">
+        "Before the Celestial Veil fractured, ten thousand spires sang across the firmament. Now, only the Archivists guard the remaining fragments of solar fire and obsidian dynastic memories."
       </p>
 
-      <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
-        <a href="#vault" class="px-5 py-3 rounded-lg bg-accent-cyan text-obsidian-950 font-bold hover:bg-sky-300 transition-colors flex items-center gap-2">
-          <span>Explore Vault</span>
-          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      <p class="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl mb-10 font-light">
+        Welcome to the central repository of Aetheria. Explore uncharted planetary sectors, decrypt primeval artifacts, and unravel the biographies of rulers who shaped civilizations across the Solar Rift.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="#starmap" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-celestial-gold to-amber-500 text-void-950 font-serif font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_30px_rgba(245,158,11,0.4)] transition-all flex items-center gap-2.5">
+          <span>Survey Star Constellations</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
           </svg>
         </a>
-        <a href="#console" class="px-5 py-3 rounded-lg bg-obsidian-850 border border-white/10 text-slate-300 hover:border-white/30 transition-colors flex items-center gap-2">
-          <span class="text-accent-cyan">$</span>
-          <span>Launch CLI</span>
+        <a href="#chronicles" class="px-6 py-3.5 rounded-xl bg-void-850 border border-white/10 hover:border-celestial-gold/50 text-slate-200 transition-all font-serif text-xs uppercase tracking-widest flex items-center gap-2">
+          <span>Read The Great Epochs</span>
         </a>
       </div>
     </section>
 
-    <section id="vault" class="scroll-mt-24">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+    <section id="starmap" class="scroll-mt-24 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div class="text-accent-cyan font-mono text-xs uppercase tracking-widest mb-1">// Vault Works</div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Curated Deployments & Systems</h2>
+          <div class="text-xs font-serif uppercase tracking-[0.25em] text-celestial-gold mb-1">Sector Astrogation</div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-100">Interactive Firmament Navigator</h2>
         </div>
-
-        <!-- Filter Controls -->
-        <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-obsidian-900 border border-white/10 text-xs font-mono">
-          <button data-filter="all" class="vault-filter-btn px-3 py-1.5 rounded-lg bg-white text-obsidian-950 font-semibold transition-all">All</button>
-          <button data-filter="web" class="vault-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Web & Apps</button>
-          <button data-filter="motion" class="vault-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Motion & Edit</button>
-          <button data-filter="3d" class="vault-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">3D Pipeline</button>
+        <div class="text-xs text-slate-400 font-sans flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-celestial-gold"></span>
+          <span>Click any nexus star node to uncover realm dossiers</span>
         </div>
       </div>
 
-      <!-- Grid of Projects -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="vaultGrid">
+      <!-- Canvas Star Grid Container -->
+      <div class="celestial-card rounded-2xl p-6 relative overflow-hidden border border-celestial-gold/20 shadow-2xl">
+        <div class="relative w-full h-[400px] sm:h-[480px] bg-void-950/90 rounded-xl overflow-hidden flex items-center justify-center">
+          <canvas id="starMapCanvas" class="w-full h-full block cursor-crosshair"></canvas>
 
-        <!-- Card 1: Web Engine -->
-        <div class="vault-card neo-border rounded-xl p-5 flex flex-col justify-between" data-category="web">
-          <div>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-              <span class="px-2 py-0.5 rounded bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan font-semibold">Web System</span>
-              <span>2026.04</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2">PulseSync: WebGL Shader Engine</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Real-time reactive visualizer linking WebAudio spectral analysis with GLSL fragment vertex shaders. Zero server overhead.
-            </p>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-300 mb-6">
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">JavaScript</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Three.js</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">GLSL</span>
-            </div>
+          <!-- Floating Map HUD Overlay -->
+          <div class="absolute top-4 left-4 pointer-events-none bg-void-900/80 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 text-xs">
+            <div class="text-[10px] text-celestial-gold uppercase tracking-widest font-serif font-bold">Astrolabe Gauge</div>
+            <div id="hudCoordinates" class="text-slate-300 font-mono text-[11px] mt-0.5">RA 18h 42m // DEC +32° 14'</div>
           </div>
-          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <button onclick="openModal('pulsesync')" class="text-accent-cyan hover:underline">Inspect Specs &rarr;</button>
-            <span class="text-slate-500">60 FPS Locked</span>
+
+          <div class="absolute bottom-4 right-4 pointer-events-none bg-void-900/80 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 text-right">
+            <div class="text-[10px] text-astral-purple uppercase tracking-widest font-serif font-bold">Surveyed Nodes</div>
+            <div class="text-slate-300 font-mono text-[11px] mt-0.5">6 Principal Sovereign Stars</div>
           </div>
         </div>
 
-        <!-- Card 2: 3D Asset -->
-        <div class="vault-card neo-border rounded-xl p-5 flex flex-col justify-between" data-category="3d">
-          <div>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-              <span class="px-2 py-0.5 rounded bg-accent-purple/10 border border-accent-purple/20 text-accent-purple font-semibold">3D Modeling</span>
-              <span>Cycles X</span>
+        <!-- Selected Star Information Card below canvas -->
+        <div id="starDetailPanel" class="mt-4 p-4 rounded-xl bg-void-900 border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all">
+          <div class="flex items-center gap-4">
+            <div id="starColorOrb" class="w-10 h-10 rounded-full bg-celestial-gold/20 border border-celestial-gold flex items-center justify-center text-celestial-gold font-serif font-bold text-sm">
+              ✦
             </div>
-            <h3 class="text-lg font-bold text-white mb-2">AeroKinetics Hard-Surface Rig</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Procedurally generated robotics joint mechanisms built using non-destructive geometry nodes, baked metallic maps, and clean edge loops.
-            </p>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-300 mb-6">
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Blender 4.x</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Geometry Nodes</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Procedural</span>
+            <div>
+              <h4 id="starDetailName" class="text-base font-serif font-bold text-slate-100">Sol-Aethel Citadel</h4>
+              <p id="starDetailLore" class="text-xs text-slate-400 font-lore italic text-[15px]">The ancestral throne world orbiting a dual sapphire binary star.</p>
             </div>
           </div>
-          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <button onclick="openModal('aerokinetics')" class="text-accent-cyan hover:underline">Inspect Specs &rarr;</button>
-            <span class="text-slate-500">CC0 Asset</span>
-          </div>
+          <button id="starInspectBtn" onclick="inspectSelectedNode()" class="px-4 py-2 rounded-lg bg-void-800 border border-celestial-gold/40 hover:border-celestial-gold text-celestial-gold font-serif text-xs uppercase tracking-wider transition-all whitespace-nowrap">
+            Open Star Lore Dossier &rarr;
+          </button>
         </div>
-
-        <!-- Card 3: Motion -->
-        <div class="vault-card neo-border rounded-xl p-5 flex flex-col justify-between" data-category="motion">
-          <div>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-              <span class="px-2 py-0.5 rounded bg-accent-blue/10 border border-accent-blue/20 text-accent-blue font-semibold">Motion Reel</span>
-              <span>120 FPS Cut</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2">Vektor Launch Teaser Reel</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              High-intensity kinetic typography and rhythmic montage sequencing with chromatic displacement and tailored audio foley.
-            </p>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-300 mb-6">
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Premiere Pro</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">After Effects</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Sound Design</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <button onclick="openModal('vektor')" class="text-accent-cyan hover:underline">Inspect Specs &rarr;</button>
-            <span class="text-slate-500">Commercial Cut</span>
-          </div>
-        </div>
-
-        <!-- Card 4: Web Tool -->
-        <div class="vault-card neo-border rounded-xl p-5 flex flex-col justify-between" data-category="web">
-          <div>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-              <span class="px-2 py-0.5 rounded bg-accent-cyan/10 border border-accent-cyan/20 text-accent-cyan font-semibold">CLI & Web</span>
-              <span>Open Source</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2">GhostHost: Single-Bundle Boilerplate</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Zero-dependency static application framework designed explicitly for 100/100 Core Web Vitals on GitHub Pages and Cloudflare DNS.
-            </p>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-300 mb-6">
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Semantic HTML</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Tailwind</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Vanilla JS</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <button onclick="openModal('ghosthost')" class="text-accent-cyan hover:underline">Inspect Specs &rarr;</button>
-            <span class="text-slate-500">Zero Cost</span>
-          </div>
-        </div>
-
-        <!-- Card 5: Motion Cut -->
-        <div class="vault-card neo-border rounded-xl p-5 flex flex-col justify-between" data-category="motion">
-          <div>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-              <span class="px-2 py-0.5 rounded bg-accent-blue/10 border border-accent-blue/20 text-accent-blue font-semibold">Broadcast Edit</span>
-              <span>4K Delivery</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2">Cybernetic HUD Interface Rig</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Modular 2D/3D user interface overlays, oscilloscope counters, telemetry meters, and track matte transitions for digital broadcasts.
-            </p>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-300 mb-6">
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">After Effects</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Illustrator</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">MoGraph</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <button onclick="openModal('hud')" class="text-accent-cyan hover:underline">Inspect Specs &rarr;</button>
-            <span class="text-slate-500">Overlay Pack</span>
-          </div>
-        </div>
-
-        <!-- Card 6: 3D Environment -->
-        <div class="vault-card neo-border rounded-xl p-5 flex flex-col justify-between" data-category="3d">
-          <div>
-            <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
-              <span class="px-2 py-0.5 rounded bg-accent-purple/10 border border-accent-purple/20 text-accent-purple font-semibold">Environment</span>
-              <span>Eevee Next</span>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-2">Neon Monolith: Sci-Fi Chamber</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-4">
-              Real-time atmospheric interior render with raytraced subsurface scattering, volumetric fog scattering, and metallic reflections.
-            </p>
-            <div class="flex flex-wrap gap-1.5 font-mono text-[10px] text-slate-300 mb-6">
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Blender Shaders</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Volumetrics</span>
-              <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-white/5">Lighting Rig</span>
-            </div>
-          </div>
-          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <button onclick="openModal('monolith')" class="text-accent-cyan hover:underline">Inspect Specs &rarr;</button>
-            <span class="text-slate-500">Asset File</span>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <section id="reels" class="scroll-mt-24">
-      <div class="text-accent-cyan font-mono text-xs uppercase tracking-widest mb-1">// Media & Video Studio</div>
-      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-8">Video Reel & High-Density Clips</h2>
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Large Hero Reel Player Simulation -->
-        <div class="lg:col-span-2 neo-border rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between min-h-[340px]">
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/60 to-transparent z-10 pointer-events-none"></div>
-          <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity hover:scale-105 transition-transform duration-700" style="background-image: url('https://placehold.co/900x500/090a0f/38bdf8?text=Motion+Showreel+2026');"></div>
-
-          <div class="relative z-20 flex justify-between items-start">
-            <span class="px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-md border border-white/10 text-white font-mono text-[11px]">Primary Reel [01:24]</span>
-            <span class="text-xs font-mono text-slate-300">4K • 60 FPS</span>
-          </div>
-
-          <div class="relative z-20 space-y-4">
-            <div>
-              <h3 class="text-xl sm:text-2xl font-bold text-white mb-1">Kinetic Editing & Motion Reel</h3>
-              <p class="text-xs sm:text-sm text-slate-300 max-w-lg">Compilation of high-velocity pacing, audio-sync slicing, 3D tracking, and commercial color science.</p>
-            </div>
-
-            <div class="flex items-center gap-3">
-              <button onclick="openVideoPlayer('Motion Showreel 2026', 'High-energy compilation of editing, 3D renders, and dynamic typography.')" class="px-4 py-2.5 rounded-lg bg-accent-cyan text-obsidian-950 font-bold font-mono text-xs flex items-center gap-2 hover:bg-white transition-colors">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                <span>Launch Interactive Player</span>
-              </button>
-              <button onclick="copyToClipboard('https://youtube.com', this)" class="px-3.5 py-2.5 rounded-lg bg-obsidian-850 border border-white/10 text-slate-300 hover:text-white font-mono text-xs flex items-center gap-1.5 transition-colors">
-                <span class="copy-label">Copy Direct Link</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reel Sidebar Clips -->
-        <div class="space-y-4">
-          <div class="neo-border rounded-xl p-4 flex gap-4 items-center group cursor-pointer hover:border-accent-cyan/50" onclick="openVideoPlayer('Commercial Sound Foley Breakdown', 'Step-by-step layer decomposition of sub-bass, sweeps, risers, and vocal glitch.')">
-            <div class="w-20 h-16 rounded-lg bg-obsidian-850 border border-white/10 flex items-center justify-center flex-shrink-0 text-accent-cyan group-hover:scale-105 transition-transform">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <div>
-              <h4 class="text-sm font-semibold text-white group-hover:text-accent-cyan transition-colors">Sound Foley Design</h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Sub-bass, risers & glitch foley</p>
-              <span class="text-[10px] font-mono text-accent-cyan">00:48 Cut</span>
-            </div>
-          </div>
-
-          <div class="neo-border rounded-xl p-4 flex gap-4 items-center group cursor-pointer hover:border-accent-cyan/50" onclick="openVideoPlayer('Procedural Hard-Surface Turntable', '360 degree turntable render of subdivision surface robotics joint.')">
-            <div class="w-20 h-16 rounded-lg bg-obsidian-850 border border-white/10 flex items-center justify-center flex-shrink-0 text-accent-purple group-hover:scale-105 transition-transform">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <div>
-              <h4 class="text-sm font-semibold text-white group-hover:text-accent-cyan transition-colors">3D Turntable Passes</h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Wireframe to Cycles bake</p>
-              <span class="text-[10px] font-mono text-accent-purple">00:32 Loop</span>
-            </div>
-          </div>
-
-          <div class="neo-border rounded-xl p-4 flex gap-4 items-center group cursor-pointer hover:border-accent-cyan/50" onclick="openVideoPlayer('Kinetic Letterform Speed Ramp', 'Dynamic tracking typography synchronized with 175 BPM drum and bass master.')">
-            <div class="w-20 h-16 rounded-lg bg-obsidian-850 border border-white/10 flex items-center justify-center flex-shrink-0 text-accent-blue group-hover:scale-105 transition-transform">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <div>
-              <h4 class="text-sm font-semibold text-white group-hover:text-accent-cyan transition-colors">Typography Speedramp</h4>
-              <p class="text-[11px] text-slate-400 mt-0.5">Custom bezier curves & sync</p>
-              <span class="text-[10px] font-mono text-accent-blue">00:19 Short</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="stack" class="scroll-mt-24">
-      <div class="text-accent-cyan font-mono text-xs uppercase tracking-widest mb-1">// Production Tooling</div>
-      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-8">Hardware Rig & Technical Stack</h2>
-
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 font-mono text-xs">
-        
-        <div class="neo-border rounded-xl p-4 text-center">
-          <div class="text-white font-bold text-sm mb-1">Vanilla JS</div>
-          <div class="text-slate-400 text-[11px]">ES6+ / WebGL</div>
-          <div class="text-accent-cyan text-[10px] mt-2">Zero Dependencies</div>
-        </div>
-
-        <div class="neo-border rounded-xl p-4 text-center">
-          <div class="text-white font-bold text-sm mb-1">Tailwind CSS</div>
-          <div class="text-slate-400 text-[11px]">Utility First</div>
-          <div class="text-accent-cyan text-[10px] mt-2">Responsive UI</div>
-        </div>
-
-        <div class="neo-border rounded-xl p-4 text-center">
-          <div class="text-white font-bold text-sm mb-1">Blender 3D</div>
-          <div class="text-slate-400 text-[11px]">Geometry Nodes</div>
-          <div class="text-accent-purple text-[10px] mt-2">Cycles X Engine</div>
-        </div>
-
-        <div class="neo-border rounded-xl p-4 text-center">
-          <div class="text-white font-bold text-sm mb-1">Premiere Pro</div>
-          <div class="text-slate-400 text-[11px]">Timeline Pacing</div>
-          <div class="text-accent-blue text-[10px] mt-2">120 FPS Workflow</div>
-        </div>
-
-        <div class="neo-border rounded-xl p-4 text-center">
-          <div class="text-white font-bold text-sm mb-1">After Effects</div>
-          <div class="text-slate-400 text-[11px]">Motion & VFX</div>
-          <div class="text-accent-blue text-[10px] mt-2">Compositing</div>
-        </div>
-
-        <div class="neo-border rounded-xl p-4 text-center">
-          <div class="text-white font-bold text-sm mb-1">GitHub Pages</div>
-          <div class="text-slate-400 text-[11px]">Zero-Cost Host</div>
-          <div class="text-accent-emerald text-[10px] mt-2">$0 Forever</div>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="console" class="scroll-mt-24">
-      <div class="text-accent-cyan font-mono text-xs uppercase tracking-widest mb-1">// Retro-Modern Console</div>
-      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6">Interactive Micro Terminal</h2>
-
-      <div class="neo-border rounded-2xl overflow-hidden bg-obsidian-950 font-mono text-xs border border-white/10 shadow-2xl">
-        <!-- Terminal Title Bar -->
-        <div class="px-4 py-3 bg-obsidian-900 border-b border-white/10 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
-            <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-            <span class="ml-2 text-slate-400 text-[11px]">bash — guest@nexus-os:~</span>
-          </div>
-          <span class="text-slate-500 text-[10px]">Type 'help' for instructions</span>
-        </div>
-
-        <!-- Terminal Output Area -->
-        <div id="terminalBody" class="p-4 sm:p-6 space-y-2 h-64 overflow-y-auto text-slate-300">
-          <div class="text-slate-400 leading-relaxed">
-            Welcome to <span class="text-accent-cyan font-semibold">NEXUS Core Console</span> [Version 2.8.0-static].<br>
-            Hosted on zero-cost infrastructure via GitHub Pages. Type <span class="text-accent-cyan underline cursor-pointer" onclick="runCommand('help')">help</span> to explore available commands.
-          </div>
-        </div>
-
-        <!-- Terminal Input Bar -->
-        <form id="terminalForm" onsubmit="handleTerminalInput(event)" class="px-4 py-3 bg-obsidian-900/90 border-t border-white/10 flex items-center gap-2">
-          <span class="text-accent-cyan font-bold">&gt;</span>
-          <input id="terminalInput" type="text" autocomplete="off" spellcheck="false" class="w-full bg-transparent text-white focus:outline-none placeholder:text-slate-600" placeholder="Type command here (e.g. help, skills, vault, contact, clear)...">
-          <button type="submit" class="px-2.5 py-1 rounded bg-white/10 text-slate-300 hover:text-white text-[11px]">Send</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="contact" class="scroll-mt-24 pt-6 border-t border-white/10">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-        
+    <section id="codex" class="scroll-mt-24 space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div class="text-accent-cyan font-mono text-xs uppercase tracking-widest mb-1">// Initiate Transmission</div>
-          <h2 class="text-3xl font-bold text-white tracking-tight mb-4">Let's talk projects & commissions.</h2>
-          <p class="text-sm text-slate-400 leading-relaxed mb-6">
-            Looking for high-impact responsive front-end builds, dynamic YouTube video editing, motion design, or 3D assets? Copy direct handles or submit your scope below.
+          <div class="text-xs font-serif uppercase tracking-[0.25em] text-celestial-gold mb-1">Imperial Lore Repository</div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-100">The Grand Dossiers</h2>
+        </div>
+
+        <!-- Category Filtration Tabs -->
+        <div class="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-void-900/90 border border-white/10 text-xs font-serif">
+          <button data-category="all" class="codex-filter-btn px-3.5 py-1.5 rounded-lg bg-celestial-gold text-void-950 font-bold transition-all">All Vaults</button>
+          <button data-category="ruler" class="codex-filter-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">High Sovereigns</button>
+          <button data-category="relic" class="codex-filter-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Primal Relics</button>
+          <button data-category="location" class="codex-filter-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Sanctuaries</button>
+          <button data-category="creature" class="codex-filter-btn px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white transition-all">Cosmic Entities</button>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="relative">
+        <input id="codexSearchInput" type="text" placeholder="Search archive by title, house, or legend keywords..." class="w-full bg-void-900/80 border border-celestial-gold/25 rounded-xl px-5 py-3.5 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-celestial-gold transition-colors shadow-inner" oninput="filterCodexCards()">
+        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-serif text-xs">ARCHIVE SEARCH</span>
+      </div>
+
+      <!-- Lore Grid Cards -->
+      <div id="codexGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <div class="codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between" data-category="ruler" data-id="valerius">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-celestial-gold/15 text-celestial-gold border border-celestial-gold/30">Dynast / Ruler</span>
+              <span class="text-slate-500">Tier IX Sovereign</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">High Monarch Valerius IX</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "We did not harness the corona to rule men; we burned so the dark wouldn't swallow our children."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              Bearer of the Sun-Gold Sigil and unifier of the Obsidian Reach during the Solar Cataclysm. Commanded the first Dyson Citadel armada.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-celestial-gold/80">Affiliation: House of Aurum</span>
+            <button onclick="openLoreDossier('valerius')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between" data-category="relic" data-id="astralcompass">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-astral-violet/15 text-astral-purple border border-astral-violet/30">Primal Relic</span>
+              <span class="text-slate-500">Ancient Archetype</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">The Chrono-Astrolabe</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "Twelve interlocking rings of cold star-iron that calibrate to timelines that never happened."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              Forged in the heart of an imploding dwarf star. It allows navigators to chart safe passage through fractured spatial anomalies.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-astral-purple">Origin: Epoch 0 Pre-Fracture</span>
+            <button onclick="openLoreDossier('astralcompass')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between" data-category="location" data-id="elysianveil">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-astral-cyan/15 text-astral-cyan border border-astral-cyan/30">Sanctuary</span>
+              <span class="text-slate-500">Sanctum Class</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">The Elysian Veil</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "A shimmering nebula where gravity flows upward and light refracts like liquid amethyst."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              Resting place of ancient stargazers and sanctuary to rogue scholars fleeing the inquisitorial decrees of the Obsidian Pact.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-astral-cyan">Coordinates: Outer Verge-7</span>
+            <button onclick="openLoreDossier('elysianveil')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between" data-category="creature" data-id="voidserpent">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Cosmic Entity</span>
+              <span class="text-slate-500">Legendary Leviathan</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">Aetherial Leviathan</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "Miles of bioluminescent tendrils drifting through the vacuum, feeding solely on solar winds."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              Sentient spacefaring organisms that maintain cosmic balance by neutralizing stray gamma bursts and singing resonant planetary hymns.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-emerald-400">Class: Benign Cosmic</span>
+            <button onclick="openLoreDossier('voidserpent')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between" data-category="relic" data-id="celestialblade">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-astral-violet/15 text-astral-purple border border-astral-violet/30">Primal Relic</span>
+              <span class="text-slate-500">Armament</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">Blade of the Void Zenith</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "It casts no shadow, reflects no candlelight, and severs matter by bending local curvature."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              Carried by the High Champion of House Kaelen during the Siege of the Sun-Gates. Imbued with pure dark matter alloy.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-astral-purple">Wielder: Champion Kieran</span>
+            <button onclick="openLoreDossier('celestialblade')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between" data-category="ruler" data-id="lyraqueen">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-celestial-gold/15 text-celestial-gold border border-celestial-gold/30">Dynast / Ruler</span>
+              <span class="text-slate-500">Matriarch</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">Queen Seraphina of Lyra</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "We trade neither in gold nor grain; our tribute is the harmonious resonance of stars."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              Master of crystalline acoustics and sovereign of the Floating Glass Isles. Known for mediating the Celestial Concord.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-celestial-gold/80">Realm: Floating Isles of Lyra</span>
+            <button onclick="openLoreDossier('lyraqueen')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="chronicles" class="scroll-mt-24 space-y-8">
+      <div>
+        <div class="text-xs font-serif uppercase tracking-[0.25em] text-celestial-gold mb-1">Historical Annals</div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-100">The Great Epochs of Aetheria</h2>
+      </div>
+
+      <div class="relative border-l border-celestial-gold/30 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
+
+        <!-- Epoch 1 -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-void-950 border-2 border-celestial-gold flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-celestial-gold"></div>
+          </div>
+          <div class="text-xs font-serif text-celestial-gold uppercase tracking-widest mb-1">Epoch I: The Dawning Spires (Year 0 - 1,200)</div>
+          <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">The Solar Synthesis</h3>
+          <p class="text-sm text-slate-400 leading-relaxed font-light max-w-3xl">
+            The first human navigators arrive at the Binary Rim and discover the resonant singing crystals of Aethel. Ten colossal spires are raised around the primary star to channel unlimited solar harmony.
+          </p>
+        </div>
+
+        <!-- Epoch 2 -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-void-950 border-2 border-astral-purple flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-astral-purple"></div>
+          </div>
+          <div class="text-xs font-serif text-astral-purple uppercase tracking-widest mb-1">Epoch II: The Fracture (Year 2,450)</div>
+          <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">Shattering of the Firmament</h3>
+          <p class="text-sm text-slate-400 leading-relaxed font-light max-w-3xl">
+            An overcharged solar nexus creates the Great Spatial Rift, splitting the system into fragmented sovereign sectors. House Aurum and the Shadow Syndicate wage war over the lingering celestial beacons.
+          </p>
+        </div>
+
+        <!-- Epoch 3 -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-void-950 border-2 border-astral-cyan flex items-center justify-center">
+            <div class="w-1.5 h-1.5 rounded-full bg-astral-cyan"></div>
+          </div>
+          <div class="text-xs font-serif text-astral-cyan uppercase tracking-widest mb-1">Epoch III: The Concord (Year 3,900 - Present)</div>
+          <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">Establishment of the Imperial Codex</h3>
+          <p class="text-sm text-slate-400 leading-relaxed font-light max-w-3xl">
+            Under the decree of Queen Seraphina and the Arch-Scribe conclave, the Imperial Archives are consecrated to record every remaining celestial fragment and prevent forbidden solar exploitation.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="factions" class="scroll-mt-24 space-y-8">
+      <div>
+        <div class="text-xs font-serif uppercase tracking-[0.25em] text-celestial-gold mb-1">Sovereign Orders</div>
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-100">The Great Houses of the Realm</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- House 1 -->
+        <div class="celestial-card rounded-2xl p-6 border-t-2 border-t-celestial-gold">
+          <div class="w-12 h-12 rounded-xl bg-celestial-gold/10 border border-celestial-gold/30 text-celestial-gold flex items-center justify-center font-serif text-xl font-bold mb-4">
+            ☉
+          </div>
+          <h3 class="text-lg font-serif font-bold text-slate-100 mb-1">House of Aurum</h3>
+          <p class="text-xs text-celestial-gold/90 font-serif mb-3">Motto: "Through the Crucible, Eternal Light"</p>
+          <p class="text-xs text-slate-400 leading-relaxed font-light mb-4">
+            The solar dynasties who dwell in the inner sun-citadels. Masters of solar alchemy, grand architecture, and celestial diplomacy.
+          </p>
+          <div class="text-[11px] font-mono text-slate-500">Territory: Sol-Aethel Core</div>
+        </div>
+
+        <!-- House 2 -->
+        <div class="celestial-card rounded-2xl p-6 border-t-2 border-t-astral-violet">
+          <div class="w-12 h-12 rounded-xl bg-astral-violet/10 border border-astral-violet/30 text-astral-purple flex items-center justify-center font-serif text-xl font-bold mb-4">
+            ☽
+          </div>
+          <h3 class="text-lg font-serif font-bold text-slate-100 mb-1">The Umbral Conclave</h3>
+          <p class="text-xs text-astral-purple font-serif mb-3">Motto: "Silence Precedes the Starfall"</p>
+          <p class="text-xs text-slate-400 leading-relaxed font-light mb-4">
+            Occult astronomers and void navigators who inhabit the dark margins of the rift. They preserve primeval relics and unwritten prophecies.
+          </p>
+          <div class="text-[11px] font-mono text-slate-500">Territory: The Void Verge</div>
+        </div>
+
+        <!-- House 3 -->
+        <div class="celestial-card rounded-2xl p-6 border-t-2 border-t-astral-cyan">
+          <div class="w-12 h-12 rounded-xl bg-astral-cyan/10 border border-astral-cyan/30 text-astral-cyan flex items-center justify-center font-serif text-xl font-bold mb-4">
+            ✦
+          </div>
+          <h3 class="text-lg font-serif font-bold text-slate-100 mb-1">The Glass Guild of Lyra</h3>
+          <p class="text-xs text-astral-cyan font-serif mb-3">Motto: "Resonance Across the Divide"</p>
+          <p class="text-xs text-slate-400 leading-relaxed font-light mb-4">
+            Artisans, scholars, and acoustic glass-singers who float among crystalline nebulae, weaving historical ballads into luminous song.
+          </p>
+          <div class="text-[11px] font-mono text-slate-500">Territory: Floating Isles of Lyra</div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="scribe" class="scroll-mt-24 pt-8 border-t border-celestial-gold/20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+        <div>
+          <div class="text-xs font-serif uppercase tracking-[0.25em] text-celestial-gold mb-1">Imperial Arch-Scribe Conclave</div>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-100 mb-4">Inscribe New Legends into the Codex</h2>
+          <p class="font-lore text-lg text-slate-300 italic mb-6">
+            "Every traveler who crosses the Void Verge carries a truth that the Great Archives lack."
+          </p>
+          <p class="text-sm text-slate-400 leading-relaxed font-light mb-8">
+            Are you a stargazer, wandering chronicler, or realm creator? Submit a dispatch or artifact sighting to the central ledger. All transmissions are reviewed under the High Arch-Scribe's seal.
           </p>
 
-          <div class="space-y-3 font-mono text-xs">
-            <button onclick="copyToClipboard('hello@yourcustomdomain.com', this)" class="w-full p-3.5 rounded-xl neo-border flex items-center justify-between group text-left">
-              <div class="flex items-center gap-3">
-                <span class="text-slate-500 font-bold">EMAIL:</span>
-                <span class="text-white">hello@yourcustomdomain.com</span>
-              </div>
-              <span class="copy-label text-accent-cyan group-hover:underline">Copy</span>
-            </button>
-
-            <button onclick="copyToClipboard('nexus_studio#0001', this)" class="w-full p-3.5 rounded-xl neo-border flex items-center justify-between group text-left">
-              <div class="flex items-center gap-3">
-                <span class="text-slate-500 font-bold">DISCORD:</span>
-                <span class="text-white">nexus_studio#0001</span>
-              </div>
-              <span class="copy-label text-accent-cyan group-hover:underline">Copy</span>
-            </button>
+          <div class="p-4 rounded-xl bg-void-900 border border-white/10 flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-celestial-gold/20 flex items-center justify-center text-celestial-gold font-serif text-lg">
+              📜
+            </div>
+            <div>
+              <div class="text-xs font-serif font-bold text-slate-200">Official Imperial Seal</div>
+              <div class="text-[11px] text-slate-400">Archived under public domain celestial licenses</div>
+            </div>
           </div>
         </div>
 
-        <!-- Direct Dispatch Form -->
-        <div class="neo-border rounded-2xl p-6 sm:p-7">
-          <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
+        <!-- Interactive Lore Submission Form -->
+        <div class="celestial-card rounded-2xl p-6 sm:p-8">
+          <form id="scribeForm" onsubmit="handleScribeDispatch(event)" class="space-y-4">
             <div>
-              <label class="block text-xs font-mono text-slate-400 mb-1.5" for="name">Your Name</label>
-              <input required id="name" type="text" class="w-full bg-obsidian-950 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-accent-cyan" placeholder="Jordan Vance">
+              <label class="block text-xs font-serif text-celestial-light mb-1.5" for="scribeName">Chronicler / Scribe Name</label>
+              <input required id="scribeName" type="text" placeholder="Arch-Explorer Theron Vance" class="w-full bg-void-950 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-celestial-gold transition-colors">
             </div>
 
             <div>
-              <label class="block text-xs font-mono text-slate-400 mb-1.5" for="email">Email Address</label>
-              <input required id="email" type="email" class="w-full bg-obsidian-950 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-accent-cyan" placeholder="jordan@domain.com">
+              <label class="block text-xs font-serif text-celestial-light mb-1.5" for="scribeCategory">Codex Category</label>
+              <select id="scribeCategory" class="w-full bg-void-950 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-celestial-gold transition-colors">
+                <option value="Dynast / Ruler">Dynast / Ruler</option>
+                <option value="Primal Relic">Primal Relic</option>
+                <option value="Sanctuary / Location">Sanctuary / Location</option>
+                <option value="Cosmic Entity">Cosmic Entity</option>
+              </select>
             </div>
 
             <div>
-              <label class="block text-xs font-mono text-slate-400 mb-1.5" for="message">Project Scope & Timeline</label>
-              <textarea required id="message" rows="3" class="w-full bg-obsidian-950 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-accent-cyan" placeholder="Tell me about the goals and deliverables..."></textarea>
+              <label class="block text-xs font-serif text-celestial-light mb-1.5" for="scribeTitle">Discovery / Entity Title</label>
+              <input required id="scribeTitle" type="text" placeholder="The Obsidian Monolith of sector 4" class="w-full bg-void-950 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-celestial-gold transition-colors">
             </div>
 
-            <button type="submit" id="submitBtn" class="w-full py-3 rounded-lg bg-accent-cyan text-obsidian-950 font-bold font-mono text-xs uppercase tracking-wider hover:bg-white transition-colors">
-              Transmit Dispatch
+            <div>
+              <label class="block text-xs font-serif text-celestial-light mb-1.5" for="scribeLore">Lore Excerpt & Observational Notes</label>
+              <textarea required id="scribeLore" rows="3" placeholder="Describe the atmosphere, significance, and celestial coordinates..." class="w-full bg-void-950 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-celestial-gold transition-colors"></textarea>
+            </div>
+
+            <button type="submit" id="scribeBtn" class="w-full py-3.5 rounded-lg bg-gradient-to-r from-celestial-gold to-amber-500 text-void-950 font-serif font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+              Transmit to Imperial Scribe Conclave
             </button>
 
-            <div id="formNotice" class="hidden p-3 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 font-mono text-xs">
-              &checkmark; Dispatch received! Since this runs on zero-cost static hosting, reach out via the email copy button above for instant connection!
+            <div id="dispatchSuccessNotice" class="hidden p-3.5 rounded-lg bg-celestial-gold/15 border border-celestial-gold/40 text-celestial-light text-xs font-serif">
+              ✦ Transmission accepted. Your entry has been indexed into the current session ledger!
             </div>
           </form>
         </div>
@@ -555,263 +584,470 @@
 
   </main>
 
-  <!-- Project Modal -->
-  <div id="projectModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian-950/80 backdrop-blur-md">
-    <div class="neo-border w-full max-w-2xl rounded-2xl p-6 sm:p-8 bg-obsidian-900 space-y-5">
-      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+  <div id="dossierModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-void-950/85 backdrop-blur-md">
+    <div class="celestial-card w-full max-w-2xl rounded-2xl p-6 sm:p-8 bg-void-900 border border-celestial-gold/30 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-white/10 pb-4">
         <div>
-          <span id="modalCategory" class="text-accent-cyan text-[11px] font-mono uppercase font-bold">Category</span>
-          <h3 id="modalTitle" class="text-xl font-bold text-white mt-0.5">Project Title</h3>
+          <span id="modalClassification" class="px-2.5 py-0.5 rounded-full bg-celestial-gold/15 text-celestial-gold border border-celestial-gold/30 text-[10px] font-serif uppercase tracking-widest font-bold">
+            Classification
+          </span>
+          <h3 id="modalName" class="text-2xl font-serif font-bold text-slate-100 mt-2">Dossier Name</h3>
         </div>
-        <button onclick="closeModal()" class="p-1.5 rounded-lg bg-obsidian-800 text-slate-400 hover:text-white">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <button onclick="closeLoreDossier()" class="p-2 rounded-lg bg-void-800 text-slate-400 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
         </button>
       </div>
 
-      <p id="modalDesc" class="text-sm text-slate-300 leading-relaxed">Detailed technical description of this asset.</p>
+      <!-- Quote callout -->
+      <blockquote id="modalQuote" class="font-lore italic text-lg text-slate-200 border-l-2 border-celestial-gold pl-4 py-1">
+        "Lore quote"
+      </blockquote>
 
-      <div>
-        <div class="text-xs font-mono text-slate-400 mb-2">Technical Implementation:</div>
-        <div id="modalTags" class="flex flex-wrap gap-2"></div>
+      <!-- Full Lore Body -->
+      <div class="space-y-4 text-sm text-slate-300 leading-relaxed font-light">
+        <p id="modalDescription">Detailed chronicle narrative.</p>
+        <div class="p-4 rounded-xl bg-void-950/80 border border-white/5 space-y-2">
+          <div class="text-xs font-serif uppercase tracking-wider text-celestial-gold">Imperial Attributes & Archival Record:</div>
+          <ul id="modalAttributes" class="space-y-1.5 text-xs text-slate-400 font-mono"></ul>
+        </div>
       </div>
 
-      <div class="pt-4 border-t border-white/10 flex justify-end gap-3 font-mono text-xs">
-        <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-obsidian-800 text-slate-300 hover:bg-obsidian-700">Dismiss</button>
-        <a href="#contact" onclick="closeModal()" class="px-4 py-2 rounded-lg bg-accent-cyan text-obsidian-950 font-bold hover:bg-white transition-colors">Inquire Scope</a>
+      <!-- Modal Footer -->
+      <div class="pt-4 border-t border-white/10 flex justify-end gap-3 font-serif text-xs">
+        <button onclick="closeLoreDossier()" class="px-5 py-2.5 rounded-lg bg-void-800 text-slate-300 hover:bg-void-700 transition-colors uppercase tracking-wider">
+          Return to Vault
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Video Modal -->
-  <div id="videoModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-obsidian-950/85 backdrop-blur-md">
-    <div class="neo-border w-full max-w-3xl rounded-2xl overflow-hidden bg-obsidian-900">
-      <div class="p-4 bg-obsidian-850 border-b border-white/10 flex items-center justify-between">
-        <span id="videoTitle" class="text-sm font-bold text-white font-mono">Video Reel Stream</span>
-        <button onclick="closeVideoModal()" class="p-1 rounded text-slate-400 hover:text-white">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-
-      <!-- Simulated High-Fidelity Canvas / Player Stage -->
-      <div class="h-72 sm:h-96 bg-obsidian-950 relative flex items-center justify-center p-6 text-center">
-        <div class="space-y-3">
-          <div class="w-14 h-14 rounded-full bg-accent-cyan/10 border border-accent-cyan/40 text-accent-cyan mx-auto flex items-center justify-center animate-pulse">
-            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <p id="videoDesc" class="text-xs text-slate-300 max-w-md">Playback pipeline ready for self-hosted MP4/WebM files, YouTube unlisted embeds, or custom WebGL loops.</p>
-          <span class="text-[10px] font-mono text-slate-500 block">Single-File Optimized • Zero Bandwidth Overhead</span>
-        </div>
-      </div>
-
-      <div class="p-4 border-t border-white/10 flex justify-between items-center text-xs font-mono">
-        <span class="text-emerald-400">&bull; 4K ProRes Master Source Ready</span>
-        <button onclick="closeVideoModal()" class="px-4 py-2 rounded-lg bg-accent-cyan text-obsidian-950 font-bold">Close Player</button>
-      </div>
-    </div>
-  </div>
-
-  <footer class="border-t border-white/10 py-8 relative z-10 text-xs font-mono text-slate-500">
+  <footer class="border-t border-celestial-gold/15 py-10 relative z-10 text-xs font-serif text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-accent-cyan"></span>
-        <span>Ready for GitHub Pages custom domain linking</span>
+        <span class="w-2 h-2 rounded-full bg-celestial-gold"></span>
+        <span class="tracking-widest uppercase">The Aetheria Chronicles • Single-Page Imperial Codex</span>
       </div>
-      <div>&copy; <span id="year"></span> NEXUS // All systems operational.</div>
+      <div>Epoch 4,812 // All stars charted under the sovereign archive.</div>
     </div>
   </footer>
 
   <script>
-    // Dynamic Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    /* ========================================================
+       1. SYNTHESIZED WEB AUDIO SPACE ATMOSPHERE DRONE
+       ======================================================== */
+    let audioCtx = null;
+    let osc1 = null, osc2 = null, filter = null, gainNode = null;
+    let isAudioPlaying = false;
 
-    // Vault Filtering Logic
-    const filterBtns = document.querySelectorAll('.vault-filter-btn');
-    const vaultCards = document.querySelectorAll('.vault-card');
+    function toggleAtmosphereAudio() {
+      const label = document.getElementById('audioLabel');
+      const waveIcon = document.getElementById('audioWaveIcon');
+
+      if (!isAudioPlaying) {
+        try {
+          if (!audioCtx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContext();
+          }
+
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+
+          // Gentle low celestial drone (Root C2 / 65.4 Hz + fifth G2 / 98.0 Hz)
+          osc1 = audioCtx.createOscillator();
+          osc2 = audioCtx.createOscillator();
+          filter = audioCtx.createBiquadFilter();
+          gainNode = audioCtx.createGain();
+
+          osc1.type = 'sine';
+          osc1.frequency.setValueAtTime(65.41, audioCtx.currentTime); // C2
+
+          osc2.type = 'triangle';
+          osc2.frequency.setValueAtTime(98.00, audioCtx.currentTime); // G2
+
+          // Low-pass filter for cosmic warmth
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+          // Subtle, calm volume
+          gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 3);
+
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+
+          osc1.start();
+          osc2.start();
+
+          isAudioPlaying = true;
+          label.textContent = "Atmosphere: Resonating";
+          waveIcon.innerHTML = `
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-celestial-gold opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-celestial-gold"></span>
+          `;
+        } catch (e) {
+          console.error("Audio error:", e);
+        }
+      } else {
+        if (gainNode && audioCtx) {
+          gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+          setTimeout(() => {
+            if (osc1) osc1.stop();
+            if (osc2) osc2.stop();
+            isAudioPlaying = false;
+          }, 1200);
+        } else {
+          isAudioPlaying = false;
+        }
+        label.textContent = "Atmosphere: Off";
+        waveIcon.innerHTML = `<span class="inline-flex rounded-full h-2 w-2 bg-slate-500"></span>`;
+      }
+    }
+
+    /* ========================================================
+       2. INTERACTIVE FIRMAMENT CANVAS (STAR MAP)
+       ======================================================== */
+    const canvas = document.getElementById('starMapCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    const starNodes = [
+      { id: 'valerius', name: 'Sol-Aethel Citadel', x: 0.22, y: 0.38, radius: 7, color: '#f59e0b', lore: 'Ancestral throne world of House Aurum.', coords: "RA 18h 42m // DEC +32° 14'" },
+      { id: 'elysianveil', name: 'The Elysian Sanctuary', x: 0.50, y: 0.25, radius: 8, color: '#38bdf8', lore: 'Nebula of floating crystalline monuments.', coords: "RA 20h 11m // DEC -14° 08'" },
+      { id: 'astralcompass', name: 'The Chrono Core', x: 0.76, y: 0.42, radius: 7, color: '#a78bfa', lore: 'Nexus where the ancient astrolabe was forged.', coords: "RA 04h 55m // DEC +09° 50'" },
+      { id: 'voidserpent', name: 'Abyssal Ridge', x: 0.35, y: 0.72, radius: 6, color: '#34d399', lore: 'Territory of the colossal singing star leviathans.', coords: "RA 12h 28m // DEC -02° 19'" },
+      { id: 'celestialblade', name: 'The Iron Zenith', x: 0.64, y: 0.78, radius: 6, color: '#c084fc', lore: 'Fortress forge of the void champion blades.', coords: "RA 22h 19m // DEC +58° 11'" },
+      { id: 'lyraqueen', name: 'Isles of Lyra', x: 0.82, y: 0.20, radius: 7, color: '#fcd34d', lore: 'Sovereign singing glass world of Queen Seraphina.', coords: "RA 08h 14m // DEC -28° 02'" }
+    ];
+
+    let selectedStar = starNodes[0];
+
+    // Background passive stars
+    const backgroundStars = [];
+    for (let i = 0; i < 90; i++) {
+      backgroundStars.push({
+        x: Math.random(),
+        y: Math.random(),
+        size: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.7 + 0.2
+      });
+    }
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      width = canvas.width = rect.width;
+      height = canvas.height = rect.height;
+      drawStarMap();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawStarMap() {
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Draw passive starlight
+      backgroundStars.forEach(s => {
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.beginPath();
+        ctx.arc(s.x * width, s.y * height, s.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 2. Draw constellation connective lines
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.18)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let i = 0; i < starNodes.length; i++) {
+        for (let j = i + 1; j < starNodes.length; j++) {
+          const dx = (starNodes[i].x - starNodes[j].x) * width;
+          const dy = (starNodes[i].y - starNodes[j].y) * height;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < width * 0.45) {
+            ctx.moveTo(starNodes[i].x * width, starNodes[i].y * height);
+            ctx.lineTo(starNodes[j].x * width, starNodes[j].y * height);
+          }
+        }
+      }
+      ctx.stroke();
+
+      // 3. Draw active nodes
+      starNodes.forEach(node => {
+        const px = node.x * width;
+        const py = node.y * height;
+        const isSelected = selectedStar.id === node.id;
+
+        // Outer glow
+        const gradient = ctx.createRadialGradient(px, py, 1, px, py, isSelected ? 24 : 14);
+        gradient.addColorStop(0, node.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(px, py, isSelected ? 24 : 14, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Core star
+        ctx.fillStyle = isSelected ? '#ffffff' : node.color;
+        ctx.beginPath();
+        ctx.arc(px, py, node.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Label
+        ctx.fillStyle = isSelected ? '#fef3c7' : '#94a3b8';
+        ctx.font = isSelected ? "bold 11px Cinzel, serif" : "10px Cinzel, serif";
+        ctx.fillText(node.name, px + 12, py + 4);
+      });
+    }
+
+    // Canvas click detection
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      let found = null;
+      starNodes.forEach(node => {
+        const px = node.x * width;
+        const py = node.y * height;
+        const dist = Math.hypot(clickX - px, clickY - py);
+        if (dist < 20) {
+          found = node;
+        }
+      });
+
+      if (found) {
+        selectedStar = found;
+        document.getElementById('hudCoordinates').textContent = found.coords;
+        document.getElementById('starDetailName').textContent = found.name;
+        document.getElementById('starDetailLore').textContent = found.lore;
+        document.getElementById('starColorOrb').style.borderColor = found.color;
+        document.getElementById('starColorOrb').style.color = found.color;
+        drawStarMap();
+      }
+    });
+
+    function inspectSelectedNode() {
+      if (selectedStar) {
+        openLoreDossier(selectedStar.id);
+      }
+    }
+
+    /* ========================================================
+       3. LORE DOSSIERS DATA & MODAL CONTROLS
+       ======================================================== */
+    const loreArchive = {
+      valerius: {
+        name: "High Monarch Valerius IX",
+        classification: "Imperial Dynast & High Sovereign",
+        quote: "We did not harness the corona to rule men; we burned so the dark would not swallow our children.",
+        description: "Valerius IX ascended during the zenith of the Great Fracture. Crowned within the Solar Crucible of Aethel, he wielded the Sun-Gold Sigil to orchestrate the solar shielding that preserved the central habitable belt. His reign established seventy generations of unbroken peace.",
+        attributes: [
+          "• Sovereign Title: Emperor of the Sun-Gold Reach",
+          "• Reign: Epoch 2,450 – 2,548",
+          "• Relic Bound: Sun-Gold Sigil of Aethel",
+          "• Primary Citadel: Sol-Aethel Prime"
+        ]
+      },
+      astralcompass: {
+        name: "The Chrono-Astrolabe",
+        classification: "Primal Pre-Fracture Relic",
+        quote: "Twelve interlocking rings of cold star-iron that calibrate to timelines that never happened.",
+        description: "Discovered embedded inside the crust of a frozen moon in the Lyra Expanse. Its dials adjust in real-time to gravitational shifts and temporal fractures, enabling void pilots to traverse warped sectors without succumbing to temporal dilation.",
+        attributes: [
+          "• Material: Singularity Nickel-Alloy",
+          "• Epoch of Origin: Estimated Epoch 0 (Pre-Imperial)",
+          "• Current Custodian: The Umbral Conclave",
+          "• Threat / Resonance Index: Level IV Stable"
+        ]
+      },
+      elysianveil: {
+        name: "The Elysian Veil",
+        classification: "Sanctuary & Crystalline Nebula",
+        quote: "A shimmering nebula where gravity flows upward and light refracts like liquid amethyst.",
+        description: "A sanctuary protected by crystalline electrostatic clouds. Inside, dozens of floating spires remain preserved since the first migration. Scholars and cartographers journey here to meditate and consult the singing resonance chambers.",
+        attributes: [
+          "• Coordinates: Outer Verge Sector 7",
+          "• Atmosphere: Crystalline Violet Noble Gas",
+          "• Inhabitants: 120,000 Archivists and Monks",
+          "• Stellar Proximity: Dual Sapphire Binary"
+        ]
+      },
+      voidserpent: {
+        name: "Aetherial Leviathan",
+        classification: "Benign Cosmic Entity",
+        quote: "Miles of bioluminescent tendrils drifting through the vacuum, feeding solely on solar winds.",
+        description: "Believed to be the original shepherds of the stellar systems. These immense beings measure over six kilometers in length, gracefully navigating cosmic slipstreams and releasing calming harmonic pulses that neutralize electromagnetic storms.",
+        attributes: [
+          "• Lifespan: Estimated 25,000 Standard Solar Years",
+          "• Diet: Solar Flare Radiation & Ionized Hydrogen",
+          "• Temperament: Non-Aggressive, Protective",
+          "• Sacred Status: Protected under Imperial Law"
+        ]
+      },
+      celestialblade: {
+        name: "Blade of the Void Zenith",
+        classification: "Primal Relic / Armament",
+        quote: "It casts no shadow, reflects no candlelight, and severs matter by bending local curvature.",
+        description: "Forged during the Siege of the Sun-Gates, this blade does not rely on a sharpened edge. Instead, it utilizes a microscopic gravitational rift along its spine to shear through physical obstacles at the atomic scale.",
+        attributes: [
+          "• Wielder: Champion Kieran of House Kaelen",
+          "• Weight: Variable based on gravitational orientation",
+          "• Forging Method: Sub-Zero Dark Matter Compression",
+          "• Vault Location: Vault Omega, Imperial Arsenal"
+        ]
+      },
+      lyraqueen: {
+        name: "Queen Seraphina of Lyra",
+        classification: "Matriarch & Chief Architect of the Concord",
+        quote: "We trade neither in gold nor grain; our tribute is the harmonious resonance of stars.",
+        description: "Queen Seraphina united the scattered glass isles of Lyra and authored the foundational charters of the Imperial Codex. Her singing choirs maintain the harmonic resonance that prevents the remaining solar beacons from collapsing.",
+        attributes: [
+          "• Sovereign Realm: Floating Isles of Lyra",
+          "• Role: Chief Architect of the Celestial Concord",
+          "• Specialty: Harmonic Solar Resonances",
+          "• Status: Active Regent of the High Synod"
+        ]
+      }
+    };
+
+    function openLoreDossier(id) {
+      const dossier = loreArchive[id];
+      if (!dossier) return;
+
+      document.getElementById('modalClassification').textContent = dossier.classification;
+      document.getElementById('modalName').textContent = dossier.name;
+      document.getElementById('modalQuote').textContent = `"${dossier.quote}"`;
+      document.getElementById('modalDescription').textContent = dossier.description;
+
+      const attrList = document.getElementById('modalAttributes');
+      attrList.innerHTML = '';
+      dossier.attributes.forEach(attr => {
+        const li = document.createElement('li');
+        li.textContent = attr;
+        attrList.appendChild(li);
+      });
+
+      document.getElementById('dossierModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLoreDossier() {
+      document.getElementById('dossierModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    /* ========================================================
+       4. CATEGORY FILTRATION & SEARCH
+       ======================================================== */
+    const filterBtns = document.querySelectorAll('.codex-filter-btn');
+    const cards = document.querySelectorAll('.codex-card');
+    const searchInput = document.getElementById('codexSearchInput');
+
+    let activeCategory = 'all';
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => {
-          b.classList.remove('bg-white', 'text-obsidian-950', 'font-semibold');
+          b.classList.remove('bg-celestial-gold', 'text-void-950', 'font-bold');
           b.classList.add('text-slate-400');
         });
-        btn.classList.add('bg-white', 'text-obsidian-950', 'font-semibold');
+        btn.classList.add('bg-celestial-gold', 'text-void-950', 'font-bold');
         btn.classList.remove('text-slate-400');
 
-        const cat = btn.getAttribute('data-filter');
-        vaultCards.forEach(card => {
-          if (cat === 'all' || card.getAttribute('data-category') === cat) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
+        activeCategory = btn.getAttribute('data-category');
+        filterCodexCards();
       });
     });
 
-    // Project Data for Modals
-    const projectDatabase = {
-      pulsesync: {
-        title: "PulseSync: WebGL Shader Engine",
-        category: "Web & Graphics",
-        desc: "A pure vanilla JavaScript and WebGL vertex displacement playground. It receives raw browser mic inputs, converts them via FFT into frequency buckets, and distorts meshes without external heavy dependencies.",
-        tags: ["WebGL", "Three.js", "WebAudio API", "Shader Art", "Zero Bloat"]
-      },
-      aerokinetics: {
-        title: "AeroKinetics Hard-Surface Rig",
-        category: "3D Procedural Assets",
-        desc: "Built with non-destructive procedural modifier stacks and geometric nodes in Blender. Baked ambient occlusion and metallic roughness maps allow direct export to modern glTF web engines.",
-        tags: ["Blender 4.x", "Subdivision Topology", "PBR Shaders", "Geometry Nodes"]
-      },
-      vektor: {
-        title: "Vektor Launch Teaser Reel",
-        category: "Motion & Editing",
-        desc: "Precision frame-by-frame rhythmic editing. Synced with complex speed ramping curves, custom glow dissipation effects, and multi-track spatial sound effects.",
-        tags: ["Premiere Pro", "After Effects", "Sound Foley", "120 FPS", "Speed Ramps"]
-      },
-      ghosthost: {
-        title: "GhostHost: Single-Bundle Boilerplate",
-        category: "Web Architecture",
-        desc: "Engineered specifically for creators wanting a single-file modern portfolio deployed on GitHub Pages or Cloudflare Pages with zero recurring monthly subscription costs.",
-        tags: ["Single File", "Tailwind CSS", "Semantic HTML", "100/100 Lighthouse"]
-      },
-      hud: {
-        title: "Cybernetic HUD Interface Rig",
-        category: "Motion Graphics",
-        desc: "Vector overlay pack consisting of digital scopes, tracking markers, target brackets, and audio spectrum meters created for broadcast video editors.",
-        tags: ["Illustrator", "After Effects", "Motion Vectors", "Alpha Transparency"]
-      },
-      monolith: {
-        title: "Neon Monolith: Sci-Fi Chamber",
-        category: "3D Environments",
-        desc: "Interior raytraced environment utilizing volumetric light cones and emissive panel materials for clean architectural atmosphere.",
-        tags: ["Blender Cycles", "Volumetric Scattering", "Real-Time 3D", "PBR Materials"]
-      }
-    };
+    function filterCodexCards() {
+      const query = (searchInput.value || '').toLowerCase().trim();
 
-    // Project Modal
-    const pModal = document.getElementById('projectModal');
-    function openModal(id) {
-      const data = projectDatabase[id];
-      if (!data) return;
-      document.getElementById('modalTitle').textContent = data.title;
-      document.getElementById('modalCategory').textContent = data.category;
-      document.getElementById('modalDesc').textContent = data.desc;
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const text = card.textContent.toLowerCase();
+        const matchesCategory = (activeCategory === 'all' || cat === activeCategory);
+        const matchesQuery = !query || text.includes(query);
 
-      const tagContainer = document.getElementById('modalTags');
-      tagContainer.innerHTML = '';
-      data.tags.forEach(t => {
-        const span = document.createElement('span');
-        span.className = 'px-2 py-0.5 rounded bg-obsidian-950 border border-white/10 text-[11px] font-mono text-accent-cyan';
-        span.textContent = t;
-        tagContainer.appendChild(span);
+        if (matchesCategory && matchesQuery) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
       });
-
-      pModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-      pModal.classList.add('hidden');
-      document.body.style.overflow = 'auto';
     }
 
-    // Video Reel Modal
-    const vModal = document.getElementById('videoModal');
-    function openVideoPlayer(title, desc) {
-      document.getElementById('videoTitle').textContent = title;
-      document.getElementById('videoDesc').textContent = desc;
-      vModal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeVideoModal() {
-      vModal.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
-
-    // Clipboard Function
-    function copyToClipboard(text, btn) {
-      const el = document.createElement('textarea');
-      el.value = text;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-
-      const label = btn.querySelector('.copy-label');
-      if (label) {
-        const orig = label.textContent;
-        label.textContent = 'Copied!';
-        label.classList.add('text-emerald-400');
-        setTimeout(() => {
-          label.textContent = orig;
-          label.classList.remove('text-emerald-400');
-        }, 1800);
-      }
-    }
-
-    // Interactive Terminal
-    const termBody = document.getElementById('terminalBody');
-    const termInput = document.getElementById('terminalInput');
-
-    function appendTerminal(line, isCommand = false) {
-      const div = document.createElement('div');
-      div.className = isCommand ? "text-accent-cyan font-bold" : "text-slate-300";
-      div.innerHTML = line;
-      termBody.appendChild(div);
-      termBody.scrollTop = termBody.scrollHeight;
-    }
-
-    function runCommand(cmd) {
-      const raw = cmd.trim().toLowerCase();
-      appendTerminal(`&gt; ${cmd}`, true);
-
-      switch (raw) {
-        case 'help':
-          appendTerminal("Commands available: <br>&bull; <span class='text-white'>vault</span>: Jump to work archive<br>&bull; <span class='text-white'>skills</span>: List active tools<br>&bull; <span class='text-white'>reels</span>: Browse video media<br>&bull; <span class='text-white'>contact</span>: Open direct handles<br>&bull; <span class='text-white'>clear</span>: Clear terminal window");
-          break;
-        case 'skills':
-          appendTerminal("Active Stack: Vanilla JS, Tailwind CSS, Blender 4.x (Geometry Nodes), Premiere Pro, After Effects, GitHub Pages ($0 hosting).");
-          break;
-        case 'vault':
-        case 'projects':
-          location.hash = '#vault';
-          appendTerminal("Navigating to Vault section...");
-          break;
-        case 'reels':
-          location.hash = '#reels';
-          appendTerminal("Navigating to Video Reel showcase...");
-          break;
-        case 'contact':
-          location.hash = '#contact';
-          appendTerminal("Contact channels: hello@yourcustomdomain.com | Discord: nexus_studio#0001");
-          break;
-        case 'clear':
-          termBody.innerHTML = '';
-          break;
-        default:
-          appendTerminal(`Command not recognized: '${cmd}'. Type 'help' for instructions.`);
-      }
-    }
-
-    function handleTerminalInput(e) {
+    /* ========================================================
+       5. SCRIBE SUBMISSION TRANSMISSION
+       ======================================================== */
+    function handleScribeDispatch(e) {
       e.preventDefault();
-      const val = termInput.value;
-      if (!val) return;
-      runCommand(val);
-      termInput.value = '';
-    }
+      const name = document.getElementById('scribeName').value;
+      const cat = document.getElementById('scribeCategory').value;
+      const title = document.getElementById('scribeTitle').value;
+      const lore = document.getElementById('scribeLore').value;
+      const notice = document.getElementById('dispatchSuccessNotice');
+      const submitBtn = document.getElementById('scribeBtn');
 
-    // Contact Form feedback
-    function handleContact(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const notice = document.getElementById('formNotice');
-      btn.textContent = "Transmitting...";
+      submitBtn.textContent = "Communing with the Scribes...";
       setTimeout(() => {
         notice.classList.remove('hidden');
-        btn.textContent = "Transmitted";
-        document.getElementById('contactForm').reset();
-      }, 600);
+        submitBtn.textContent = "Transmit to Imperial Scribe Conclave";
+        
+        // Dynamically insert user-created lore into the Codex
+        const newId = 'custom_' + Date.now();
+        loreArchive[newId] = {
+          name: title,
+          classification: cat + " [Newly Chronicled]",
+          quote: "Chronicled by " + name + " during the current imperial cycle.",
+          description: lore,
+          attributes: [
+            "• Scribe: " + name,
+            "• Classification: " + cat,
+            "• Verification: Verified by Imperial Scribe Conclave",
+            "• Record Date: Epoch 4,812"
+          ]
+        };
+
+        const grid = document.getElementById('codexGrid');
+        const newCard = document.createElement('div');
+        newCard.className = "codex-card celestial-card rounded-2xl p-6 flex flex-col justify-between";
+        newCard.setAttribute('data-category', 'ruler');
+        newCard.setAttribute('data-id', newId);
+        newCard.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between text-xs mb-3 font-serif">
+              <span class="px-2.5 py-0.5 rounded-full bg-celestial-gold/15 text-celestial-gold border border-celestial-gold/30">${cat}</span>
+              <span class="text-emerald-400">Newly Chronicled</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-100 mb-2">${title}</h3>
+            <p class="font-lore italic text-slate-300 text-base leading-snug mb-4">
+              "Chronicled by ${name}..."
+            </p>
+            <p class="text-xs text-slate-400 line-clamp-3 leading-relaxed mb-6 font-light">
+              ${lore}
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-celestial-gold">Scribe: ${name}</span>
+            <button onclick="openLoreDossier('${newId}')" class="text-xs font-serif text-celestial-gold hover:underline flex items-center gap-1 font-semibold">
+              Inspect Dossier &rarr;
+            </button>
+          </div>
+        `;
+        grid.prepend(newCard);
+        document.getElementById('scribeForm').reset();
+      }, 700);
     }
+
+    // Initialize Canvas on Load
+    window.onload = function() {
+      resizeCanvas();
+    };
   </script>
 </body>
 </html>
